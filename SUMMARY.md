@@ -1,6 +1,10 @@
 # Table of contents
 
-* [Page 1](README.md)
+## Getting Started
+
+* [Welcome to Doomsday Guide](README.md)
+* [Environment & Setup](getting-started/environment-and-setup.md)
+* [The Perfect Module Boilerplate](getting-started/the-perfect-module-boilerplate.md)
 
 ## 🐍 PYTHON CRASH COURSE FOR ODOO
 
@@ -29,12 +33,6 @@
 
 * [Directory & File Structure](coding-standards-and-hygiene/directory-and-file-structure.md)
 * [Naming Conventions](coding-standards-and-hygiene/naming-conventions.md)
-
-## Getting Started
-
-* [Environment & Setup](getting-started/environment-and-setup.md)
-* [The Perfect Module Boilerplate](getting-started/the-perfect-module-boilerplate.md)
-* [Welcome to Doomsday Guide](getting-started/welcome-to-doomsday-guide.md)
 
 ## CORE ARCHITECTURE
 
