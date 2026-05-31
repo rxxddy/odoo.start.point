@@ -2,6 +2,34 @@
 
 * [Page 1](README.md)
 
+## 🐍 PYTHON CRASH COURSE FOR ODOO
+
+* [Essential Odoo Imports](python-crash-course-for-odoo/essential-odoo-imports.md)
+* [Data Structures Survival Guide](python-crash-course-for-odoo/data-structures-survival-guide.md)
+* [The super() Function Explained](python-crash-course-for-odoo/the-super-function-explained.md)
+* [Loops and Recordsets](python-crash-course-for-odoo/loops-and-recordsets.md)
+* [Understanding Decorators](python-crash-course-for-odoo/understanding-decorators.md)
+
+## 🍳 THE "HOW-TO" COOKBOOK
+
+* [How to Create a Model from Scratch](the-how-to-cookbook/how-to-create-a-model-from-scratch.md)
+* [How to Add a Custom Field to an Existing Model](the-how-to-cookbook/how-to-add-a-custom-field-to-an-existing-model.md)
+* [How to Add a Button That Executes Python](the-how-to-cookbook/how-to-add-a-button-that-executes-python.md)
+* [How to Throw Errors and Notifications](the-how-to-cookbook/how-to-throw-errors-and-notifications.md)
+* [How to Write a Cron Job (Scheduled Action)](the-how-to-cookbook/how-to-write-a-cron-job-scheduled-action.md)
+* [How to Handle External Modules](the-how-to-cookbook/how-to-handle-external-modules.md)
+
+## 🏗️ REAL-WORLD BLUEPRINTS
+
+* [E-commerce Synchronization Boilerplate](real-world-blueprints/e-commerce-synchronization-boilerplate.md)
+* [Shipping & Courier API Integration](real-world-blueprints/shipping-and-courier-api-integration.md)
+* [Custom PDF Report Template](real-world-blueprints/custom-pdf-report-template.md)
+
+## 📝 CODING STANDARDS & HYGIENE
+
+* [Directory & File Structure](coding-standards-and-hygiene/directory-and-file-structure.md)
+* [Naming Conventions](coding-standards-and-hygiene/naming-conventions.md)
+
 ## Getting Started
 
 * [Environment & Setup](getting-started/environment-and-setup.md)
