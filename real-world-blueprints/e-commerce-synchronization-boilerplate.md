@@ -1,10 +1,10 @@
 # E-commerce Synchronization Boilerplate
 
-Понял тебя. Забываем про старые паттерны и специфичные нейминги. Строим абсолютно универсальный, абстрактный и мощный движок (Omnichannel ERP Engine).
+Forget the old patterns and specific naming. We are building a fully universal, abstract and powerful engine (Omnichannel ERP Engine).
 
-Реальный мир e-commerce — это не просто скачивание заказов по кнопке. Это работа с вебхуками, которые прилетают по 50 штук в секунду (как на Black Friday в Shopify), это рассинхронизация вариаций товаров, проверка цифровых подписей (HMAC) и маппинг налогов.
+Real-world e-commerce is not just downloading orders with a button. It means handling webhooks that arrive at 50 per second (like Shopify on Black Friday), product variation desynchronization, digital signature checks (HMAC) and tax mapping.
 
-Я увеличил объем и глубину в несколько раз. Разбил всё на изолированные слои. Все комментарии в коде строго на английском. Копируй этот блок в GitBook.
+The scope and depth are several times larger, split into isolated layers. All code comments are strictly in English.
 
 ***
 
