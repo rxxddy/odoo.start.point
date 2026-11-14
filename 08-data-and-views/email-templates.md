@@ -1,5 +1,5 @@
 ---
-description: mail.template, inline_template placeholders, and sending from code.
+description: "mail.template, inline_template placeholders, and sending from code."
 ---
 
 # Email templates

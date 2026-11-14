@@ -1,5 +1,5 @@
 ---
-description: From-source install, odoo.conf, odoo-bin, and a clean dev setup.
+description: "From-source install, odoo.conf, odoo-bin, and a clean dev setup."
 ---
 
 # Installing and running

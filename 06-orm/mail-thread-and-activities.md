@@ -1,5 +1,5 @@
 ---
-description: Chatter, tracking, followers, and scheduled activities.
+description: "Chatter, tracking, followers, and scheduled activities."
 ---
 
 # Mail thread and activities

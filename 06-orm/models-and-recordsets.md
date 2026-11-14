@@ -1,5 +1,5 @@
 ---
-description: Model types, recordsets, and the idioms for working with them.
+description: "Model types, recordsets, and the idioms for working with them."
 ---
 
 # Models and recordsets

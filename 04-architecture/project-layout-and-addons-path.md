@@ -1,5 +1,5 @@
 ---
-description: How custom code is organised and found.
+description: "How custom code is organised and found."
 ---
 
 # Project layout and addons path

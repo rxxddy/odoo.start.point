@@ -1,5 +1,5 @@
 ---
-description: Standard Odoo 18 models and the fields developers touch most.
+description: "Standard Odoo 18 models and the fields developers touch most."
 ---
 
 # Model catalogue

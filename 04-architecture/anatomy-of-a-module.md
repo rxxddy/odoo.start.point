@@ -1,5 +1,5 @@
 ---
-description: Manifest, folders, load order, and what each file is for.
+description: "Manifest, folders, load order, and what each file is for."
 ---
 
 # Anatomy of a module

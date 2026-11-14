@@ -1,5 +1,5 @@
 ---
-description: How to find and replace deprecated APIs before they are removed.
+description: "How to find and replace deprecated APIs before they are removed."
 ---
 
 # Deprecations

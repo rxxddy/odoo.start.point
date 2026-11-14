@@ -1,5 +1,5 @@
 ---
-description: One-off scripts against a database, locally and on a server.
+description: "One-off scripts against a database, locally and on a server."
 ---
 
 # Running scripts

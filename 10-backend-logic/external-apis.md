@@ -1,5 +1,5 @@
 ---
-description: HTTP clients, timeouts, retries, and error mapping.
+description: "HTTP clients, timeouts, retries, and error mapping."
 ---
 
 # Consuming external APIs

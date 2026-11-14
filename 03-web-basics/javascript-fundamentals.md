@@ -1,5 +1,5 @@
 ---
-description: Modern JavaScript: variables, functions, modules, classes.
+description: "Modern JavaScript: variables, functions, modules, classes."
 ---
 
 # JavaScript fundamentals

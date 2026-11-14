@@ -1,5 +1,5 @@
 ---
-description: Report actions, QWeb PDF templates, paper formats, and wkhtmltopdf.
+description: "Report actions, QWeb PDF templates, paper formats, and wkhtmltopdf."
 ---
 
 # PDF reports

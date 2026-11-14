@@ -1,5 +1,5 @@
 ---
-description: Adding fields, buttons, and rules to sales and invoicing.
+description: "Adding fields, buttons, and rules to sales and invoicing."
 ---
 
 # Extending a standard workflow

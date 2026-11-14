@@ -1,5 +1,5 @@
 ---
-description: Layers of access control and how they combine.
+description: "Layers of access control and how they combine."
 ---
 
 # The security model

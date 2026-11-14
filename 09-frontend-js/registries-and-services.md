@@ -1,5 +1,5 @@
 ---
-description: Registries as the extension mechanism of the web client, services as shared state, and the built-in services you will call every day.
+description: "Registries as the extension mechanism of the web client, services as shared state, and the built-in services you will call every day."
 ---
 
 # Registries and services

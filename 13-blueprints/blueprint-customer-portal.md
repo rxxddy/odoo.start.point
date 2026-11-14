@@ -1,5 +1,5 @@
 ---
-description: Customer-facing pages with correct access control.
+description: "Customer-facing pages with correct access control."
 ---
 
 # A portal feature

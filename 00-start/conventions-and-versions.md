@@ -1,5 +1,5 @@
 ---
-description: Notation used throughout, and how version differences from Odoo 16 to 20 are marked.
+description: "Notation used throughout, and how version differences from Odoo 16 to 20 are marked."
 ---
 
 # Conventions and version notes

@@ -1,5 +1,5 @@
 ---
-description: Routes, authentication types, request handling, and safe controller code.
+description: "Routes, authentication types, request handling, and safe controller code."
 ---
 
 # HTTP controllers

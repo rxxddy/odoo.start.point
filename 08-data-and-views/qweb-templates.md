@@ -1,5 +1,5 @@
 ---
-description: QWeb directives, t-call, t-set, and escaping.
+description: "QWeb directives, t-call, t-set, and escaping."
 ---
 
 # QWeb templates

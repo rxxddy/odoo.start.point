@@ -1,5 +1,5 @@
 ---
-description: Extending standard views without copying them: inherit_id, xpath, positions, priorities.
+description: "Extending standard views without copying them: inherit_id, xpath, positions, priorities."
 ---
 
 # View inheritance and XPath

@@ -1,5 +1,5 @@
 ---
-description: Every key accepted in __manifest__.py, with defaults.
+description: "Every key accepted in __manifest__.py, with defaults."
 ---
 
 # Manifest reference

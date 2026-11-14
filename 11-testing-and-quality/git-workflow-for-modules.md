@@ -1,5 +1,5 @@
 ---
-description: Branches, commits, and moving changes between environments.
+description: "Branches, commits, and moving changes between environments."
 ---
 
 # Git workflow for modules

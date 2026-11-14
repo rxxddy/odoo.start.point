@@ -1,5 +1,5 @@
 ---
-description: Promises, async/await, events, and manipulating the page.
+description: "Promises, async/await, events, and manipulating the page."
 ---
 
 # Async and the DOM

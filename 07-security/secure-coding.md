@@ -1,5 +1,5 @@
 ---
-description: Injection, sudo misuse, exposing controllers, and secrets.
+description: "Injection, sudo misuse, exposing controllers, and secrets."
 ---
 
 # Secure coding

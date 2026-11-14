@@ -1,5 +1,5 @@
 ---
-description: The web client, its three JavaScript worlds, how it boots, and the toolbox for reading it.
+description: "The web client, its three JavaScript worlds, how it boots, and the toolbox for reading it."
 ---
 
 # Frontend overview

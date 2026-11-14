@@ -1,5 +1,5 @@
 ---
-description: depends, stored vs not, inverse, search, and dependency pitfalls.
+description: "depends, stored vs not, inverse, search, and dependency pitfalls."
 ---
 
 # Computed and related fields

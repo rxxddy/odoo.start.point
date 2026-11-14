@@ -1,5 +1,5 @@
 ---
-description: Breakpoints, stepping, and attaching an IDE.
+description: "Breakpoints, stepping, and attaching an IDE."
 ---
 
 # Debugging with pdb and debugpy

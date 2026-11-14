@@ -1,5 +1,5 @@
 ---
-description: Kanban architecture, QWeb cards, and progress bars.
+description: "Kanban architecture, QWeb cards, and progress bars."
 ---
 
 # Kanban views

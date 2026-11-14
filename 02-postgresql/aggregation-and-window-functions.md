@@ -1,5 +1,5 @@
 ---
-description: GROUP BY, HAVING, and window functions for reporting queries.
+description: "GROUP BY, HAVING, and window functions for reporting queries."
 ---
 
 # Aggregation and window functions

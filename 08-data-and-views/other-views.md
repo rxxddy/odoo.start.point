@@ -1,5 +1,5 @@
 ---
-description: Pivot, graph, calendar, gantt, activity, and map views.
+description: "Pivot, graph, calendar, gantt, activity, and map views."
 ---
 
 # Other views

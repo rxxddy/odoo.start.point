@@ -1,5 +1,5 @@
 ---
-description: Reading rows with SELECT: filtering, NULL logic, sorting, dates, strings, subqueries, and CTEs.
+description: "Reading rows with SELECT: filtering, NULL logic, sorting, dates, strings, subqueries, and CTEs."
 ---
 
 # SELECT, FROM, WHERE

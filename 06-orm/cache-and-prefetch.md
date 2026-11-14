@@ -1,5 +1,5 @@
 ---
-description: Why N+1 happens and how the ORM avoids it.
+description: "Why N+1 happens and how the ORM avoids it."
 ---
 
 # Cache and prefetch

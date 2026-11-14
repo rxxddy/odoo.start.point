@@ -1,5 +1,5 @@
 ---
-description: What a future maintainer needs to find.
+description: "What a future maintainer needs to find."
 ---
 
 # Documenting your modules

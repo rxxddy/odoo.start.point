@@ -1,5 +1,5 @@
 ---
-description: Groups, categories, implied groups and ir.model.access.
+description: "Groups, categories, implied groups and ir.model.access."
 ---
 
 # Groups and access rights

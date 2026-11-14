@@ -1,5 +1,5 @@
 ---
-description: Changing data with INSERT, UPDATE, DELETE, and RETURNING, and doing it safely next to Odoo.
+description: "Changing data with INSERT, UPDATE, DELETE, and RETURNING, and doing it safely next to Odoo."
 ---
 
 # INSERT, UPDATE, DELETE

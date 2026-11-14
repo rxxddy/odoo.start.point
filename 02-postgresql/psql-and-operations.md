@@ -1,5 +1,5 @@
 ---
-description: Connecting, dumping, restoring, and the diagnostic queries worth keeping.
+description: "Connecting, dumping, restoring, and the diagnostic queries worth keeping."
 ---
 
 # psql and operations

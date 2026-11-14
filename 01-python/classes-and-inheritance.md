@@ -1,5 +1,5 @@
 ---
-description: Objects, methods, MRO, and why Odoo inheritance works the way it does.
+description: "Objects, methods, MRO, and why Odoo inheritance works the way it does."
 ---
 
 # Classes and inheritance

@@ -1,5 +1,5 @@
 ---
-description: Modeling workflows with a state field and guarded transitions.
+description: "Modeling workflows with a state field and guarded transitions."
 ---
 
 # State machines

@@ -1,5 +1,5 @@
 ---
-description: Reading a query plan and deciding when an index helps.
+description: "Reading a query plan and deciding when an index helps."
 ---
 
 # Indexes and EXPLAIN

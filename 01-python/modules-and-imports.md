@@ -1,5 +1,5 @@
 ---
-description: Packages, __init__.py, import order, and circular imports.
+description: "Packages, __init__.py, import order, and circular imports."
 ---
 
 # Modules and imports

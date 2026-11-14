@@ -1,5 +1,5 @@
 ---
-description: Numbers, strings, booleans, None, truthiness, and the traps in each.
+description: "Numbers, strings, booleans, None, truthiness, and the traps in each."
 ---
 
 # Values and types

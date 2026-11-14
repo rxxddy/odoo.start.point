@@ -1,5 +1,5 @@
 ---
-description: The four containers, when to use which, and how Odoo uses them.
+description: "The four containers, when to use which, and how Odoo uses them."
 ---
 
 # Lists, tuples, dicts, sets

@@ -1,5 +1,5 @@
 ---
-description: Move a real database to a new Odoo version, safely.
+description: "Move a real database to a new Odoo version, safely."
 ---
 
 # Upgrading a database

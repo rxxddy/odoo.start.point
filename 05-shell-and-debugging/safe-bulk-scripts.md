@@ -1,5 +1,5 @@
 ---
-description: Dry runs, batching, savepoints, and scripts you can trust on production data.
+description: "Dry runs, batching, savepoints, and scripts you can trust on production data."
 ---
 
 # Safe bulk scripts

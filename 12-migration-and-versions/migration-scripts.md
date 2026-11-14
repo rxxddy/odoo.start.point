@@ -1,5 +1,5 @@
 ---
-description: Pre, post and end scripts that move data between module versions.
+description: "Pre, post and end scripts that move data between module versions."
 ---
 
 # Migration scripts

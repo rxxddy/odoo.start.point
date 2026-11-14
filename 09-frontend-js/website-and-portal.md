@@ -1,5 +1,5 @@
 ---
-description: Customer portal pages, public widgets, public OWL components and Odoo 20 interactions: the JavaScript and QWeb that run for visitors and portal users.
+description: "Customer portal pages, public widgets, public OWL components and Odoo 20 interactions: the JavaScript and QWeb that run for visitors and portal users."
 ---
 
 # Website and portal

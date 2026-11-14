@@ -1,5 +1,5 @@
 ---
-description: Debug mode, view editor, technical menu, and metadata inspection.
+description: "Debug mode, view editor, technical menu, and metadata inspection."
 ---
 
 # Developer mode and tools

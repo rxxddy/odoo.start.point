@@ -1,5 +1,5 @@
 ---
-description: Verification, idempotency, and fast acknowledgement.
+description: "Verification, idempotency, and fast acknowledgement."
 ---
 
 # Receiving webhooks

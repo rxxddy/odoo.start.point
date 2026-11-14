@@ -1,5 +1,5 @@
 ---
-description: Terms used in the book.
+description: "Terms used in the book."
 ---
 
 # Glossary

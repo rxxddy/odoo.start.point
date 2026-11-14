@@ -1,5 +1,5 @@
 ---
-description: XML-RPC and JSON-RPC from outside Odoo, with API keys.
+description: "XML-RPC and JSON-RPC from outside Odoo, with API keys."
 ---
 
 # Remote scripts over RPC

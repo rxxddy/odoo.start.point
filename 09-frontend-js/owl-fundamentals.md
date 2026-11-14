@@ -1,5 +1,5 @@
 ---
-description: Components, templates, state, props, hooks, slots and lifecycle in OWL 2, as shipped with Odoo 17 and 18.
+description: "Components, templates, state, props, hooks, slots and lifecycle in OWL 2, as shipped with Odoo 17 and 18."
 ---
 
 # OWL fundamentals

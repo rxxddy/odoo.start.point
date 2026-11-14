@@ -1,5 +1,5 @@
 ---
-description: Mapping tables, change detection, and avoiding infinite loops.
+description: "Mapping tables, change detection, and avoiding infinite loops."
 ---
 
 # Bidirectional synchronisation

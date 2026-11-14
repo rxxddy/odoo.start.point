@@ -1,5 +1,5 @@
 ---
-description: Building collections and streaming large data without loading it all.
+description: "Building collections and streaming large data without loading it all."
 ---
 
 # Comprehensions and generators

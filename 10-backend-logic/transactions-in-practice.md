@@ -1,5 +1,5 @@
 ---
-description: Savepoints, commits, rollbacks, and what breaks when you mix them.
+description: "Savepoints, commits, rollbacks, and what breaks when you mix them."
 ---
 
 # Transactions in practice

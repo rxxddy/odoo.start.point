@@ -1,5 +1,5 @@
 ---
-description: Company fields, rules, and the mistakes that leak data.
+description: "Company fields, rules, and the mistakes that leak data."
 ---
 
 # Multi-company

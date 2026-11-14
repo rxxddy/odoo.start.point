@@ -1,5 +1,5 @@
 ---
-description: Columns, editable lists, decorations, optional columns, and grouping.
+description: "Columns, editable lists, decorations, optional columns, and grouping."
 ---
 
 # List views

@@ -1,5 +1,5 @@
 ---
-description: Compact tables for daily use.
+description: "Compact tables for daily use."
 ---
 
 # ORM cheat sheet

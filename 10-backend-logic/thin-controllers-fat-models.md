@@ -1,5 +1,5 @@
 ---
-description: Where business logic belongs and why.
+description: "Where business logic belongs and why."
 ---
 
 # Thin controllers, fat models

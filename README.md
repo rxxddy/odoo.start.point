@@ -1,5 +1,5 @@
 ---
-description: A self-contained handbook for building Odoo modules, from Python and SQL basics to production backend logic.
+description: "A self-contained handbook for building Odoo modules, from Python and SQL basics to production backend logic."
 ---
 
 # Odoo Developer Handbook

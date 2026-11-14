@@ -1,5 +1,5 @@
 ---
-description: Logger names, levels, and reading logs when something is wrong.
+description: "Logger names, levels, and reading logs when something is wrong."
 ---
 
 # Logging

@@ -1,5 +1,5 @@
 ---
-description: Inner, left, and the join patterns the Odoo schema needs.
+description: "Inner, left, and the join patterns the Odoo schema needs."
 ---
 
 # Joins

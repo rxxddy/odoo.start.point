@@ -1,5 +1,5 @@
 ---
-description: try/except, raising, custom exceptions, and what Odoo does with them.
+description: "try/except, raising, custom exceptions, and what Odoo does with them."
 ---
 
 # Errors and exceptions

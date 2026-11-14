@@ -1,5 +1,5 @@
 ---
-description: Tables, keys, types, and constraints, with the small library schema the rest of this part uses.
+description: "Tables, keys, types, and constraints, with the small library schema the rest of this part uses."
 ---
 
 # Relational basics

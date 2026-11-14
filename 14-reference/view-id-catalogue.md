@@ -1,5 +1,5 @@
 ---
-description: Standard Odoo 18 view external IDs to use as inherit_id.
+description: "Standard Odoo 18 view external IDs to use as inherit_id."
 ---
 
 # View ID catalogue

@@ -1,5 +1,5 @@
 ---
-description: Arguments, defaults, *args, **kwargs, return values, scope.
+description: "Arguments, defaults, *args, **kwargs, return values, scope."
 ---
 
 # Functions

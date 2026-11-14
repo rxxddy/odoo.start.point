@@ -1,5 +1,5 @@
 ---
-description: Every odoo-bin switch you will actually use.
+description: "Every odoo-bin switch you will actually use."
 ---
 
 # Command line reference

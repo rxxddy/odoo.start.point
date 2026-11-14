@@ -1,5 +1,5 @@
 ---
-description: Shell, odoo-bin, psql, and git on one page.
+description: "Shell, odoo-bin, psql, and git on one page."
 ---
 
 # Command cheat sheet

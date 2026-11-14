@@ -1,5 +1,5 @@
 ---
-description: ir.model.data, env.ref, and stable identifiers.
+description: "ir.model.data, env.ref, and stable identifiers."
 ---
 
 # XML IDs and references

@@ -1,5 +1,5 @@
 ---
-description: The built-in profiler and what its output tells you.
+description: "The built-in profiler and what its output tells you."
 ---
 
 # Profiling

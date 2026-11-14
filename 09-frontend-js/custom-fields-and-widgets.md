@@ -1,5 +1,5 @@
 ---
-description: Writing field widgets and view widgets for Odoo 17 and 18 forms, lists and kanbans, with complete working examples.
+description: "Writing field widgets and view widgets for Odoo 17 and 18 forms, lists and kanbans, with complete working examples."
 ---
 
 # Custom field widgets

@@ -1,5 +1,5 @@
 ---
-description: Requests, status codes, headers, and JSON as the common language.
+description: "Requests, status codes, headers, and JSON as the common language."
 ---
 
 # HTTP and JSON

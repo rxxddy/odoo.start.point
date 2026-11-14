@@ -1,5 +1,5 @@
 ---
-description: Cron-driven queues and splitting work into batches.
+description: "Cron-driven queues and splitting work into batches."
 ---
 
 # Queues and background work

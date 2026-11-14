@@ -1,5 +1,5 @@
 ---
-description: Every field type, its attributes, and when to choose it.
+description: "Every field type, its attributes, and when to choose it."
 ---
 
 # Fields reference

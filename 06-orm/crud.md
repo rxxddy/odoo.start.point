@@ -1,5 +1,5 @@
 ---
-description: The four operations, batch behaviour, and the Command API.
+description: "The four operations, batch behaviour, and the Command API."
 ---
 
 # Create, read, write, unlink

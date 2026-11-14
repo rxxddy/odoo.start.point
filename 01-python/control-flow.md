@@ -1,5 +1,5 @@
 ---
-description: Conditions, loops, and the idioms that replace most loops.
+description: "Conditions, loops, and the idioms that replace most loops."
 ---
 
 # Control flow

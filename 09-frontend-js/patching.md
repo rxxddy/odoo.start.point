@@ -1,5 +1,5 @@
 ---
-description: Changing existing JavaScript and template behaviour with patch() and template inheritance, safely, and knowing when not to.
+description: "Changing existing JavaScript and template behaviour with patch() and template inheritance, safely, and knowing when not to."
 ---
 
 # Patching standard code

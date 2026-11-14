@@ -1,5 +1,5 @@
 ---
-description: Testing the frontend: tours that drive a real browser, hoot unit tests for components and fields, and how to run both locally and in CI.
+description: "Testing the frontend: tours that drive a real browser, hoot unit tests for components and fields, and how to run both locally and in CI."
 ---
 
 # Tours and frontend tests

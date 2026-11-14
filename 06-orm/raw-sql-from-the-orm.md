@@ -1,5 +1,5 @@
 ---
-description: The SQL helper, flush and invalidate, and when raw SQL is justified.
+description: "The SQL helper, flush and invalidate, and when raw SQL is justified."
 ---
 
 # Raw SQL from the ORM

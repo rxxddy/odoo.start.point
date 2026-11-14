@@ -1,5 +1,5 @@
 ---
-description: Starting it, the env object, committing, and using it as a lab.
+description: "Starting it, the env object, committing, and using it as a lab."
 ---
 
 # The Odoo shell

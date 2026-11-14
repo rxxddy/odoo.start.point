@@ -1,5 +1,5 @@
 ---
-description: Row locks, FOR UPDATE, SKIP LOCKED, advisory locks, and deadlocks.
+description: "Row locks, FOR UPDATE, SKIP LOCKED, advisory locks, and deadlocks."
 ---
 
 # Locks

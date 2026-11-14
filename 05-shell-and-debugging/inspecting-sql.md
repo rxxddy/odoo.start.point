@@ -1,5 +1,5 @@
 ---
-description: Logging queries, counting them, and finding the slow ones.
+description: "Logging queries, counting them, and finding the slow ones."
 ---
 
 # Inspecting SQL

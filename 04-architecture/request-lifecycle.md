@@ -1,5 +1,5 @@
 ---
-description: From HTTP request to database commit.
+description: "From HTTP request to database commit."
 ---
 
 # Request lifecycle

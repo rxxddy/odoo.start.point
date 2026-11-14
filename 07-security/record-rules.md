@@ -1,5 +1,5 @@
 ---
-description: ir.rule domains, global vs group rules, and what the ORM does with them.
+description: "ir.rule domains, global vs group rules, and what the ORM does with them."
 ---
 
 # Record rules

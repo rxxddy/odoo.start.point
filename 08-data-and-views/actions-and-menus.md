@@ -1,5 +1,5 @@
 ---
-description: Window, URL, server and client actions, plus menus.
+description: "Window, URL, server and client actions, plus menus."
 ---
 
 # Actions and menus

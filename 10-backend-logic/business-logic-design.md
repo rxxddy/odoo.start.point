@@ -1,5 +1,5 @@
 ---
-description: Designing business rules that survive imports, RPC, crons and other modules.
+description: "Designing business rules that survive imports, RPC, crons and other modules."
 ---
 
 # Business logic design

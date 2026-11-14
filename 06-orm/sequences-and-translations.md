@@ -1,5 +1,5 @@
 ---
-description: Numbering, ir.sequence, and translatable fields.
+description: "Numbering, ir.sequence, and translatable fields."
 ---
 
 # Sequences and translations

@@ -1,5 +1,5 @@
 ---
-description: create, write, unlink, copy; the batch signatures and where overrides go wrong.
+description: "create, write, unlink, copy; the batch signatures and where overrides go wrong."
 ---
 
 # Overriding CRUD methods

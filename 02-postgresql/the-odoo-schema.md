@@ -1,5 +1,5 @@
 ---
-description: How Odoo turns models into tables, columns, constraints, and relation tables, and where its own metadata lives.
+description: "How Odoo turns models into tables, columns, constraints, and relation tables, and where its own metadata lives."
 ---
 
 # The Odoo schema

@@ -1,5 +1,5 @@
 ---
-description: Branches, builds, staging, logs, and the shell on a hosted platform.
+description: "Branches, builds, staging, logs, and the shell on a hosted platform."
 ---
 
 # Odoo.sh and deployment

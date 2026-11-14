@@ -1,5 +1,5 @@
 ---
-description: Layout, buttons, statusbar, notebooks, and smart buttons.
+description: "Layout, buttons, statusbar, notebooks, and smart buttons."
 ---
 
 # Form views

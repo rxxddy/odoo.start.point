@@ -1,5 +1,5 @@
 ---
-description: Domain syntax, operators, and performance of search.
+description: "Domain syntax, operators, and performance of search."
 ---
 
 # Search and domains

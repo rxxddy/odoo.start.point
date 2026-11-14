@@ -1,5 +1,5 @@
 ---
-description: Fields, filters, group by, and search defaults.
+description: "Fields, filters, group by, and search defaults."
 ---
 
 # Search views

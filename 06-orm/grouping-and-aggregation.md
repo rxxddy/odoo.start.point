@@ -1,5 +1,5 @@
 ---
-description: read_group, _read_group, and aggregate queries.
+description: "read_group, _read_group, and aggregate queries."
 ---
 
 # Grouping and aggregation

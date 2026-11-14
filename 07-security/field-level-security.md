@@ -1,5 +1,5 @@
 ---
-description: Field groups and hiding data properly.
+description: "Field groups and hiding data properly."
 ---
 
 # Field-level security

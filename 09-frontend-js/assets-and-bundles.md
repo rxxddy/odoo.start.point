@@ -1,5 +1,5 @@
 ---
-description: How JavaScript, CSS and templates reach the browser, and how to debug it when they do not.
+description: "How JavaScript, CSS and templates reach the browser, and how to debug it when they do not."
 ---
 
 # Assets and bundles

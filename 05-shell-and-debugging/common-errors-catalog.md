@@ -1,5 +1,5 @@
 ---
-description: The errors you will meet, what causes them, and the fix.
+description: "The errors you will meet, what causes them, and the fix."
 ---
 
 # Common errors catalog

@@ -1,5 +1,5 @@
 ---
-description: Race conditions, row locks, advisory locks, and idempotency.
+description: "Race conditions, row locks, advisory locks, and idempotency."
 ---
 
 # Concurrency

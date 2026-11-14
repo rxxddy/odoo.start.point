@@ -1,5 +1,5 @@
 ---
-description: Measuring first, then batching, indexing, and caching.
+description: "Measuring first, then batching, indexing, and caching."
 ---
 
 # Performance

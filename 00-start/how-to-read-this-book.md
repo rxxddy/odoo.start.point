@@ -1,5 +1,5 @@
 ---
-description: Reading paths, prerequisites, and how the chapters are laid out.
+description: "Reading paths, prerequisites, and how the chapters are laid out."
 ---
 
 # How to read this book

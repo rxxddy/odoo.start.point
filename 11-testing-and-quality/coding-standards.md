@@ -1,5 +1,5 @@
 ---
-description: Naming, structure, and review checklists.
+description: "Naming, structure, and review checklists."
 ---
 
 # Coding standards

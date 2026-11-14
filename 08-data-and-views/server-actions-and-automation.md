@@ -1,5 +1,5 @@
 ---
-description: ir.actions.server types and base.automation triggers.
+description: "ir.actions.server types and base.automation triggers."
 ---
 
 # Server actions and automation

@@ -1,5 +1,5 @@
 ---
-description: Syntax, escaping, and the parts of XML Odoo files rely on.
+description: "Syntax, escaping, and the parts of XML Odoo files rely on."
 ---
 
 # XML for Odoo

@@ -1,5 +1,5 @@
 ---
-description: What changes in the Odoo 20 web client with OWL 3, and how to port 17/18 frontend code.
+description: "What changes in the Odoo 20 web client with OWL 3, and how to port 17/18 frontend code."
 ---
 
 # OWL 3 and the Odoo 20 web client

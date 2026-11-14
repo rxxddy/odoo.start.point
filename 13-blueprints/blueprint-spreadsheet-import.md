@@ -1,5 +1,5 @@
 ---
-description: Validating and loading a customer file with a preview step.
+description: "Validating and loading a customer file with a preview step."
 ---
 
 # Spreadsheet import

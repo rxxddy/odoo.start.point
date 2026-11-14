@@ -1,5 +1,5 @@
 ---
-description: Decimal, rounding, UTC storage, and local-time conversion.
+description: "Decimal, rounding, UTC storage, and local-time conversion."
 ---
 
 # Money, dates, and time zones

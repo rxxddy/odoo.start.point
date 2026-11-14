@@ -1,5 +1,5 @@
 ---
-description: Interpreter, virtual environments, running scripts, the REPL.
+description: "Interpreter, virtual environments, running scripts, the REPL."
 ---
 
 # Setup and running code

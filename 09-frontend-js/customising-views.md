@@ -1,5 +1,5 @@
 ---
-description: Changing list, form and kanban views with js_class, subclassed controllers and renderers, and button templates, without patching the core.
+description: "Changing list, form and kanban views with js_class, subclassed controllers and renderers, and button templates, without patching the core."
 ---
 
 # Customising views

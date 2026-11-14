@@ -1,5 +1,5 @@
 ---
-description: How to find the real cause in a long stack.
+description: "How to find the real cause in a long stack."
 ---
 
 # Reading tracebacks

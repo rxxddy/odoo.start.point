@@ -1,5 +1,5 @@
 ---
-description: Input, processing, and output as one feature.
+description: "Input, processing, and output as one feature."
 ---
 
 # A wizard with a PDF report

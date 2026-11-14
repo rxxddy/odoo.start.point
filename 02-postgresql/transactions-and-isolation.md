@@ -1,5 +1,5 @@
 ---
-description: How PostgreSQL isolates concurrent work, why Odoo runs in REPEATABLE READ, and what that means for your code.
+description: "How PostgreSQL isolates concurrent work, why Odoo runs in REPEATABLE READ, and what that means for your code."
 ---
 
 # Transactions and isolation

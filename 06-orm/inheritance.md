@@ -1,5 +1,5 @@
 ---
-description: Classical, extension, and delegation, with the schema each produces.
+description: "Classical, extension, and delegation, with the schema each produces."
 ---
 
 # Inheritance

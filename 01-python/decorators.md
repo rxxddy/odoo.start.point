@@ -1,5 +1,5 @@
 ---
-description: How @api.depends, @api.model and friends are built, and writing your own.
+description: "How @api.depends, @api.model and friends are built, and writing your own."
 ---
 
 # Decorators

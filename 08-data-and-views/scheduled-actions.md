@@ -1,5 +1,5 @@
 ---
-description: ir.cron records, intervals, and running jobs safely.
+description: "ir.cron records, intervals, and running jobs safely."
 ---
 
 # Scheduled actions

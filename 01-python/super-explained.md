@@ -1,5 +1,5 @@
 ---
-description: What super() really resolves to, and the mistakes that break override chains.
+description: "What super() really resolves to, and the mistakes that break override chains."
 ---
 
 # super() explained

@@ -1,5 +1,5 @@
 ---
-description: Testing controllers and the browser.
+description: "Testing controllers and the browser."
 ---
 
 # HTTP and tour tests

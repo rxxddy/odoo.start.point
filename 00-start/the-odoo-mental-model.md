@@ -1,5 +1,5 @@
 ---
-description: One page that explains how Odoo fits together before you write anything.
+description: "One page that explains how Odoo fits together before you write anything."
 ---
 
 # The Odoo mental model

@@ -1,5 +1,5 @@
 ---
-description: Port a custom module to a new Odoo version.
+description: "Port a custom module to a new Odoo version."
 ---
 
 # Upgrading a module

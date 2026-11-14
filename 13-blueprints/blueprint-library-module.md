@@ -1,5 +1,5 @@
 ---
-description: Models, security, views, menus, tests, step by step.
+description: "Models, security, views, menus, tests, step by step."
 ---
 
 # A complete module from scratch

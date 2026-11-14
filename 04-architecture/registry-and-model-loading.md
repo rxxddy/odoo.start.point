@@ -1,5 +1,5 @@
 ---
-description: How classes become one model, and what happens at startup.
+description: "How classes become one model, and what happens at startup."
 ---
 
 # Registry and model loading
