@@ -1,2 +1,0 @@
-# Consuming External APIs
-

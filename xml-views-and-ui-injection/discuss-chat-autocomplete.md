@@ -1,2 +1,0 @@
-# Discuss Chat Autocomplete
-

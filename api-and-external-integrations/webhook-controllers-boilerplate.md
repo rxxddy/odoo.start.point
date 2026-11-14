@@ -1,2 +1,0 @@
-# Webhook Controllers Boilerplate
-

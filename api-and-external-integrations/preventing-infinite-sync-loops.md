@@ -1,2 +1,0 @@
-# Preventing Infinite Sync Loops
-

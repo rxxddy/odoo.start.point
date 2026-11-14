@@ -1,2 +1,0 @@
-# Recovering from InFailedSqlTransaction
-
