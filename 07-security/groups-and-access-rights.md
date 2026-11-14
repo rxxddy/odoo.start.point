@@ -4,7 +4,7 @@ description: "Defining groups and access rights for a module: groups, implied gr
 
 # Groups and access rights
 
-Groups answer "who", access rights (ACLs) answer "what on which model". This chapter defines both for the `library` module in the Odoo 18 form, shows how Odoo 20 changed the group definition, explains how rights combine and which user types exist, and ends with the checks you write in code.
+Groups answer "who", access rights (ACLs) answer "what on which model".
 
 Checked against `odoo/addons/base/models/res_users.py`, `ir_model.py`, `security/base_groups.xml` (18) and `models/res_groups.py`, `security/base_groups.xml`, `addons/hr/security/hr_security.xml` (20).
 

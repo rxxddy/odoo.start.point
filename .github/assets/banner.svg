@@ -35,7 +35,7 @@
   <text x="64" y="112" font-family="'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="58" font-weight="700" fill="#ffffff">Odoo Developer Handbook</text>
   <rect x="64" y="130" width="0" height="5" rx="2.5" fill="url(#accent)"><animate attributeName="width" values="0;420;420" keyTimes="0;0.25;1" dur="1.6s" fill="freeze"/></rect>
   <text x="64" y="176" font-family="'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="24" fill="#d8d3ee">From Python and SQL to production Odoo modules.</text>
-  <text x="64" y="208" font-family="'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="19" fill="#9d97bd">Odoo 16 to 20  |  checked against the real source  |  works offline</text>
+  <text x="64" y="208" font-family="'Segoe UI',Inter,Helvetica,Arial,sans-serif" font-size="19" fill="#9d97bd">Odoo 16 to 20  |  Python, SQL, ORM, views, OWL, security</text>
 
   <rect x="48" y="226" width="760" height="54" rx="10" fill="#0e1020" opacity="0.65"/>
   <g font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="21">

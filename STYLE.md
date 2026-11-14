@@ -1,34 +1,40 @@
-# Style guide (authoring notes, not part of the book)
+# Writing guide for contributors
 
-Rules every chapter follows. Keep this file out of SUMMARY.md.
+This file is not part of the book and is not listed in `SUMMARY.md`.
 
-## Voice
-- English, written by a senior developer to a colleague. Direct, concrete, no filler.
-- No emojis. No marketing tone. No "In this chapter we will explore". Start with the substance.
-- Say what breaks and why. A rule without its reason is not included.
-- Short paragraphs. Prefer a code block and one sentence over three sentences of description.
-- Avoid stock phrases: "powerful", "seamless", "leverage", "robust", "delve", "it is important to note".
+## Text
 
-## Chapter shape
-1. One-paragraph statement of what the chapter solves.
-2. Core material, with runnable examples.
-3. "Pitfalls" section with real failure modes.
-4. "Versions" section only if behaviour differs between 16 and 20.
-5. Optional "Try it" with a shell or psql command the reader can run.
+- Write in plain English, in the second person where it helps. Give the rule and the reason for it.
+- Start a chapter with the problem it solves. Skip introductions about what the chapter will cover.
+- Keep paragraphs short. A code block and one sentence beat three sentences of description.
+- Say what breaks and why. A rule with no reason does not belong.
+- Use concrete numbers and names instead of adjectives.
+
+## Chapter layout
+
+1. The problem the chapter solves, in a short paragraph.
+2. The material, with examples that run or are marked as fragments.
+3. A "Pitfalls" section with failures that actually happen.
+4. A "Versions" section only where Odoo 16 to 20 differ.
+5. Optional "Try it" exercises with solutions in `<details>`.
 
 ## Code
-- Every example is complete enough to run or clearly marked as a fragment.
-- Model names come from the standard Odoo models, or from the neutral teaching module `library` (`library.book`, `library.loan`). Never from client projects.
-- Names, XML IDs, and fields in standard Odoo are verified against the real source before use. Unverified names are marked in the writing notes, never published.
-- Sensitive data: no company names, domains, credentials, IDs, or client data in any example.
+
+- Examples are complete enough to run, or clearly marked as fragments.
+- Models come from standard Odoo or from the teaching module `library` (`library.book`, `library.loan`). Do not use names from real projects.
+- Check every standard name (model, field, XML id, method signature) in the Odoo source before using it. State the version you checked.
+- No company names, domains, credentials, ids or client data in examples.
+- A command that changes data comes after the read-only command that shows what it will change.
 
 ## Versions
-- Written for the newest verified version, with differences marked by a "Versions" hint:
-  `{% hint style="info" %}` for notes, `{% hint style="danger" %}` for breaking changes.
-- Odoo 20 content is added only after it can be checked; until then it is not stated.
+
+- Write for Odoo 18 and mark differences for 16, 17 and 20 in a version note.
+- Use `{% hint style="info" %}` for notes and `{% hint style="danger" %}` for breaking changes.
+- If a point could not be checked in a version, say so instead of guessing.
 
 ## Formatting
-- GitBook hints: info (context), warning (pitfall), danger (data loss or breaking change), success (recommended practice).
+
+- Hints: info for context, warning for pitfalls, danger for data loss or breaking changes, success for recommended practice.
 - Tabs only for per-version or per-OS variants.
-- Headings: one H1 per page, H2 for sections, H3 sparingly.
-- Commands that change data are always preceded by their read-only counterpart.
+- One H1 per page, H2 for sections, H3 sparingly.
+- Front matter `description` values are quoted strings, because an unquoted colon breaks the GitBook import.

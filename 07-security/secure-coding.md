@@ -4,7 +4,7 @@ description: "The mistakes that turn a custom module into a vulnerability: SQL b
 
 # Secure coding
 
-The ORM's three access layers protect you only while your code goes through them. Custom modules leak data in a handful of recurring ways: a SQL string built with formatting, a `sudo()` that returns what rules were hiding, a controller route that trusts a parameter, HTML marked safe that came from a user, a token compared with `==`. This chapter lists each failure with the unsafe form, the safe form and the source behind the safe form. It is a checklist you can run on any module before it goes to production.
+The ORM's three access layers protect you only while your code goes through them. Custom modules leak data in a handful of recurring ways: a SQL string built with formatting, a `sudo()` that returns what rules were hiding, a controller route that trusts a parameter, HTML marked safe that came from a user, a token compared with `==`. It is a checklist you can run on any module before it goes to production.
 
 Checked against Odoo 18 (`odoo/tools/sql.py`, `odoo/sql_db.py`, `odoo/api.py`, `odoo/http.py`, `odoo/tools/misc.py`, `odoo/fields.py`, `odoo/tools/mail.py`) and the 20 tree where noted.
 

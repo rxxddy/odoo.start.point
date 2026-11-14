@@ -4,7 +4,7 @@ description: "Registries as the extension mechanism of the web client, services 
 
 # Registries and services
 
-A registry is an ordered key-value store, and nearly every extension point of the web client is one. A service is a long-lived singleton started with the client, registered in the `services` registry. Together they are the reason you can add a field widget, a view, a menu entry or a global behaviour without touching Odoo's files. This chapter covers the registry API, the shapes of the entries you will register, how services are written and started, and the built-in services (`orm`, `action`, `dialog`, `notification`, `user`, `rpc`) with the exact signatures from the Odoo 18 source.
+A registry is an ordered key-value store, and nearly every extension point of the web client is one. A service is a long-lived singleton started with the client, registered in the `services` registry. Together they are the reason you can add a field widget, a view, a menu entry or a global behaviour without touching Odoo's files.
 
 Odoo 20 is mid-way through replacing services with OWL 3 plugins. The service API described here still works there through a bridge; the last section says what changed.
 

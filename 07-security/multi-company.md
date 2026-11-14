@@ -4,7 +4,7 @@ description: "Several companies in one database: the environment's companies, th
 
 # Multi-company
 
-One Odoo database can serve several companies whose data must stay apart: their own invoices, stock, sequences, prices, while sharing users, products and partners where that is useful. Multi-company is not a switch you flip; it is a set of conventions that your models must follow. This chapter explains how the environment tracks companies, the model pattern with `company_id`, the rule that enforces isolation, the `check_company` consistency checks, company-dependent fields (which changed storage in 18), and where `sudo` and cron jobs break everything.
+One Odoo database can serve several companies whose data must stay apart: their own invoices, stock, sequences, prices, while sharing users, products and partners where that is useful. Multi-company is not a switch you flip; it is a set of conventions that your models must follow.
 
 Checked against `odoo/api.py`, `odoo/models.py`, `odoo/fields.py` and `odoo/addons/base/security/base_security.xml` (18).
 

@@ -4,7 +4,7 @@ description: "How JavaScript, CSS and templates reach the browser, and how to de
 
 # Assets and bundles
 
-Front-end files are not loaded because they exist. They are loaded because a manifest `assets` key (or an `ir.asset` record) lists them in a bundle. Forget this and your code is silently absent: no error, no warning, just nothing happening. This chapter covers how a bundle is assembled, every directive, SCSS and variables, lazy loading, caching, and a diagnosis procedure for the day your file does not show up.
+Front-end files are not loaded because they exist. They are loaded because a manifest `assets` key (or an `ir.asset` record) lists them in a bundle. Forget this and your code is silently absent: no error, no warning, just nothing happening.
 
 Checked against the Odoo 18 source (`odoo/addons/base/models/ir_asset.py`, `assetsbundle.py`, `addons/web/__manifest__.py`) and the Odoo 20 tree. Differences are in the Versions section.
 

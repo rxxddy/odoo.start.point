@@ -4,9 +4,9 @@ description: "Components, templates, state, props, hooks, slots and lifecycle in
 
 # OWL fundamentals
 
-OWL is the component framework of the web client. You write a class, an XML template and some hooks; the framework re-renders the component when reactive state changes. This chapter teaches OWL 2 as it ships in Odoo 18 (`owl.js` 2.8.4 in `addons/web/static/lib/owl`). Odoo 20 ships OWL 3, which changes props, state and refs; that is covered in the next chapter, and the differences are flagged here where they bite.
+OWL is the component framework of the web client. You write a class, an XML template and some hooks; the framework re-renders the component when reactive state changes. Odoo 20 ships OWL 3, which changes props, state and refs; that is covered in the next chapter, and the differences are flagged here where they bite.
 
-Everything in the examples uses imports that exist in the Odoo 18 source. The teaching module is `library`.
+Examples target Odoo 18, which ships OWL 2.8.4 (`addons/web/static/lib/owl`), and use the teaching module `library`.
 
 ## Anatomy of a component
 

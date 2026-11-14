@@ -4,9 +4,9 @@ description: "The layers that decide who can see and change what in Odoo, in the
 
 # The security model
 
-Odoo security is not one mechanism. It is five layers stacked on top of each other, each answering a different question, and almost every security bug in a custom module comes from a developer assuming one layer does the work of another. This chapter lays out the layers, shows where each is enforced in the source, explains the superuser and `sudo()`, and gives a decision procedure for "where should this rule live?". The following chapters go deep on each layer.
+Odoo security is not one mechanism. It is five layers stacked on top of each other, each answering a different question, and almost every security bug in a custom module comes from a developer assuming one layer does the work of another. The following chapters go deep on each layer.
 
-Checked against the Odoo 18 source (`odoo/models.py`, `odoo/api.py`, `odoo/addons/base/models/ir_model.py`, `ir_rule.py`, `res_users.py`). Version differences are at the end.
+Checked against the Odoo 18 source (`odoo/models.py`, `odoo/api.py`, `odoo/addons/base/models/ir_model.py`, `ir_rule.py`, `res_users.py`).
 
 ## The five layers
 

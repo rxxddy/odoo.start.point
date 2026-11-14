@@ -148,7 +148,7 @@ from . import wizard
 from . import report
 ```
 
-Points worth reading twice:
+Notes:
 
 - `report_action(docs, data=...)` returns a client action dictionary. The wizard does not render anything itself; it hands the client a URL to fetch the PDF from.
 - The wizard searches once and passes ids. The report must not search again with different criteria, or the PDF and the validation ("no loans match") can disagree.

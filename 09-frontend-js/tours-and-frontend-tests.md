@@ -4,9 +4,9 @@ description: "Testing the frontend: tours that drive a real browser, hoot unit t
 
 # Tours and frontend tests
 
-Frontend code fails in ways Python tests never see: a bundle that does not load, a selector that matches nothing, a widget that works in forms and crashes in lists. Two kinds of test cover this. A **tour** drives a real headless browser through a scenario against a real database. A **hoot unit test** mounts a component or a view against a mocked server in milliseconds. This chapter shows both with complete examples for the `library` module, how to run them, and how to keep them from becoming flaky.
+Frontend code fails in ways Python tests never see: a bundle that does not load, a selector that matches nothing, a widget that works in forms and crashes in lists. Two kinds of test cover this. A **tour** drives a real headless browser through a scenario against a real database. A **hoot unit test** mounts a component or a view against a mocked server in milliseconds.
 
-Verified against the Odoo 18 source (`addons/web_tour`, `addons/web/static/tests`, `addons/web/tests/test_js.py`, `odoo/tests/common.py`). Version notes at the end.
+Verified against the Odoo 18 source (`addons/web_tour`, `addons/web/static/tests`, `addons/web/tests/test_js.py`, `odoo/tests/common.py`).
 
 ## Which test for which question
 
@@ -187,7 +187,7 @@ Tags matter:
 ./odoo-bin -d test_library -i library --test-enable --test-tags /library:TestLibraryTours --stop-after-init
 ```
 
-Tag syntax is `[-][tag][/module][:class][.method]`, so `/library:TestLibraryTours.test_loan_tour` selects one test. 
+Tag syntax is `[-][tag][/module][:class][.method]`, so `/library:TestLibraryTours.test_loan_tour` selects one test.
 The `-i`/`-u` run needs a database where demo data exists if your tour uses it; create the data in the test itself to avoid the dependency.
 
 ### Debugging a failing tour

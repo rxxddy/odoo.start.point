@@ -4,7 +4,7 @@ description: "The groups attribute on fields: what the ORM does with restricted 
 
 # Field-level security
 
-Sometimes the model is open but one column is not: a member's phone number, a loan's internal notes, a price. A field's `groups` attribute removes the field from every user outside the listed groups. This chapter shows exactly what "removes" means in the ORM, where the protection leaks if you are careless (computed, related, `sudo`, SQL), and how it relates to hiding a field in a view.
+Sometimes the model is open but one column is not: a member's phone number, a loan's internal notes, a price. A field's `groups` attribute removes the field from every user outside the listed groups.
 
 Checked against `odoo/fields.py` (`Field.is_accessible`, `NO_ACCESS`) and `odoo/models.py` (`check_field_access_rights`, `fields_get`, `_fetch_field`) of Odoo 18, and the 20 tree where noted.
 

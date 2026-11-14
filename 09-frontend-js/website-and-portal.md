@@ -4,7 +4,7 @@ description: "Customer portal pages, public widgets, public OWL components and O
 
 # Website and portal
 
-The backend web client is not what visitors and portal users see. Their pages are rendered by a controller with QWeb, served with `web.assets_frontend`, and brought to life by a different set of JavaScript tools. This chapter covers the whole slice a developer touches: adding a section to the customer portal (controller, templates, access rules), attaching behaviour to the page with a public widget (Odoo 17 and 18) or an interaction (Odoo 20), mounting an OWL component on a public page, and calling back to the server.
+The backend web client is not what visitors and portal users see. Their pages are rendered by a controller with QWeb, served with `web.assets_frontend`, and brought to life by a different set of JavaScript tools.
 
 Everything was read from the Odoo 18 `portal` and `web` addons and the Odoo 20 tree. The teaching module `library` gives its members a page listing their loans.
 

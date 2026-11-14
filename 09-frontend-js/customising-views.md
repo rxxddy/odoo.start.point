@@ -6,7 +6,7 @@ description: "Changing list, form and kanban views with js_class, subclassed con
 
 Every list, form and kanban screen is assembled from a small set of replaceable parts: a controller, a renderer, a model, an arch parser, and a button template. They are bundled into a **view definition** stored in the `views` registry, and an individual view picks its definition with the `js_class` attribute. That is the supported way to change one screen without touching any other, and this chapter shows how it works and walks through four recipes: a list with an extra control panel button, a list that colours rows by a business rule, a form that confirms before a button runs, and a kanban card with extra classes.
 
-Everything was read from the Odoo 18 source (`addons/web/static/src/views`). Odoo 20 differences are at the end.
+Everything was read from the Odoo 18 source (`addons/web/static/src/views`).
 
 ## The view stack
 

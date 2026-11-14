@@ -4,7 +4,7 @@ description: "Notation used throughout, and how version differences from Odoo 16
 
 # Conventions and version notes
 
-Small decisions in notation decide whether a code sample can be pasted or has to be decoded. This chapter lists them in one place: how code, commands, and placeholders are written, what each hint colour means, how version differences between Odoo 16 and 20 are marked, and what the teaching module `library` is. Read it once; refer back when a notation puzzles you.
+This chapter lists the notation used in the book: how code, commands and placeholders are written, what each hint colour means, how version differences between Odoo 16 and 20 are marked, and what the teaching module `library` is.
 
 ## Code and commands
 
@@ -30,7 +30,7 @@ On Windows PowerShell, the line continuation is the backtick, environment variab
 
 **Python style** follows the project coding standards covered in the testing part: four-space indentation, double or single quotes consistently within a file, and Odoo naming conventions (`_name = "library.book"`, method names `action_*`, `_compute_*`, `_onchange_*`, `_check_*`). **JavaScript style** uses ES modules, `const`/`let`, double quotes, semicolons, and four spaces in Odoo-facing code but two in short generic snippets for width.
 
-**Command safety.** Commands that change data are always preceded by their read-only counterpart. If the book shows `UPDATE`, you will see the `SELECT` with the same `WHERE` first. If it shows `-u library`, it first shows how to check what the update would touch. This is a convention of the book and a habit to copy.
+**Command safety.** Commands that change data are always preceded by their read-only counterpart. If the book shows `UPDATE`, you will see the `SELECT` with the same `WHERE` first. If it shows `-u library`, it first shows how to check what the update would touch. Copy the habit.
 
 ## Placeholders
 
@@ -54,7 +54,7 @@ All names, people, and numbers in examples are invented. Example people are "Ann
 
 ## Hints
 
-The book uses GitBook hint boxes, sparingly. They have fixed meanings:
+Hint boxes have fixed meanings:
 
 {% hint style="info" %}
 Info. Background, a version note, or a pointer to another chapter. Safe to skip on a first read.
@@ -80,7 +80,7 @@ A "Try it" section ends most chapters. Solutions sit inside `<details><summary>S
 
 ## Version notes
 
-The book targets Odoo 16 through 20 (the number is the major version; each release is `<number>.0`). Text is written for the newest version that has been verified, and differences are marked, never silently blended.
+The book covers Odoo 16 through 20 (the number is the major version; each release is `<number>.0`). Text is written for Odoo 18 unless it says otherwise, and differences in other versions are marked.
 
 ### How differences are marked
 
@@ -102,16 +102,18 @@ The book targets Odoo 16 through 20 (the number is the major version; each relea
 
 A statement without a version mark holds for every version in scope. If a hint says "Odoo 17 and later", it holds from 17 to the newest verified release unless a later hint says otherwise. Where a behaviour is the same but a name changed, the text gives both names.
 
-The examples above are real differences, and they show the style. Read the details in the chapters where they occur.
+The details are in the chapters where they occur.
 
-### What "verified" means
+### What was checked, and where
 
-Every standard-Odoo name in the book (a model, a field, an XML ID, a method, a template) was checked against real source code of at least one release before it was written. Where a name could not be checked, it is left out rather than guessed; when you see an instruction to "check the source for your version", it is because that detail varies and the book could not pin it down for every release.
+Standard Odoo names (models, fields, XML ids, methods, templates) were checked in the Odoo source before they were used. Odoo 18 is the main reference; chapters for the security and frontend parts also checked the Odoo 20 source, and version notes for 16 and 17 come from the `16.0` and `17.0` branches. Where a detail varies between releases and could not be confirmed, the text says "check the source for your version".
 
-Examples were run against a real Odoo 18 installation unless a chapter says otherwise. Behaviour in 16 and 17 is marked where it is known to differ; behaviour that has not been checked in a given release is not claimed for it.
+Behaviour is claimed for a version only if it was checked in that version.
+
+Odoo 20 changed several things that matter to module authors:
 
 {% hint style="warning" %}
-Odoo 20 content is added only after it can be verified against a release. Until then the book does not state anything specific about Odoo 20: statements marked "and later" mean "up to the newest verified release", and you must check the version-differences chapter and your own installation before assuming they hold for 20.
+Odoo 20 ships OWL 3: `static props` becomes `useProps`, `useState` becomes `proxy`, refs are signals and templates address members with `this.`. On the server side, groups move from `category_id` to a privilege, and `@route(type='json')` is a deprecated alias of `type='jsonrpc'`. The chapters of the frontend and security parts mark each case. Chapters not yet revised against Odoo 20 say nothing specific about it, so check your own installation.
 {% endhint %}
 
 ### Checking your version
@@ -169,4 +171,4 @@ The glossary in the reference part defines the rest.
 
 ## When you find a mistake
 
-A name that does not exist in your version, an example that does not run, or a statement the source contradicts is a bug in the book, not in you. Reproduce it on a scratch database, note your version and the exact error, and compare with the source of your installation. In practice this takes five minutes and teaches more than the chapter did.
+If a name does not exist in your version, an example does not run, or the source contradicts a statement, reproduce it on a scratch database, note your version and the exact error, compare with the source of your installation, and open an issue.

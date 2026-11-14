@@ -4,7 +4,7 @@ description: "What changes in the Odoo 20 web client with OWL 3, and how to port
 
 # OWL 3 and the Odoo 20 web client
 
-Odoo 20 replaces OWL 2 with OWL 3. Most of the vocabulary of the previous chapter survives (components, templates, slots, lifecycle hooks, registries) but the way you declare props, hold state, reference elements and write services changes. Code written for Odoo 18 does not run unchanged. This chapter lists what changed, shows the new idioms side by side with the old, and gives a porting procedure.
+Odoo 20 replaces OWL 2 with OWL 3. Most of the vocabulary of the previous chapter survives (components, templates, slots, lifecycle hooks, registries) but the way you declare props, hold state, reference elements and write services changes. Code written for Odoo 18 does not run unchanged.
 
 {% hint style="warning" %}
 Everything here was read from the Odoo 20 source tree available to the author, whose bundled library reports `3.0.0-alpha.50` (`addons/web/static/lib/owl/owl.js`). The source contains `@todo owl3 migration` markers and a temporary compatibility layer, so details can still move between that tree and a release you install. Where something is marked temporary in the source, this chapter says so. Always re-check an API against your own checkout before relying on it.

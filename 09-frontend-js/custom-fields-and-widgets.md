@@ -4,9 +4,9 @@ description: "Writing field widgets and view widgets for Odoo 17 and 18 forms, l
 
 # Custom field widgets
 
-A field widget is an OWL component that displays and edits one field of a record, registered in the `fields` registry and selected from a view with `widget="name"`. A view widget is the same idea without a field behind it, registered in `view_widgets` and placed with `<widget name="..."/>`. This chapter shows how the web client finds a widget, what it hands your component, how to read and write values correctly, and builds three complete widgets: an editable ISBN field with validation, a read-only "days overdue" badge that pulls an extra field, and a view widget.
+A field widget is an OWL component that displays and edits one field of a record, registered in the `fields` registry and selected from a view with `widget="name"`. A view widget is the same idea without a field behind it, registered in `view_widgets` and placed with `<widget name="..."/>`.
 
-All behaviour was read from the Odoo 18 source (`addons/web/static/src/views/fields`, `views/widgets`, `model/relational_model`). The OWL 3 form used by Odoo 20 is shown at the end.
+All behaviour was read from the Odoo 18 source (`addons/web/static/src/views/fields`, `views/widgets`, `model/relational_model`).
 
 ## How a widget is found
 

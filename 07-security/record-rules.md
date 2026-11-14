@@ -4,7 +4,7 @@ description: "ir.rule in depth: the exact domain the ORM builds, global versus g
 
 # Record rules
 
-ACLs say whether a user may touch a model at all. Record rules (`ir.rule`) narrow that to specific rows. A rule is a domain, a set of operations it applies to, and optionally a set of groups. This chapter explains exactly how the ORM combines the rules into one domain (including the case that surprises almost everyone), the evaluation context, the rule patterns that cover most real needs, how failures surface, and how to test them.
+ACLs say whether a user may touch a model at all. Record rules (`ir.rule`) narrow that to specific rows. A rule is a domain, a set of operations it applies to, and optionally a set of groups.
 
 Checked against `odoo/addons/base/models/ir_rule.py`, `odoo/models.py` and `odoo/osv/expression.py` of Odoo 18, and the Odoo 20 tree where noted.
 

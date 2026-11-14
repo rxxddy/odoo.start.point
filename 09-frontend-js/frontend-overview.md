@@ -4,7 +4,7 @@ description: "The web client, its three JavaScript worlds, how it boots, and the
 
 # Frontend overview
 
-Odoo ships three different JavaScript worlds, and most confusion comes from mixing them. A snippet that works in the backend does nothing on a public page, and a tutorial for one version can crash another. This chapter maps the territory: which world a task belongs to, how the backend client starts, what an extension point looks like, and how to read the real implementation of anything you are about to change.
+Odoo ships three different JavaScript worlds, and most confusion comes from mixing them. A snippet that works in the backend does nothing on a public page, and a tutorial for one version can crash another.
 
 Everything below was checked against the Odoo 18 source and, where noted, against Odoo 20. Version differences are called out in the Versions section at the end.
 
