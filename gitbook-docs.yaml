@@ -1,0 +1,16 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: Odoo Developer Handbook
+  structure:
+    - type: section
+      key: documentation
+      title: Documentation
+      path: documentation
+      children:
+        - type: space
+          key: handbook
+          title: Odoo Developer Handbook
+          path: handbook
+          default: true
+          content:
+            directory: ./
