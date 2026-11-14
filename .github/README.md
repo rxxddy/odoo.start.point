@@ -3,13 +3,16 @@
 </p>
 
 <p align="center">
-  <a href="https://weden.gitbook.io/odoo-developer-handbook"><img alt="Read online" src="https://img.shields.io/badge/read-online-714B67?style=for-the-badge&logo=gitbook&logoColor=white"></a>
+  <a href="https://rxxddy.github.io/odoo.start.point/"><img alt="GitHub Pages" src="https://img.shields.io/badge/read-GitHub%20Pages-24292f?style=for-the-badge&logo=github&logoColor=white"></a>
+  <a href="https://weden.gitbook.io/odoo-developer-handbook"><img alt="GitBook" src="https://img.shields.io/badge/read-GitBook-714B67?style=for-the-badge&logo=gitbook&logoColor=white"></a>
   <img alt="Odoo versions" src="https://img.shields.io/badge/Odoo-16%20%C2%B7%2017%20%C2%B7%2018%20%C2%B7%2020-714B67?style=for-the-badge">
   <img alt="Chapters" src="https://img.shields.io/badge/chapters-130-3b82f6?style=for-the-badge">
   <a href="../LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-f59e0b?style=for-the-badge"></a>
 </p>
 
 A handbook for people who write Odoo modules. It starts with the Python, SQL and web basics that Odoo code relies on, then covers the ORM, security, views, the frontend, backend logic, testing and migration, and ends with complete modules.
+
+Read it online on [GitHub Pages](https://rxxddy.github.io/odoo.start.point/) or on [GitBook](https://weden.gitbook.io/odoo-developer-handbook).
 
 Odoo 18 is the reference version. Differences in 16, 17 and 20 are marked in version notes. Odoo 20 ships OWL 3, so its frontend differs a lot from 18; [one chapter](../09-frontend-js/owl3-and-odoo-20.md) covers the port.
 

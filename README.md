@@ -6,6 +6,8 @@ description: "Handbook for Odoo module developers: Python, PostgreSQL, the ORM, 
 
 A handbook for people who write Odoo modules. It starts with the Python, SQL and web basics that Odoo code relies on, then covers the ORM, security, views, the frontend, backend logic, testing and migration, and ends with complete modules.
 
+Read online: [GitBook](https://weden.gitbook.io/odoo-developer-handbook) or [GitHub Pages](https://rxxddy.github.io/odoo.start.point/).
+
 Odoo 18 is the reference version. Differences in 16, 17 and 20 are marked in version notes. Odoo 20 ships OWL 3, so the frontend differs a lot from 18; the chapter [OWL 3 and Odoo 20](09-frontend-js/owl3-and-odoo-20.md) covers the port.
 
 ## Contents
