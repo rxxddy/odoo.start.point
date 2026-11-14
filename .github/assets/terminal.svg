@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="330" viewBox="0 0 1000 330" role="img" aria-labelledby="t d">
+  <title id="t">An Odoo shell session</title>
+  <desc id="d">Animated terminal: a read-only query, a dry-run write and a rollback</desc>
+  <rect x="1" y="1" width="998" height="328" rx="14" fill="#10131f" stroke="#2c3250"/>
+  <rect x="1" y="1" width="998" height="40" rx="14" fill="#1a1e30"/>
+  <rect x="1" y="26" width="998" height="15" fill="#1a1e30"/>
+  <circle cx="26" cy="21" r="6" fill="#ff5f56"/><circle cx="48" cy="21" r="6" fill="#ffbd2e"/><circle cx="70" cy="21" r="6" fill="#27c93f"/>
+  <text x="500" y="26" text-anchor="middle" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#8b90b0">odoo shell - library</text>
+  <g font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="17">
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.02;0.06;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="80" fill="#7ee0a8">$ ./odoo-bin shell -d library --no-http</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.12;0.16;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="116" fill="#ffd166">&gt;&gt;&gt; loans = env["library.loan"].search([("state", "=", "open")])</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.26;0.30;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="148" fill="#ffd166">&gt;&gt;&gt; len(loans), loans.filtered("is_overdue").mapped("book_id.name")</text>
+      <text x="28" y="176" fill="#c9d1ff">(14, ['Dune', 'Solaris'])</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.46;0.50;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="212" fill="#ffd166">&gt;&gt;&gt; loans.filtered("is_overdue").write({"state": "returned"})</text>
+      <text x="28" y="240" fill="#c9d1ff">True</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.66;0.70;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="276" fill="#ffd166">&gt;&gt;&gt; env.cr.rollback()   # dry run: nothing is saved</text></g>
+    <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.82;0.86;0.97;1" dur="18s" repeatCount="indefinite"/>
+      <text x="28" y="306" fill="#8b90b0"># read first, change inside a trial, roll back a dry run</text></g>
+  </g>
+</svg>
