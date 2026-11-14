@@ -33,7 +33,7 @@ The second query finds the tables where a recompute or a loop script will take h
 
 ## Run the upgrade
 
-Odoo's own modules are migrated by the upgrade service or the open-source `OpenUpgrade` project, depending on the version path; custom modules by your scripts. Whichever tool moves the standard schema, finish with your modules:
+Odoo's own modules are migrated by Odoo's upgrade service or by the community OpenUpgrade project, depending on your edition and version path (neither is part of the source checked for this book); custom modules by your scripts. Whichever tool moves the standard schema, finish with your modules. `odoo-bin db` helps with the copies: `dump` writes a dump with the filestore, `load` restores one (`--neutralize` neutralises it afterwards), `duplicate` copies a database with its filestore (also `--neutralize`), and `odoo-bin neutralize -d <db> --stdout` prints the neutralisation SQL instead of applying it.
 
 ```bash
 pg_restore -d lib_test backup.dump
@@ -66,7 +66,7 @@ Open the main menus as a normal user, not as admin: access rules and record rule
 - Attachments: confirm the filestore is copied with the database dump, or every file is gone.
 
 {% hint style="danger" %}
-Never run `-u all` on production for the first time. Always restore a copy, and never point a copy at the production outgoing mail server or crons; neutralise them first.
+Never run `-u all` on production for the first time. Always restore a copy, and never point a copy at the production outgoing mail server or crons; neutralise them first (`odoo-bin db load --neutralize` or `odoo-bin neutralize`).
 {% endhint %}
 
 ## Pitfalls

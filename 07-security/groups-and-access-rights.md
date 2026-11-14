@@ -140,6 +140,18 @@ Rights are additive. A user in several groups gets the union of all rows. There 
 - If a user can do something you did not intend, find which of their groups grants it. A SQL query makes that quick, see Try it.
 - You cannot revoke a permission another module grants. You can only change which groups the user belongs to, or add a record rule that restricts the rows.
 
+### Access rights in Odoo 20
+
+In the Odoo 20 tree there is no `ir.model.access`. A row of `security/ir.access.csv` carries `operation` (letters from `crud`) and an optional `domain`, and a row with a group is a permission:
+
+```csv
+id,name,model_id,group_id/id,operation,domain
+access_library_book_user,library.book user,library.book,group_library_user,r,
+access_library_book_manager,library.book manager,library.book,group_library_manager,crud,
+```
+
+`model_id` is the model's technical name. Permissions of a user's groups are OR-ed, so a user gets the widest domain among them, and having no permission for an operation means no access. The security model chapter explains the combination, and `odoo-bin upgrade_code` converts 18 data (see the migration chapter).
+
 ## User types
 
 Beyond application groups there are three mutually exclusive **user types** in the category `base.module_category_user_type`:

@@ -182,7 +182,7 @@ The first test exercises the global rule through `allowed_company_ids`, exactly 
 
 ## Odoo 20
 
-The mechanisms above (`env.company`, `env.companies`, `with_company`, `check_company`) exist unchanged in the Odoo 20 tree. The group layout for `base.group_multi_company` follows the new privilege structure, which affects only the group XML you write, not the ORM behaviour.
+The isolation rule is an `ir.access` row without a group in the 20 tree (a restriction), for example `hr_employee_comp_rule` in `hr`: empty group, operation `crud`, domain `[('company_id', 'in', company_ids + [False])]`. The mechanisms above (`env.company`, `env.companies`, `with_company`, `check_company`) exist unchanged in the Odoo 20 tree. The group layout for `base.group_multi_company` follows the new privilege structure, which affects only the group XML you write, not the ORM behaviour.
 
 ## Pitfalls
 

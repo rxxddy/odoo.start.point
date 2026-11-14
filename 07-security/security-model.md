@@ -133,6 +133,46 @@ def action_extend(self, days):
     self.sudo().write({"due_date": self.due_date + timedelta(days=days)})
 ```
 
+## Odoo 20: ACLs and rules become `ir.access`
+
+The Odoo 20 source merges layers 3 and 4 into one model, `ir.access` (`odoo/addons/base/models/ir_access.py`). The ORM still exposes `check_access`, `has_access` and `_filtered_access`, but the data and the combining rule changed:
+
+| `ir.access` field | Meaning |
+| --- | --- |
+| `model_id` | the model |
+| `group_id` | a group makes the record a **permission**; no group makes it a **restriction** |
+| `operation` | a subset of the letters `crud` (`r`, `ru`, `cru`, `crud`, ...) |
+| `domain` | optional domain; an empty domain means all records |
+| `active`, `name`, `note` | switch, label, free text |
+
+`Model._access_domain(operation)` builds the answer for the current user:
+
+```python
+permissions = [domains of accesses with a group the user has]      # OR-ed
+restrictions = [domains of accesses without a group]               # AND-ed
+# parent models of _inherits are added as ('parent_field', 'any', parent_domain) restrictions
+return Domain.OR(permissions) & Domain.AND(restrictions)
+```
+
+Consequences, all visible in that function and in `_get_failed_accesses`:
+
+- **No applicable permission means no access at all.** `Domain.OR([])` is false, so the "model with only group rules is unrestricted for outsiders" trap of Odoo 18 does not exist. The failure is a model-level access error.
+- **A permission with an empty domain gives access to every record**, and it is OR-ed with the other permissions of the user. A user in group A (read everything) and group B (read own records) reads everything. In 18 the same pair was an ACL for A plus a group rule for B, and the rule narrowed the ACL. Converting by hand means giving each group's permission its own domain.
+- **A restriction replaces the global rule.** `hr_employee_comp_rule` in the 20 `hr` module is an `ir.access` row with an empty group and the domain `[('company_id', 'in', company_ids + [False])]`.
+- The domain evaluation context is the same four names (`user`, `time`, `company_ids`, `company_id`).
+
+Data files change too. The CSV is `security/ir.access.csv` with these columns, taken from the `hr` module:
+
+```csv
+id,name,model_id,group_id/id,operation,domain
+access_hr_employee_user,hr.employee user,hr.employee,hr.group_hr_user,crud,
+hr_employee_comp_rule,Employee multi company rule,hr.employee,,crud,"[('company_id', 'in', company_ids + [False])]"
+```
+
+Note `model_id` holds the model's technical name, not `model_<name>`, and `operation` replaces the four `perm_*` columns.
+
+The Odoo 20 tree ships a conversion script, `odoo/upgrade_code/19.4-00-ir-access.py`, run with `odoo-bin upgrade_code`. It converts `ir.model.access` and `ir.rule` data to `ir.access` and logs a warning when an ACL that grants a whole model overlaps group rules that used to narrow it. Read those warnings; they point at exactly the reinterpretation described above. The migration chapter covers the command.
+
 ## Combining groups
 
 The ladder pattern keeps this manageable: an application defines groups where each higher group *implies* the lower (`implied_ids`), and each ACL line is granted to the lowest group that needs it. The groups chapter shows it in XML.
@@ -181,7 +221,7 @@ Hiding a menu or a button is not security. Any user with the right ACL can call 
 
 **18:** `check_access`, `has_access`, `_filtered_access`. The deprecated names remain with warnings. `auth='bearer'` is documented in `http.route`.
 
-**20:** groups are filed under privileges (`privilege_id`), members are `user_ids`, and the user's groups are `group_ids`/`all_group_ids`. Odoo 19 was not available to check. Do not copy 18 group XML into 20.
+**20:** groups are filed under privileges (`privilege_id`), members are `user_ids`, and the user's groups are `group_ids`/`all_group_ids`. ACLs and rules are one model, `ir.access`, with permissions OR-ed and restrictions AND-ed. Odoo 19 was not available to check. Do not copy 18 security data into 20.
 {% endhint %}
 
 ## Try it

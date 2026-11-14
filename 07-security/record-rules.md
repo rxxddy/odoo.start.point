@@ -246,6 +246,24 @@ env["ir.rule"].with_user(user)._compute_domain("library.loan", "read")
 
 It returns the normalised domain the ORM will append, or an empty list when nothing restricts the user.
 
+## Odoo 20: `ir.access`
+
+In the Odoo 20 tree a record rule is an `ir.access` row: `model_id`, `group_id`, `operation` (a subset of `crud`) and `domain`. The three rules of this chapter become:
+
+```csv
+id,name,model_id,group_id/id,operation,domain
+library_loan_own,Library loan: own loans,library.loan,group_library_user,cru,"[('member_id.user_id', '=', user.id)]"
+library_loan_manager,Library loan: managers see all,library.loan,group_library_manager,crud,
+library_loan_company,Library loan: multi-company,library.loan,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+```
+
+The first two have a group, so they are permissions and are OR-ed; the third has none, so it is a restriction and is AND-ed. The effect is `OR(own, all) & company`. Two behaviours differ from 18:
+
+- With no applicable permission the result is the empty set, not "no restriction". The surprise described under "How the final domain is built" is gone.
+- A permission without a domain grants every record. A user who is in a group with `r` and no domain and in another group with `r` and a narrowing domain gets everything. Give each group's permission its own domain.
+
+The evaluation context, `_get_failed_accesses` (the 20 name of `_get_failing`) and the error text are otherwise the same idea as in 18.
+
 ## Pitfalls
 
 {% hint style="warning" %}
@@ -270,7 +288,7 @@ A model with only group rules is unrestricted for users outside those groups. Re
 
 **17 and 18:** `any` and `not any` are available (present in the 17 `expression.py`). 18 applies parent rules for `_inherits` through `any` in `_compute_domain`.
 
-**20:** access records live in `ir_access.py` of the base module. The ORM code was moved to `odoo/orm/`, and the expression engine gained internal `any!` operators. Rule XML written for 18 loads unchanged, but re-test the effect of rules on shared models.
+**20:** `ir.rule` and `ir.model.access` no longer exist as separate models. Both are `ir.access` records (`odoo/addons/base/models/ir_access.py`): a record with a group is a permission, a record without one is a restriction, and the final domain is `OR(permissions) & AND(restrictions)`. A rule written for 18 has to be converted, and the semantics of group rules change (no permission means no access). See "Odoo 20: `ir.access`" below. The ORM code was also moved to `odoo/orm/`.
 {% endhint %}
 
 ## Try it

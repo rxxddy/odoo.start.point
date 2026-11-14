@@ -8,13 +8,14 @@ You have a custom module that works on one version and must load on the next. Th
 
 ## Work on a branch per version
 
-Create a branch named after the target (`18.0`), not a long-lived feature branch. Bump the manifest `version` to `18.0.1.0.0`; the first two segments are the Odoo series and Odoo checks them when it computes the module version.
+Create a branch named after the target (`18.0`), not a long-lived feature branch. Bump the manifest `version` to `18.0.1.0.0`. The first two segments are the Odoo series. The migration loader compares the module version with the installed one to decide which `migrations/` folders run, so a higher version is what triggers your scripts.
 
 ## The sequence
 
+0. Run the rewrite scripts on a clean branch first: `odoo-bin upgrade_code --addons-path=./my_addons --from <your current series> --dry-run`, then without `--dry-run`, and commit the result on its own (see [Deprecations](deprecations.md)). Available from 18.0.
 1. Start a throw-away database with only your module's dependencies, then install your module with `-i library --stop-after-init`. Read the first traceback; fix; repeat. Do not fix everything by grepping first, the real loader order shows what matters.
-2. Fix XML first. View validation fails before Python is imported for most issues. Convert `attrs`/`states` to expressions, `tree` to `list`, replace removed XML ids.
-3. Fix Python: removed or renamed methods (`name_get`, `name_search`, `read_group` calls), changed signatures, `check_access_rights`.
+2. Fix XML first. View validation fails before Python is imported for most issues. Convert `attrs`/`states` to expressions (no script does it), `tree` to `list` (script `tree-to-list`), replace removed XML ids.
+3. Fix Python: removed or renamed methods (`name_get` is gone in 18, `_name_search` became `_search_display_name`), changed signatures, `check_access_rights` (deprecated in 18, gone in 20), `_sql_constraints`, `type='json'` routes, `_cr`/`_uid`/`_context`. The version table in [Version differences](version-differences.md) lists each with its release.
 4. Fix data files: `noupdate` records that reference renamed ids, removed groups, changed `selection` keys.
 5. Rewrite JavaScript. Legacy widgets are not portable; treat each as a new OWL component.
 6. Run the tests: `-u library --test-tags /library --stop-after-init`.
@@ -45,7 +46,7 @@ A module that installs cleanly on an empty database can still fail on upgrade of
 
 ## Pitfalls
 
-- Bumping only the manifest. Odoo then runs the module's pre/post scripts for versions you never wrote.
+- Forgetting to bump the manifest version: no `migrations/` folder qualifies and none of your scripts run.
 - Leaving `external_dependencies` unchanged when the target needs a newer Python library.
 - Adding a stored computed field on a large table without checking recompute time; it recomputes on update.
 - Overriding `create` with the old single-vals signature and breaking batch creation.

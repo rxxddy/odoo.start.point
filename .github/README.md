@@ -54,7 +54,7 @@ Odoo 18 is the reference version. Differences in 16, 17 and 20 are marked in ver
 ## Sources and versions
 
 - Names, signatures and behaviour are taken from the Odoo source: 18 for most of the book, 20 where a chapter says so, and the 16.0 and 17.0 branches for version notes.
-- Security (part 07) and frontend (part 09) were rewritten against the source. The other parts are older and shorter; they are being revised one part at a time.
+- Security (part 07), frontend (part 09) and the version tables in part 12 were rewritten against the source. The other parts are older and shorter; they are revised part by part.
 - Examples use a small teaching module, `library`. They contain no client data.
 
 ## Reading offline
