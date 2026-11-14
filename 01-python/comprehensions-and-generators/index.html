@@ -1,0 +1,4688 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Building collections and streaming large data without loading it all.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/01-python/comprehensions-and-generators/">
+      
+      
+        <link rel="prev" href="../functions/">
+      
+      
+        <link rel="next" href="../classes-and-inheritance/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Comprehensions and generators - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#comprehensions-and-generators" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Comprehensions and generators
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List comprehensions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List comprehensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering-with-if" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filtering with if
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-between-two-values-if-and-else-in-the-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing between two values: if and else in the expression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#several-for-clauses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Several for clauses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-them-on-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using them on records
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dict-and-set-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dict and set comprehensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope-and-evaluation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope and evaluation details
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-not-to-use-a-comprehension" class="md-nav__link">
+    <span class="md-ellipsis">
+      When not to use a comprehension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generator-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generator expressions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generator expressions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-a-measurable-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory: a measurable difference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generator-functions-and-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generator functions and yield
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generator functions and yield">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-generators-matter-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why generators matter: streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunking-batches-of-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chunking: batches of records
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-generators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infinite generators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yield-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      yield from
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-iterator-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      The iterator protocol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-iterator-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful iterator tools
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-list-generator-or-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing: list, generator, or loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/the-odoo-schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/multi-company/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/registries-and-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/website-and-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      List comprehensions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List comprehensions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#filtering-with-if" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filtering with if
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-between-two-values-if-and-else-in-the-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing between two values: if and else in the expression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#several-for-clauses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Several for clauses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-them-on-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using them on records
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dict-and-set-comprehensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dict and set comprehensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scope-and-evaluation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scope and evaluation details
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-not-to-use-a-comprehension" class="md-nav__link">
+    <span class="md-ellipsis">
+      When not to use a comprehension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generator-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generator expressions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generator expressions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-a-measurable-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory: a measurable difference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generator-functions-and-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generator functions and yield
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generator functions and yield">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-generators-matter-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why generators matter: streaming
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunking-batches-of-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chunking: batches of records
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinite-generators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Infinite generators
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#yield-from" class="md-nav__link">
+    <span class="md-ellipsis">
+      yield from
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-iterator-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      The iterator protocol
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-iterator-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Useful iterator tools
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-list-generator-or-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing: list, generator, or loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/01-python/comprehensions-and-generators.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="comprehensions-and-generators">Comprehensions and generators</h1>
+<p>Most loops in business code do one of two things: build a new collection from an old one, or walk through data without needing all of it in memory at once. Python has dedicated syntax for both. A <strong>comprehension</strong> builds a list, dict, or set from an iterable in one expression. A <strong>generator</strong> produces items one at a time, on demand. Odoo code uses comprehensions everywhere you see <code>[x.name for x in records]</code>, and generators matter the moment you export or import tens of thousands of rows. This chapter explains both, shows where they pay off, and shows where plain loops are the better choice.</p>
+<h2 id="list-comprehensions">List comprehensions</h2>
+<p>The loop</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">squares</span>
+<span class="go">[0, 1, 4, 9, 16]</span>
+</code></pre></div>
+<p>is written as a comprehension:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="go">[0, 1, 4, 9, 16]</span>
+</code></pre></div>
+<p>The shape is <code>[expression for name in iterable]</code>. Read it as "the expression, for each name in the iterable". The result is always a new list.</p>
+<h3 id="filtering-with-if">Filtering with <code>if</code></h3>
+<p>An <code>if</code> after the <code>for</code> keeps only the items that satisfy it:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="go">[0, 2, 4, 6, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="go">[0, 4, 16, 36, 64]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">,</span> <span class="s2">"  "</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">titles</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+<span class="go">['Dune', 'Emma']</span>
+</code></pre></div>
+<p>The filter decides which items enter; the expression decides what each becomes.</p>
+<h3 id="choosing-between-two-values-if-and-else-in-the-expression">Choosing between two values: <code>if</code> and <code>else</code> in the expression</h3>
+<p>An <code>if</code>/<code>else</code> that picks a value goes <strong>before</strong> the <code>for</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">"even"</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"odd"</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
+<span class="go">['even', 'odd', 'even', 'odd']</span>
+</code></pre></div>
+<p>The two positions differ. <code>x for x in y if cond</code> filters. <code>a if cond else b for x in y</code> transforms every item. Mixing them up is a syntax error or a wrong result, so check which one you mean.</p>
+<h3 id="several-for-clauses">Several <code>for</code> clauses</h3>
+<p>Multiple <code>for</code> clauses nest, with the leftmost as the outermost loop:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+<span class="go">[(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">orders</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"ref"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"lines"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]},</span> <span class="p">{</span><span class="s2">"ref"</span><span class="p">:</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"lines"</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">]}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">order</span><span class="p">[</span><span class="s2">"lines"</span><span class="p">]]</span>
+<span class="go">[1, 2, 3]</span>
+</code></pre></div>
+<p>The second example flattens a list of lists: for each order, for each line. This is the plain-Python equivalent of <code>mapped("order_line")</code> followed by iterating the result. More than two <code>for</code> clauses usually reads badly; use a loop.</p>
+<h3 id="using-them-on-records">Using them on records</h3>
+<p>A recordset iterates like a list, so every comprehension applies to it. The records below are dictionaries standing in for them, to keep the examples runnable anywhere:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">loans</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"ada"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"bob"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"returned"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"ada"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">21</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">l</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">]</span>
+<span class="go">[1, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"ada"</span><span class="p">)</span>
+<span class="go">35</span>
+</code></pre></div>
+<p>In real Odoo code the same shapes read <code>[l.id for l in loans if l.state == "open"]</code>. For plain extraction, <code>loans.mapped("id")</code> or <code>loans.ids</code> is shorter. For filtering where you want records back, <code>loans.filtered(...)</code> is better than a comprehension because it returns a recordset you can keep working with. Use a comprehension when you want plain values or a different structure, such as a list of tuples or a dict.</p>
+<h2 id="dict-and-set-comprehensions">Dict and set comprehensions</h2>
+<p>Curly braces with a colon build a dict. Without the colon, they build a set:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">l</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]:</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">}</span>
+<span class="go">{1: 'ada', 2: 'bob', 3: 'ada'}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">({</span><span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">})</span>
+<span class="go">['ada', 'bob']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">m</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="p">{</span><span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">}}</span> <span class="o">==</span> <span class="p">{</span><span class="s2">"ada"</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">"bob"</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>The last line shows the problem with nesting: it works, but scans the list once per member and is hard to read. Group with <code>defaultdict</code> instead (<a href="../collections/">Lists, tuples, dicts, sets</a>).</p>
+<p>Common dict comprehension uses:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">prices</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"A"</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">:</span> <span class="mf">5.5</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">sku</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">sku</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">prices</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="go">{'A': 12.0, 'B': 6.6}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>      <span class="c1"># invert</span>
+<span class="go">{1: 'a', 2: 'b'}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">prices</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">}</span>
+<span class="go">{'A': 10.0}</span>
+</code></pre></div>
+<p>In Odoo, rebuilding a <code>vals</code> dict without some keys, or with converted values, is a typical case:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"title"</span><span class="p">:</span> <span class="s2">" Dune "</span><span class="p">,</span> <span class="s2">"pages"</span><span class="p">:</span> <span class="s2">"612"</span><span class="p">,</span> <span class="s2">"note"</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
+<span class="go">{'title': ' Dune ', 'pages': '612'}</span>
+</code></pre></div>
+<h2 id="scope-and-evaluation-details">Scope and evaluation details</h2>
+<p>The loop variable of a comprehension is local to it and does not leak into the surrounding scope (unlike a <code>for</code> statement):</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+<span class="go">[0, 1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">NameError</span>: <span class="n">name 'i' is not defined</span>
+</code></pre></div>
+<p>Comprehensions evaluate eagerly and fully, the whole list is built before the next line runs. That is also why a bug inside the expression stops the entire comprehension.</p>
+<h2 id="when-not-to-use-a-comprehension">When not to use a comprehension</h2>
+<p>A comprehension is for building a collection. Do not use it for side effects:</p>
+<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="n">record</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">]</span>       <span class="c1"># wrong: builds a throwaway list</span>
+</code></pre></div>
+<p>That builds a list of return values nobody wants. Write a loop. Equally, do not stack conditions until the line needs three readings:</p>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">xs</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">ok</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">visible</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">deleted</span><span class="p">]</span>
+</code></pre></div>
+<p>A three-line loop is clearer than that. A rule that holds up in practice: if it does not fit on one line without a squint, or needs more than one <code>if</code>, write the loop and name the intermediate steps.</p>
+<h2 id="generator-expressions">Generator expressions</h2>
+<p>Replace the square brackets of a list comprehension with parentheses and you get a <strong>generator expression</strong>. It does not build the list. It produces one item at a time, when asked:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gen</span>
+<span class="go">&lt;generator object &lt;genexpr&gt; at 0x...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">(0, 1)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">[4, 9, 16]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="go">[]</span>
+</code></pre></div>
+<p>Three things to notice:</p>
+<ol>
+<li>The generator did no work when created. Each <code>next()</code> computes one item.</li>
+<li>It remembers where it is. After two <code>next</code> calls, <code>list(gen)</code> gives the remaining three.</li>
+<li>It is <strong>exhausted</strong> after one pass. The second <code>list(gen)</code> returns an empty list, and no error is raised. This is the most common generator surprise.</li>
+</ol>
+<p>Pass a generator expression directly to a function that consumes an iterable; when it is the only argument you can drop the extra parentheses:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
+<span class="go">332833500</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"Ulysses"</span><span class="p">])</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"id"</span><span class="p">])</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">)</span>
+<span class="go">'1, 2, 3'</span>
+</code></pre></div>
+<p>This avoids building an intermediate list. <code>any</code> and <code>all</code> also stop at the first decisive item, so a generator is not merely cheaper, it does less work.</p>
+<h3 id="memory-a-measurable-difference">Memory: a measurable difference</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">big_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">big_gen</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">big_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1_000_000</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">big_gen</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1000</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>A list of a million integers takes megabytes (plus the integers). The generator holds a few hundred bytes regardless of length. In an Odoo worker that has a memory limit, that difference is the difference between finishing an export and being killed.</p>
+<h2 id="generator-functions-and-yield">Generator functions and <code>yield</code></h2>
+<p>A function with <code>yield</code> in its body is a <strong>generator function</strong>. Calling it does not run the body. It returns a generator, and the body runs in slices, each time up to the next <code>yield</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">countdown</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">"start"</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">n</span>
+<span class="gp">... </span>        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">"done"</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">g</span> <span class="o">=</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">start</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="go">done</span>
+<span class="go">[1]</span>
+</code></pre></div>
+<p>Nothing printed when <code>countdown(3)</code> was called. <code>start</code> appeared at the first <code>next</code>. The function's local state (<code>n</code>) persists between <code>next</code> calls. When the body ends, the generator raises <code>StopIteration</code>, which <code>for</code> loops and <code>list()</code> catch for you.</p>
+<p>A <code>for</code> loop does exactly this behind the scenes:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">countdown</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">"got"</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">start</span>
+<span class="go">got 2</span>
+<span class="go">got 1</span>
+<span class="go">done</span>
+</code></pre></div>
+<h3 id="why-generators-matter-streaming">Why generators matter: streaming</h3>
+<p>A generator can describe a pipeline over data that does not fit in memory. Process a big file one line at a time:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">read_rows</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">handle</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">only_open</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">row</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="n">only_open</span><span class="p">(</span><span class="n">read_rows</span><span class="p">(</span><span class="s2">"loans.csv"</span><span class="p">))))</span>
+</code></pre></div>
+<p>At any moment only one row exists in memory. Each stage pulls from the one before it, and nothing is read until the final consumer asks. Stages compose without intermediate lists.</p>
+<p>Here is a version you can run without a file:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">read_rows</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">only_open</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">yield</span> <span class="n">row</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"b1,open"</span><span class="p">,</span> <span class="s2">"b2,returned"</span><span class="p">,</span> <span class="s2">"b3,open"</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">only_open</span><span class="p">(</span><span class="n">read_rows</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+<span class="go">2</span>
+</code></pre></div>
+<p>The <code>_</code> is a conventional name for a value you do not use.</p>
+<h3 id="chunking-batches-of-records">Chunking: batches of records</h3>
+<p>Processing a large set of ids in batches limits memory and transaction size. A generator that yields slices:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">chunked</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span> <span class="n">size</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">items</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">chunked</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[[1, 2, 3], [4, 5, 6], [7]]</span>
+</code></pre></div>
+<p>The batching helper takes a list; it works for lists of ids and also for an Odoo <code>ids</code> list. In Odoo, large jobs that should not run in one transaction commit between batches, which brings its own caveats (the transactions chapter in the PostgreSQL part). The loop shape is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">batch_ids</span> <span class="ow">in</span> <span class="n">chunked</span><span class="p">(</span><span class="n">all_ids</span><span class="p">,</span> <span class="mi">500</span><span class="p">):</span>
+    <span class="n">records</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span><span class="n">batch_ids</span><span class="p">)</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
+</code></pre></div>
+<p>Here <code>model.browse(ids)</code> builds a recordset of the given ids without a query; the data is fetched lazily when fields are read. Odoo's recordsets also cache field values, so a long loop that touches many records holds a lot of cached data; batching with cache invalidation between batches keeps memory flat. The details belong to the ORM part of the book.</p>
+<h3 id="infinite-generators">Infinite generators</h3>
+<p>A generator need not end. Combine it with something that stops:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">naturals</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">n</span>
+<span class="gp">... </span>        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">islice</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">naturals</span><span class="p">(),</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">naturals</span><span class="p">()</span> <span class="k">if</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)</span>
+<span class="go">8</span>
+</code></pre></div>
+<p><code>itertools.islice</code> takes the first <code>k</code> items of any iterator. Never call <code>list()</code> on an infinite generator, since it never returns.</p>
+<h3 id="yield-from"><code>yield from</code></h3>
+<p><code>yield from other</code> hands over to another iterable and yields all of its items. It flattens nested generators:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">walk</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="n">node</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"children"</span><span class="p">,</span> <span class="p">[]):</span>
+<span class="gp">... </span>        <span class="k">yield from</span> <span class="n">walk</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"root"</span><span class="p">,</span> <span class="s2">"children"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"a"</span><span class="p">,</span> <span class="s2">"children"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"b"</span><span class="p">}]},</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"c"</span><span class="p">}]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">walk</span><span class="p">(</span><span class="n">tree</span><span class="p">))</span>
+<span class="go">['root', 'a', 'b', 'c']</span>
+</code></pre></div>
+<p>This is a clean way to traverse hierarchies. Compare it with the recursive function in <a href="../functions/">Functions</a>, which returned only the depth.</p>
+<h2 id="the-iterator-protocol">The iterator protocol</h2>
+<p>Why can <code>for</code> loop over lists, files, dicts, generators, and Odoo recordsets? They all implement the same two-method protocol:</p>
+<ul>
+<li>An <strong>iterable</strong> has <code>__iter__()</code>, which returns an iterator.</li>
+<li>An <strong>iterator</strong> has <code>__next__()</code>, which returns the next item or raises <code>StopIteration</code>, and <code>__iter__()</code> returning itself.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">),</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="go">(10, 20)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">StopIteration</span>
+</code></pre></div>
+<p>A list is an iterable, not an iterator. Each <code>iter(list)</code> call gives a fresh iterator, so you can loop over a list repeatedly. A generator is its own iterator, so you can loop over it only once. This is the whole reason for the "exhausted after one pass" behaviour.</p>
+<p>You can make your own class iterable by defining <code>__iter__</code>, usually as a generator method:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Shelf</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">books</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">books</span> <span class="o">=</span> <span class="n">books</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">yield</span> <span class="n">book</span>
+<span class="gp">... </span>    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">books</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shelf</span> <span class="o">=</span> <span class="n">Shelf</span><span class="p">([</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">shelf</span><span class="p">]</span>
+<span class="go">['DUNE', 'EMMA']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">shelf</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">shelf</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">shelf</span><span class="p">)</span>
+<span class="go">(2, ['Dune', 'Emma'], ['Dune', 'Emma'])</span>
+</code></pre></div>
+<p>Because <code>Shelf.__iter__</code> returns a new generator each time, <code>Shelf</code> can be looped over repeatedly. An Odoo recordset works this way: it is iterable many times, and iterating yields single-record recordsets. That is why <code>for loan in self:</code> gives <code>loan</code> as a recordset of one record, not a bare value, and why <code>if loan:</code> is false for an empty recordset. Classes are the subject of <a href="../classes-and-inheritance/">Classes and inheritance</a>.</p>
+<h2 id="useful-iterator-tools">Useful iterator tools</h2>
+<p>The <code>itertools</code> module is covered in the <a href="../standard-library-toolbox/">Standard library toolbox</a>. Three pieces worth knowing now:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">islice</span><span class="p">,</span> <span class="n">groupby</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+<span class="go">[0, 1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[(</span><span class="n">member</span><span class="p">,</span> <span class="p">[</span><span class="n">l</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">group</span><span class="p">])</span> <span class="k">for</span> <span class="n">member</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">])]</span>
+<span class="go">[('ada', [1, 3]), ('bob', [2])]</span>
+</code></pre></div>
+<p><code>groupby</code> groups <strong>consecutive</strong> items with equal keys, so the input must be sorted by the same key first. Forgetting to sort gives several groups with the same key, silently. For grouping unsorted data, <code>defaultdict(list)</code> is safer. Also, each group is itself a lazy iterator that becomes invalid once you advance the outer loop, so consume the group (as the list comprehension above does) before moving on.</p>
+<h2 id="choosing-list-generator-or-loop">Choosing: list, generator, or loop</h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You need to index, take <code>len()</code>, or iterate several times</td>
+<td>list comprehension</td>
+</tr>
+<tr>
+<td>You only iterate once, or feed <code>sum</code>, <code>any</code>, <code>max</code>, <code>join</code></td>
+<td>generator expression</td>
+</tr>
+<tr>
+<td>Data is big, or comes from a file, a cursor, or a network</td>
+<td>generator function</td>
+</tr>
+<tr>
+<td>Several steps or side effects</td>
+<td>plain <code>for</code> loop</td>
+</tr>
+<tr>
+<td>You need a mapping or uniqueness</td>
+<td>dict or set comprehension</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Consuming a generator twice.</strong> The second pass is empty and silent. Convert to a list if you must iterate again, or build a new generator for each pass.</li>
+<li><strong><code>list()</code> on an infinite generator.</strong> It never returns and eats memory until the process is killed.</li>
+<li><strong>Side effects in comprehensions.</strong> <code>[rec.write(...) for rec in recs]</code> builds an unused list. Write a loop.</li>
+<li><strong>Late errors.</strong> A generator pipeline defers work, so an exception appears at the consumer, far from where the pipeline was built. A traceback through three generator frames is normal.</li>
+<li><strong>Closing resources too early.</strong> A generator that reads from an open file must keep the file open until exhausted. Returning a generator from inside a <code>with</code> block that closes the file gives <code>ValueError: I/O operation on closed file</code> on first use. Either do the whole processing inside the <code>with</code>, or put the <code>with</code> inside the generator function.</li>
+<li><strong><code>if</code> position confusion.</strong> <code>[x for x in xs if c]</code> filters; <code>[a if c else b for x in xs]</code> transforms. Mixing them up changes meaning.</li>
+<li><strong>Overly clever comprehensions.</strong> Nested comprehensions with two conditions are write-only code. Use a loop and named variables.</li>
+<li><strong>Variable capture in a generator expression.</strong> The iterable of the first <code>for</code> is evaluated immediately, everything else lazily. <code>gen = (x * factor for x in xs)</code> followed by <code>factor = 10</code> uses the new <code>factor</code> when consumed.</li>
+<li><strong><code>groupby</code> without sorting.</strong> Equal keys must be adjacent.</li>
+<li><strong>Holding a recordset-sized list in memory.</strong> <code>[r.name for r in huge_recordset]</code> loads every record in one go. Batch the ids and iterate per batch.</li>
+<li><strong>Dict comprehension duplicate keys.</strong> Later values silently overwrite earlier ones: <code>{l["member"]: l for l in loans}</code> keeps only the last loan per member.</li>
+</ul>
+<h2 id="try-it">Try it</h2>
+<ol>
+<li>Using the <code>loans</code> data from this chapter, build a dict from member to the total days they have on open loans, with a dict comprehension plus a generator expression (no <code>defaultdict</code>).</li>
+<li>Write a generator <code>fibonacci()</code> yielding the Fibonacci numbers forever, then print all of them under 100 using <code>itertools.takewhile</code>.</li>
+<li>Write <code>read_numbers(lines)</code> as a generator that yields <code>int</code> for each non-blank line, skipping lines that start with <code>#</code>. Use it to sum <code>["1", "# note", "", "4"]</code>.</li>
+<li>Write <code>pairs(seq)</code> that yields consecutive pairs <code>(a, b)</code> from any iterable, for <code>[1, 2, 3, 4]</code> giving <code>(1, 2), (2, 3), (3, 4)</code>. It must also work with a generator input.</li>
+<li>A colleague wrote <code>squares = (n * n for n in range(5)); print(sum(squares)); print(max(squares))</code> and gets a <code>ValueError</code>. Explain why, and fix it two ways.</li>
+</ol>
+<details>
+<summary>Solution</summary>
+<p>1.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">loans</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"ada"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"bob"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"returned"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"member"</span><span class="p">:</span> <span class="s2">"ada"</span><span class="p">,</span> <span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">21</span><span class="p">},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">members</span> <span class="o">=</span> <span class="p">{</span><span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">m</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"member"</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">members</span><span class="p">}</span> <span class="o">==</span> <span class="p">{</span><span class="s2">"ada"</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span> <span class="s2">"bob"</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>For large inputs, a single pass with <code>defaultdict(int)</code> is better, because this version rescans <code>loans</code> once per member.</p>
+<p>2.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">takewhile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">fibonacci</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">a</span>
+<span class="gp">... </span>        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">,</span> <span class="n">fibonacci</span><span class="p">()))</span>
+<span class="go">[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]</span>
+</code></pre></div>
+<p>3.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">read_numbers</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"#"</span><span class="p">):</span>
+<span class="gp">... </span>            <span class="k">continue</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">read_numbers</span><span class="p">([</span><span class="s2">"1"</span><span class="p">,</span> <span class="s2">"# note"</span><span class="p">,</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">]))</span>
+<span class="go">5</span>
+</code></pre></div>
+<p>4.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">pairs</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">previous</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">current</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">previous</span><span class="p">,</span> <span class="n">current</span>
+<span class="gp">... </span>        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">pairs</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="go">[(1, 2), (2, 3), (3, 4)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">pairs</span><span class="p">(</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)))</span>
+<span class="go">[(0, 1), (1, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">pairs</span><span class="p">([]))</span>
+<span class="go">[]</span>
+</code></pre></div>
+<ol>
+<li><code>sum(squares)</code> consumes the generator. <code>max(squares)</code> then sees an empty iterator and raises <code>ValueError: max() ... empty sequence</code>. Fix one: make a list, <code>squares = [n * n for n in range(5)]</code>. Fix two: compute each from a fresh generator, for example by wrapping it in a function <code>def squares(): return (n * n for n in range(5))</code> and calling <code>sum(squares())</code> and <code>max(squares())</code>.</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../functions/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Functions">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Functions
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../classes-and-inheritance/" class="md-footer__link md-footer__link--next" aria-label="Next: Classes and inheritance">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Classes and inheritance
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

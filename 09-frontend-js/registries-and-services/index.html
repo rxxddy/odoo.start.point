@@ -1,0 +1,4680 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Registries as the extension mechanism of the web client, services as shared state, and the built-in services you will call every day.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/09-frontend-js/registries-and-services/">
+      
+      
+        <link rel="prev" href="../owl3-and-odoo-20/">
+      
+      
+        <link rel="next" href="../patching/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Registries and services - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#registries-and-services" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Registries and services
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/control-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/comprehensions-and-generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/the-odoo-schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/multi-company/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-registry-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The registry API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-and-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keys and sequences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-categories-and-the-shape-of-their-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      The categories and the shape of their entries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing a service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing a service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-async-really-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      What async really does
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-in-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      State in services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-built-in-services-you-will-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      The built-in services you will use
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The built-in services you will use">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      orm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      rpc
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      action
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification" class="md-nav__link">
+    <span class="md-ellipsis">
+      notification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialog" class="md-nav__link">
+    <span class="md-ellipsis">
+      dialog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    <span class="md-ellipsis">
+      user
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#others" class="md-nav__link">
+    <span class="md-ellipsis">
+      Others
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together-a-service-a-component-and-a-client-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it together: a service, a component and a client action
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoo-20-services-and-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo 20: services and plugins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../website-and-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-registry-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      The registry API
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#keys-and-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keys and sequences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-categories-and-the-shape-of-their-entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      The categories and the shape of their entries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing a service
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing a service">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-async-really-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      What async really does
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-in-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      State in services
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-built-in-services-you-will-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      The built-in services you will use
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The built-in services you will use">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#orm" class="md-nav__link">
+    <span class="md-ellipsis">
+      orm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpc" class="md-nav__link">
+    <span class="md-ellipsis">
+      rpc
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#action" class="md-nav__link">
+    <span class="md-ellipsis">
+      action
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notification" class="md-nav__link">
+    <span class="md-ellipsis">
+      notification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dialog" class="md-nav__link">
+    <span class="md-ellipsis">
+      dialog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user" class="md-nav__link">
+    <span class="md-ellipsis">
+      user
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#others" class="md-nav__link">
+    <span class="md-ellipsis">
+      Others
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together-a-service-a-component-and-a-client-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it together: a service, a component and a client action
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoo-20-services-and-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo 20: services and plugins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/09-frontend-js/registries-and-services.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="registries-and-services">Registries and services</h1>
+<p>A registry is an ordered key-value store, and nearly every extension point of the web client is one. A service is a long-lived singleton started with the client, registered in the <code>services</code> registry. Together they are the reason you can add a field widget, a view, a menu entry or a global behaviour without touching Odoo's files.</p>
+<p>Odoo 20 is mid-way through replacing services with OWL 3 plugins. The service API described here still works there through a bridge; the last section says what changed.</p>
+<h2 id="the-registry-api">The registry API</h2>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">systray</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"systray"</span><span class="p">);</span>
+
+<span class="nx">systray</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.counter"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="o">:</span><span class="w"> </span><span class="nx">LoanCounter</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">25</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"library.counter"</span><span class="p">);</span><span class="w">            </span><span class="c1">// the value, or throws KeyNotFoundError</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"library.counter"</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span><span class="w">      </span><span class="c1">// default instead of throwing</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">"library.counter"</span><span class="p">);</span><span class="w">       </span><span class="c1">// boolean</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">getAll</span><span class="p">();</span><span class="w">                          </span><span class="c1">// values, ordered by sequence</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">getEntries</span><span class="p">();</span><span class="w">                      </span><span class="c1">// [key, value] pairs, ordered by sequence</span>
+<span class="nx">systray</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s2">"library.counter"</span><span class="p">);</span>
+</code></pre></div>
+<p>Behaviour that matters, from <code>addons/web/static/src/core/registry.js</code>:</p>
+<ul>
+<li><code>add(key, value, { force, sequence })</code> returns the registry, so calls chain. If the key already exists and <code>force</code> is not true it <strong>throws</strong> <code>Cannot add "key" in this registry: it already exists</code>. With <code>force: true</code> it replaces the value.</li>
+<li>The default <code>sequence</code> is <strong>50</strong>. When you replace with <code>force</code> and give no sequence, the previous sequence is kept.</li>
+<li><code>getAll()</code> and <code>getEntries()</code> sort by sequence (ascending). Equal sequences keep insertion order, which is module load order.</li>
+<li><code>get(key)</code> without a second argument throws if missing; with a second argument (even <code>undefined</code>) it returns that instead.</li>
+<li><code>category("a")</code> creates the sub-registry on first use, and <code>registry.category("a").category("b")</code> nests. Categories are plain strings with no declared list, so a typo creates a new, empty category and your entry is never read. Copy names from existing code.</li>
+<li>A registry is an event bus. Adding or removing triggers an <code>UPDATE</code> event with <code>{ operation, key, value }</code>, which the service starter listens to. You can too, with <code>addEventListener("UPDATE", ...)</code>.</li>
+<li><code>addValidation(schema)</code> installs a schema for entries (in 18 an OWL 2 <code>validate</code> schema, checked in debug mode). Odoo uses it for <code>services</code> so that a malformed service fails with a message naming the key.</li>
+</ul>
+<p>Register at module top level, never inside <code>setup()</code> or a function that can run twice. Registration is idempotent only if the key is unique; the second run throws.</p>
+<h2 id="keys-and-sequences">Keys and sequences</h2>
+<p>Key naming, because keys are global across all installed modules:</p>
+<ul>
+<li>Prefix with your module: <code>library.counter</code>, <code>library.book_search</code>. Core keys have no prefix and are short (<code>many2one</code>, <code>list</code>, <code>orm</code>), which is exactly why yours must not look like them.</li>
+<li>Do not overwrite another module's key with <code>force</code>. You may hide their entry and break the module. Register your own key and subclass the original (see the patching chapter for when replacement is justified).</li>
+<li>Use <code>sequence</code> to place yourself relative to others: lower comes first. Systray items from the core use 0, 1, 10 and so on (<code>burger_menu</code> is 0, <code>SwitchCompanyMenu</code> is 1).</li>
+</ul>
+<h2 id="the-categories-and-the-shape-of-their-entries">The categories and the shape of their entries</h2>
+<p>Registries do not validate the shape of an entry unless a schema is installed. The shape is whatever the code that reads the registry expects. The most useful categories in 18, with the shapes verified in the source:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Entry</th>
+<th>Read by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>systray</code></td>
+<td><code>{ Component, props? }</code></td>
+<td>the navbar</td>
+</tr>
+<tr>
+<td><code>main_components</code></td>
+<td><code>{ Component, props? }</code></td>
+<td><code>MainComponentsContainer</code>, mounted once for the session</td>
+</tr>
+<tr>
+<td><code>actions</code></td>
+<td>an OWL component class, or a function <code>(env, action) =&gt; ...</code></td>
+<td>the action service, for <code>ir.actions.client</code> with a matching <code>tag</code></td>
+</tr>
+<tr>
+<td><code>views</code></td>
+<td>a view definition object (<code>type</code>, <code>Controller</code>, <code>Renderer</code>, <code>Model</code>, <code>ArchParser</code>, ...)</td>
+<td>the view service</td>
+</tr>
+<tr>
+<td><code>fields</code></td>
+<td>a field definition <code>{ component, supportedTypes, ... }</code></td>
+<td>views</td>
+</tr>
+<tr>
+<td><code>view_widgets</code></td>
+<td><code>{ component, ... }</code></td>
+<td><code>&lt;widget name="..."/&gt;</code> in view arch</td>
+</tr>
+<tr>
+<td><code>user_menuitems</code></td>
+<td>a <strong>function</strong> <code>(env) =&gt; item</code></td>
+<td>the user menu</td>
+</tr>
+<tr>
+<td><code>error_handlers</code></td>
+<td>a function <code>(env, error, originalError) =&gt; boolean</code></td>
+<td>the error service</td>
+</tr>
+<tr>
+<td><code>error_dialogs</code></td>
+<td>a dialog component keyed by Python exception name</td>
+<td>RPC error handler</td>
+</tr>
+<tr>
+<td><code>error_notifications</code></td>
+<td><code>{ title?, message?, type?, sticky? }</code> keyed by exception name</td>
+<td>RPC error handler</td>
+</tr>
+<tr>
+<td><code>command_provider</code></td>
+<td>provider object for the command palette</td>
+<td>command service</td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td>functions that add items to the developer menu</td>
+<td>debug menu</td>
+</tr>
+<tr>
+<td><code>lazy_components</code></td>
+<td>component classes, loaded after their bundle</td>
+<td><code>LazyComponent</code></td>
+</tr>
+<tr>
+<td><code>public_components</code></td>
+<td>components mounted on website pages</td>
+<td>public root</td>
+</tr>
+</tbody>
+</table>
+<p>Examples of the less obvious ones.</p>
+<p>A user menu entry. Note it is a function that receives the environment and returns the item:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">libraryHelpItem</span><span class="p">(</span><span class="nx">env</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"item"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="s2">"library_help"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s2">"Library handbook"</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">callback</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"https://example.com/library-handbook"</span><span class="p">,</span><span class="w"> </span><span class="s2">"_blank"</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">35</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"user_menuitems"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library_help"</span><span class="p">,</span><span class="w"> </span><span class="nx">libraryHelpItem</span><span class="p">);</span>
+</code></pre></div>
+<p>A mapping from a Python exception to a friendly notification. The error handler looks at the <code>exceptionName</code> of the server error, which is the dotted Python class name:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># library/models/library_loan.py</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LoanLimitError</span><span class="p">(</span><span class="n">UserError</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"error_notifications"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"odoo.addons.library.models.library_loan.LoanLimitError"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">"Loan limit reached"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"warning"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">sticky</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>If the server error has an <code>exceptionName</code> found in <code>error_notifications</code>, the client shows a notification instead of the error dialog, using <code>notif.message</code> or the server message. If it is found in <code>error_dialogs</code>, that dialog component is used. For ordinary <code>UserError</code> messages you do not need this, the default dialog already shows them.</p>
+<p>An error handler of your own, for a client-side failure. Return <code>true</code> if you handled it, <code>false</code> to let the next handler try:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"error_handlers"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.quietAbort"</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">env</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">,</span><span class="w"> </span><span class="nx">originalError</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">originalError</span><span class="o">?</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">"AbortError"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w">       </span><span class="c1">// swallow: no dialog</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<h2 id="writing-a-service">Writing a service</h2>
+<p>A service is a plain object with a <code>start</code> function and optional <code>dependencies</code> and <code>async</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">bookService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">dependencies</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"orm"</span><span class="p">,</span><span class="w"> </span><span class="s2">"notification"</span><span class="p">],</span>
+<span class="w">    </span><span class="k">async</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"titleOf"</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">start</span><span class="p">(</span><span class="nx">env</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">orm</span><span class="p">,</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Map</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">titleOf</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">cache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">id</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">rec</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+<span class="w">                </span><span class="nx">cache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">rec</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nx">cache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">function</span><span class="w"> </span><span class="nx">forget</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">cache</span><span class="p">.</span><span class="ow">delete</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">titleOf</span><span class="p">,</span><span class="w"> </span><span class="nx">forget</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">};</span>
+
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"services"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="nx">bookService</span><span class="p">);</span>
+</code></pre></div>
+<p>Use it in a component with <code>useService("library.book")</code>, or outside components through <code>env.services["library.book"]</code>.</p>
+<p>How the starter works (<code>addons/web/static/src/env.js</code>, <code>startServices</code>):</p>
+<ul>
+<li>It collects every entry of the <code>services</code> registry that is not started yet, then repeatedly starts those whose <code>dependencies</code> are all started. Services without dependencies start first and everything else follows in dependency order.</li>
+<li>A dependency name that is not registered (typo, module not installed) means the service <strong>never starts</strong>. The starter throws <code>Some services could not be started: &lt;names&gt;. Missing dependencies: &lt;names&gt;</code> and the web client does not come up. Read the console first.</li>
+<li><code>start(env, deps)</code> may return a promise. The client waits for it before starting dependants and before mounting. A slow <code>start</code> delays the entire web client: no network calls in <code>start</code> unless they are essential.</li>
+<li>The value returned by <code>start</code> becomes <code>env.services[name]</code>. If you return nothing, the stored value is <code>null</code>.</li>
+<li>A service registered after startup is started on the <code>UPDATE</code> event once its dependencies exist, so lazy modules can add services.</li>
+<li>You cannot unregister: <code>remove</code> on the services registry is ignored by the starter.</li>
+</ul>
+<h3 id="what-async-really-does">What <code>async</code> really does</h3>
+<p>The <code>async</code> list names methods that return promises and might outlive the component that called them. <code>useService</code> wraps <strong>only the listed methods</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">service</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">service</span><span class="p">.</span><span class="nx">titleOf</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span><span class="w">          </span><span class="c1">// listed in async: protected</span>
+<span class="nx">service</span><span class="p">.</span><span class="nx">forget</span><span class="p">(</span><span class="mf">3</span><span class="p">);</span><span class="w">                 </span><span class="c1">// not listed: called as is</span>
+</code></pre></div>
+<p>A protected call checks the component state. If the component is <strong>destroyed</strong> by the time the promise resolves, the returned promise never settles, so the code after <code>await</code> simply does not run. This stops a closed dialog from updating a component that no longer exists, and the price is that you must not rely on <code>finally</code> blocks for cleanup in components. If the component is already destroyed when you call, the call is not made.</p>
+<p>Rules of thumb:</p>
+<ul>
+<li>List every method that returns a promise.</li>
+<li>A service method that must run to completion regardless of the caller (saving data) should not rely on the component calling it surviving. Use it from the service itself, or call <code>env.services[name]</code> directly rather than <code>useService</code>.</li>
+<li>Methods not listed are never wrapped, so an unlisted async method does not get the destruction protection.</li>
+</ul>
+<h3 id="state-in-services">State in services</h3>
+<p>A service is a singleton shared by every component. Keep per-component state in the component. Use a service for things that outlive a screen: a cache, a connection, a counter other components subscribe to.</p>
+<p>To let components react to service changes, use a reactive object or an <code>EventBus</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">EventBus</span><span class="p">,</span><span class="w"> </span><span class="nx">reactive</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@odoo/owl"</span><span class="p">;</span>
+
+<span class="nx">start</span><span class="p">(</span><span class="nx">env</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">reactive</span><span class="p">({</span><span class="w"> </span><span class="nx">unread</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">bus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">EventBus</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">state</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">bus</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">bump</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">unread</span><span class="o">++</span><span class="p">;</span><span class="w"> </span><span class="nx">bus</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s2">"CHANGED"</span><span class="p">);</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1">// component</span>
+<span class="k">this</span><span class="p">.</span><span class="nx">stats</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="nx">useService</span><span class="p">(</span><span class="s2">"library.stats"</span><span class="p">).</span><span class="nx">state</span><span class="p">);</span><span class="w">   </span><span class="c1">// re-render on change</span>
+<span class="nx">useBus</span><span class="p">(</span><span class="nx">useService</span><span class="p">(</span><span class="s2">"library.stats"</span><span class="p">).</span><span class="nx">bus</span><span class="p">,</span><span class="w"> </span><span class="s2">"CHANGED"</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">refresh</span><span class="p">());</span>
+</code></pre></div>
+<p><code>useBus(bus, eventName, callback)</code> removes the listener when the component is destroyed.</p>
+<h2 id="the-built-in-services-you-will-use">The built-in services you will use</h2>
+<h3 id="orm"><code>orm</code></h3>
+<p>Calls model methods over RPC. All methods return promises and are <code>async</code>-protected. Signatures from <code>orm_service.js</code> (18):</p>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">orm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"orm"</span><span class="p">);</span>
+
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="s2">"action_archive"</span><span class="p">,</span><span class="w"> </span><span class="p">[[</span><span class="nx">id</span><span class="p">]]);</span><span class="w">            </span><span class="c1">// call(model, method, args, kwargs)</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Dune"</span><span class="w"> </span><span class="p">}]);</span><span class="w">                </span><span class="c1">// returns the new ids</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"isbn"</span><span class="p">]);</span><span class="w">              </span><span class="c1">// read(model, ids, fields)</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[[</span><span class="s2">"state"</span><span class="p">,</span><span class="w"> </span><span class="s2">"="</span><span class="p">,</span><span class="w"> </span><span class="s2">"available"</span><span class="p">]],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="p">});</span><span class="w">  </span><span class="c1">// ids</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">searchRead</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="nx">domain</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="p">,</span><span class="w"> </span><span class="nx">order</span><span class="o">:</span><span class="w"> </span><span class="s2">"name"</span><span class="w"> </span><span class="p">});</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">searchCount</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="nx">domain</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Dune (2nd ed.)"</span><span class="w"> </span><span class="p">});</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">unlink</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">]);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">readGroup</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="nx">domain</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">"pages:sum"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"author_id"</span><span class="p">]);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">webSearchRead</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="nx">domain</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">specification</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="mf">20</span><span class="w"> </span><span class="p">});</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">webSave</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">],</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"x"</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">specification</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<ul>
+<li>Contexts are added for you from the user's context. Pass <code>{ context: {...} }</code> in <code>kwargs</code> to extend.</li>
+<li><code>orm.silent.read(...)</code> makes the same call without triggering the global error dialog; use it for background refreshes where you handle errors yourself.</li>
+<li><code>x2ManyCommands</code> in the same file builds one2many and many2many command tuples (<code>create</code>, <code>update</code>, <code>delete</code>, <code>unlink</code>, <code>link</code>, <code>clear</code>, <code>set</code>) for <code>write</code> and <code>create</code> values.</li>
+<li>Record rules and access rights apply to the calling user, as always. The ORM service cannot do <code>sudo</code>.</li>
+</ul>
+<p>Prefer one call that returns what the screen needs over several small ones. A controller route (below) returning prepared data is often better than three <code>searchRead</code> calls.</p>
+<h3 id="rpc"><code>rpc</code></h3>
+<p>For your own controllers, import the function:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">rpc</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/network/rpc"</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">rpc</span><span class="p">(</span><span class="s2">"/library/dashboard"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">limit</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<p>It posts JSON to the route and returns the parsed <code>result</code>. A server-side exception arrives as a rejected promise with an <code>RPCError</code> that carries <code>data.message</code>, <code>data.name</code> and <code>exceptionName</code>; connection loss gives <code>ConnectionLostError</code>. Use the <code>orm</code> service when you are calling model methods, and <code>rpc</code> for routes.</p>
+<p>In 18, <code>rpc</code> is a module function and not a service (in 16 and 17 it is a service, <code>useService("rpc")</code>, which you will still see in older code).</p>
+<h3 id="action"><code>action</code></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"action"</span><span class="p">);</span>
+
+<span class="k">await</span><span class="w"> </span><span class="nx">action</span><span class="p">.</span><span class="nx">doAction</span><span class="p">(</span><span class="s2">"library.action_loan"</span><span class="p">);</span><span class="w">                 </span><span class="c1">// xml id</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">action</span><span class="p">.</span><span class="nx">doAction</span><span class="p">(</span><span class="mf">42</span><span class="p">);</span><span class="w">                                     </span><span class="c1">// database id</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">action</span><span class="p">.</span><span class="nx">doAction</span><span class="p">({</span><span class="w">                                        </span><span class="c1">// action dictionary</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"ir.actions.act_window"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">res_model</span><span class="o">:</span><span class="w"> </span><span class="s2">"library.loan"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">views</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="s2">"list"</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="s2">"form"</span><span class="p">]],</span>
+<span class="w">    </span><span class="nx">domain</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">"state"</span><span class="p">,</span><span class="w"> </span><span class="s2">"="</span><span class="p">,</span><span class="w"> </span><span class="s2">"open"</span><span class="p">]],</span>
+<span class="w">    </span><span class="nx">context</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">search_default_overdue</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Open loans"</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Options (<code>ActionOptions</code> in the source): <code>additionalContext</code>, <code>clearBreadcrumbs</code>, <code>onClose</code> (callback when the action closes, for dialogs), <code>props</code> (extra props for client actions), <code>viewType</code>, <code>stackPosition</code> (<code>"replaceCurrentAction"</code> or <code>"replacePreviousAction"</code>), <code>index</code>. A <code>target: "new"</code> in the action opens it as a dialog. <code>{ type: "ir.actions.act_window_close" }</code> closes the current dialog.</p>
+<p>Other methods: <code>switchView(viewType, props)</code>, <code>restore(jsId)</code> for breadcrumbs, and <code>doActionButton(params)</code> which handles <code>&lt;button type="action"&gt;</code>.</p>
+<h3 id="notification"><code>notification</code></h3>
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"notification"</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">close</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">notification</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">"Book returned"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"success"</span><span class="w"> </span><span class="p">});</span>
+<span class="nx">notification</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s2">"Could not reach the server"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">"Warning"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"danger"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">sticky</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">autocloseDelay</span><span class="o">:</span><span class="w"> </span><span class="mf">8000</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">buttons</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">"Retry"</span><span class="p">,</span><span class="w"> </span><span class="nx">primary</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">onClick</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">retry</span><span class="p">()</span><span class="w"> </span><span class="p">}],</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Types are <code>warning</code> (default), <code>danger</code>, <code>success</code>, <code>info</code>. A non-sticky notification closes after <code>autocloseDelay</code> (default 4000 ms). <code>add</code> returns a function that closes it.</p>
+<h3 id="dialog"><code>dialog</code></h3>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">ConfirmationDialog</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/confirmation_dialog/confirmation_dialog"</span><span class="p">;</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">dialog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"dialog"</span><span class="p">);</span>
+<span class="nx">dialog</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">ConfirmationDialog</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">"Return all books?"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="s2">"This cannot be undone."</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">confirm</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">returnAll</span><span class="p">(),</span>
+<span class="w">    </span><span class="nx">cancel</span><span class="o">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{},</span>
+<span class="p">});</span>
+</code></pre></div>
+<p><code>dialog.add(Component, props, options)</code> mounts the component in a dialog and returns a function that closes it. The component receives a <code>close</code> prop it can call. Dialogs opened this way share the lifetime of the dialog stack, not of the opening component. For a dialog tied to a component, use the <code>useOwnedDialogs</code> hook from <code>@web/core/utils/hooks</code>, which closes them when the component is destroyed.</p>
+<h3 id="user"><code>user</code></h3>
+<p>In 18, <code>user</code> is <strong>a module export, not a registry service</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/user"</span><span class="p">;</span>
+
+<span class="nx">user</span><span class="p">.</span><span class="nx">userId</span><span class="p">;</span><span class="w">            </span><span class="c1">// numeric id</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">isAdmin</span><span class="p">;</span><span class="w">           </span><span class="c1">// boolean</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">isInternalUser</span><span class="p">;</span><span class="w">    </span><span class="c1">// boolean</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">partnerId</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">lang</span><span class="p">;</span><span class="w">              </span><span class="c1">// JS locale, e.g. "en-US"</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">tz</span><span class="p">;</span>
+<span class="nx">user</span><span class="p">.</span><span class="nx">context</span><span class="p">;</span><span class="w">           </span><span class="c1">// copy of the user context, with uid</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">hasGroup</span><span class="p">(</span><span class="s2">"library.group_librarian"</span><span class="p">);</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">checkAccessRight</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="s2">"write"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">]);</span>
+</code></pre></div>
+<p><code>hasGroup</code> and <code>checkAccessRight</code> call the server once per distinct argument and cache the answer. <code>checkAccessRight(model, operation, ids)</code> takes an operation such as <code>"read"</code> or <code>"write"</code> and calls <code>has_access</code> on the model. Hiding a button for users without a group is a convenience; the server must still enforce it.</p>
+<p>In 16 and 17 <code>user</code> is a service (<code>useService("user")</code>) backed by <code>session</code> and <code>user_context</code>. The property names also differ (for example the id is <code>userId</code> here, <code>uid</code> in <code>session</code>).</p>
+<h3 id="others">Others</h3>
+<ul>
+<li><code>ui</code>: <code>ui.block()</code> and <code>ui.unblock()</code> to freeze the screen during a long call, <code>ui.isSmall</code> for mobile layouts, <code>ui.bus</code> for resize events.</li>
+<li><code>hotkey</code>: <code>hotkey.add("alt+shift+l", callback, options)</code> returns a remove function. In components prefer the <code>useHotkey</code> hook in <code>@web/core/hotkeys/hotkey_hook</code>.</li>
+<li><code>title</code>, <code>menu</code>, <code>command</code>, <code>effect</code> (rainbow man), <code>popover</code>, <code>field</code>, <code>name</code> (display names for many2one values), <code>http</code>, <code>localization</code>, <code>company</code>, <code>currency</code>, <code>view</code>. When in doubt, read the file named <code>&lt;service&gt;_service.js</code> in <code>addons/web/static/src/core</code> or <code>webclient</code>. Each is short.</li>
+</ul>
+<h2 id="putting-it-together-a-service-a-component-and-a-client-action">Putting it together: a service, a component and a client action</h2>
+<p>A "recent books" service that caches the last five opened books, plus a systray dropdown that shows them.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/** @odoo-module **/</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@odoo/owl"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useService</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/utils/hooks"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">reactive</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@odoo/owl"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">recentBooksService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">dependencies</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"orm"</span><span class="p">],</span>
+<span class="w">    </span><span class="k">async</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"touch"</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">start</span><span class="p">(</span><span class="nx">env</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">orm</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">reactive</span><span class="p">({</span><span class="w"> </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="nx">names</span><span class="o">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span><span class="p">});</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">state</span><span class="p">,</span>
+<span class="w">            </span><span class="k">async</span><span class="w"> </span><span class="nx">touch</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">id</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">names</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="kd">const</span><span class="w"> </span><span class="p">[</span><span class="nx">rec</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">orm</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">]);</span>
+<span class="w">                    </span><span class="nx">state</span><span class="p">.</span><span class="nx">names</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">rec</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">                </span><span class="nx">state</span><span class="p">.</span><span class="nx">ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="nx">state</span><span class="p">.</span><span class="nx">ids</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">id</span><span class="p">)].</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">5</span><span class="p">);</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">        </span><span class="p">};</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">};</span>
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"services"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.recent_books"</span><span class="p">,</span><span class="w"> </span><span class="nx">recentBooksService</span><span class="p">);</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">RecentBooks</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"library.RecentBooks"</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">    </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">recent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">(</span><span class="nx">useService</span><span class="p">(</span><span class="s2">"library.recent_books"</span><span class="p">).</span><span class="nx">state</span><span class="p">);</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useService</span><span class="p">(</span><span class="s2">"action"</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">open</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">action</span><span class="p">.</span><span class="nx">doAction</span><span class="p">({</span>
+<span class="w">            </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">"ir.actions.act_window"</span><span class="p">,</span><span class="w"> </span><span class="nx">res_model</span><span class="o">:</span><span class="w"> </span><span class="s2">"library.book"</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">res_id</span><span class="o">:</span><span class="w"> </span><span class="nx">id</span><span class="p">,</span><span class="w"> </span><span class="nx">views</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="s2">"form"</span><span class="p">]],</span>
+<span class="w">        </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"systray"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.RecentBooks"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="o">:</span><span class="w"> </span><span class="nx">RecentBooks</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">sequence</span><span class="o">:</span><span class="w"> </span><span class="mf">30</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-name=</span><span class="s">"library.RecentBooks"</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"o_nav_entry"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">t-foreach=</span><span class="s">"recent.ids"</span><span class="w"> </span><span class="na">t-as=</span><span class="s">"id"</span><span class="w"> </span><span class="na">t-key=</span><span class="s">"id"</span><span class="w"> </span><span class="na">class=</span><span class="s">"me-2"</span><span class="nt">&gt;</span>
+<span class="w">      </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">"#"</span><span class="w"> </span><span class="na">t-on-click.prevent=</span><span class="s">"() =&gt; this.open(id)"</span><span class="w"> </span><span class="na">t-out=</span><span class="s">"recent.names[id]"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/span&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/t&gt;</span>
+</code></pre></div>
+<p>Anything that opens a book calls <code>useService("library.recent_books").touch(id)</code>, and every systray instance updates because they read the same reactive state.</p>
+<h2 id="odoo-20-services-and-plugins">Odoo 20: services and plugins</h2>
+<p>In the Odoo 20 source the web client moves services to OWL 3 plugins, but keeps the registry as a bridge. Verified in the tree available at the time of writing:</p>
+<ul>
+<li><code>registry.category("services")</code> still exists. Its validation schema is now written with OWL 3 types, but still expects <code>{ start, dependencies?, async? }</code>. The file <code>core/legacy_service_starter.js</code> is marked "temporary - to remove when all service are converted".</li>
+<li>Global plugins register through <code>services.add(PluginClass)</code> from <code>@web/core/services</code>, where <code>services</code> is an OWL <code>Resource</code> accepting <code>Plugin</code> subclasses.</li>
+<li>The ORM is now <code>class ORM extends Plugin</code> in <code>core/orm_plugin.js</code>, and <code>useService("orm")</code> keeps working through a registry entry that returns <code>usePlugin(ORM)</code>. A comment in the source says that entry is temporary.</li>
+<li><code>useService</code> still exists, and in 20 returns a <code>proxy</code> of the service when it is not already reactive.</li>
+<li>Hook argument names differ in places (<code>useAutofocus({ ref })</code>, <code>useBus(target, type, listener)</code>). Check the signature before copying a 18 call.</li>
+</ul>
+<p>So: service code you write for 18 keeps working on 20 for now, but the documented direction is plugins, and the next major version may drop the bridge. The OWL 3 chapter shows the plugin form.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>A dependency on a service that does not exist.</strong> Startup stops with a message naming it. Check spelling and that the providing module is in your <code>depends</code>.</li>
+<li><strong>Per-screen state in a service.</strong> It is a singleton and every component sees it.</li>
+<li><strong>A slow or failing <code>start</code>.</strong> The whole client waits for it; avoid network calls, or guard them.</li>
+<li><strong><code>registry.add</code> on an existing key without <code>force</code>.</strong> Throws on load, and the module (and everything depending on it) never starts.</li>
+<li><strong><code>force: true</code> on a core key</strong> to "replace" behaviour. You remove the original for everyone; subclass and register under your own key where the consumer allows it.</li>
+<li><strong>Wrong category name.</strong> No error, no effect.</li>
+<li><strong>Forgetting <code>async</code>.</strong> Calls from a destroyed component are not blocked, and their results land on dead state.</li>
+<li><strong>Relying on <code>finally</code> after a protected call.</strong> If the component is destroyed the promise never resolves and the block never runs.</li>
+<li><strong>Treating <code>hasGroup</code> as security.</strong> It hides UI; the server enforces access.</li>
+<li><strong>Importing <code>rpc</code> as a service on 18.</strong> It is a function: <code>import { rpc } from "@web/core/network/rpc"</code>.</li>
+<li><strong>Copying <code>useService("user")</code> from 16.</strong> In 18 import <code>user</code> from <code>@web/core/user</code>.</li>
+</ul>
+<h2 id="versions">Versions</h2>
+<div class="admonition info">
+<p><strong>16:</strong> legacy and OWL registries coexist. <code>rpc_service.js</code> and <code>user_service.js</code> exist, so <code>useService("rpc")</code> and <code>useService("user")</code> work. Services and the registry API are otherwise as described.</p>
+<p><strong>17:</strong> the legacy layer is gone from the backend. <code>rpc</code> is still a service (<code>core/network/rpc_service.js</code> exists in 17.0) and so is <code>user</code> (<code>core/user_service.js</code>).</p>
+<p><strong>18:</strong> <code>rpc</code> is imported from <code>@web/core/network/rpc</code> and <code>user</code> from <code>@web/core/user</code>. The service list of this chapter is the 18 list.</p>
+<p><strong>20:</strong> services are being replaced by plugins. <code>useService</code> and the services registry keep working through a bridge.</p>
+</div>
+<h2 id="try-it">Try it</h2>
+<ol>
+<li>In the console, list services: <code>odoo.loader.modules.get("@web/core/registry").registry.category("services").getEntries().map(([k]) =&gt; k)</code>.</li>
+<li>Add the <code>library.recent_books</code> service and the systray component above. Open two books and watch the systray update.</li>
+<li>Rename the dependency <code>"orm"</code> to <code>"ormm"</code> and read the startup error.</li>
+<li>In the systray component, call <code>useService("library.recent_books")</code> without listing <code>touch</code> in <code>async</code>, open a dialog that calls it, close the dialog quickly, and compare with the <code>async</code> version.</li>
+</ol>
+<details>
+<summary>Solution notes</summary>
+<ol>
+<li>The list contains <code>orm</code>, <code>action</code>, <code>dialog</code>, <code>notification</code>, <code>hotkey</code>, <code>ui</code> and the rest of the 18 services; <code>user</code> is absent because it is a module.</li>
+<li>Both items read the same reactive <code>state</code>, so they re-render together.</li>
+<li>The client fails to start, with <code>Some services could not be started: library.book. Missing dependencies: ormm</code> in the console.</li>
+<li>With <code>async: ["touch"]</code> the call from a destroyed component never resolves, so there is no write to dead state. Without the entry the promise resolves normally and code after <code>await</code> runs, even though the component is gone.</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../owl3-and-odoo-20/" class="md-footer__link md-footer__link--prev" aria-label="Previous: OWL 3 and Odoo 20">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                OWL 3 and Odoo 20
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../patching/" class="md-footer__link md-footer__link--next" aria-label="Next: Patching standard code">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Patching standard code
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4248 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Several companies in one database: the environment's companies, the company_id pattern, check_company, company-dependent fields, and the sudo and cron traps.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/07-security/multi-company/">
+      
+      
+        <link rel="prev" href="../field-level-security/">
+      
+      
+        <link rel="next" href="../secure-coding/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Multi-company - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-company" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-company
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/control-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/comprehensions-and-generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/the-odoo-schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-environment-knows-the-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the environment knows the company
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model pattern
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_company-keeping-relations-consistent" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_company: keeping relations consistent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#company-dependent-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Company-dependent fields
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-multi-company-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where multi-company breaks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoo-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo 20
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/registries-and-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/website-and-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-the-environment-knows-the-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      How the environment knows the company
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-model-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      The model pattern
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check_company-keeping-relations-consistent" class="md-nav__link">
+    <span class="md-ellipsis">
+      check_company: keeping relations consistent
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#company-dependent-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Company-dependent fields
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-multi-company-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Where multi-company breaks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoo-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo 20
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/07-security/multi-company.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="multi-company">Multi-company</h1>
+<p>One Odoo database can serve several companies whose data must stay apart: their own invoices, stock, sequences, prices, while sharing users, products and partners where that is useful. Multi-company is not a switch you flip; it is a set of conventions that your models must follow.</p>
+<p>Checked against <code>odoo/api.py</code>, <code>odoo/models.py</code>, <code>odoo/fields.py</code> and <code>odoo/addons/base/security/base_security.xml</code> (18).</p>
+<h2 id="how-the-environment-knows-the-company">How the environment knows the company</h2>
+<p>The user belongs to one or more companies (<code>user.company_ids</code>) and has a main one (<code>user.company_id</code>). The web client has a <strong>company switcher</strong>; the companies ticked there are <em>enabled</em>. The client sends them in the context as <code>allowed_company_ids</code>, with the first id being the <strong>current</strong> company. Server code reads them from the environment:</p>
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">company</span>      <span class="c1"># the current company (a res.company record)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">companies</span>    <span class="c1"># all enabled companies (a recordset)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">company_ids</span>   <span class="c1"># all companies the user may switch to</span>
+</code></pre></div>
+<p>From the 18 source (<code>api.py</code>):</p>
+<ul>
+<li><code>env.company</code> returns the first id of <code>allowed_company_ids</code> from the context, or <code>user.company_id</code> when the context has none.</li>
+<li>For a non-superuser environment, if <code>allowed_company_ids</code> contains a company that is not among the user's own companies, reading <code>env.company</code> or <code>env.companies</code> raises <code>AccessError("Access to unauthorized or invalid companies.")</code>. A tampered context cannot pick companies the user does not have.</li>
+<li><strong>In <code>sudo()</code> mode the check is skipped</strong>, and the docstring warns: "When in sudo mode, a user can access any company, even if not in his allowed companies." That is useful for inter-company transactions and dangerous everywhere else.</li>
+</ul>
+<p><code>with_company(company)</code> returns the recordset with a modified context so that <code>env.company</code> is the given company and <code>env.companies</code> includes it:</p>
+<div class="highlight"><pre><span></span><code><span class="n">invoice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_company</span><span class="p">(</span><span class="n">other_company</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="o">...</span><span class="p">})</span>
+</code></pre></div>
+<p>The docstring warns that using a company the current user is not allowed to use may raise <code>AccessError</code> unless the environment is sudoed. It returns <code>self</code> unchanged when <code>company</code> is empty.</p>
+<h2 id="the-model-pattern">The model pattern</h2>
+<p>A model whose records belong to one company gets a <code>company_id</code> and a rule:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LibraryLoan</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s2">"library.loan"</span>
+    <span class="n">_description</span> <span class="o">=</span> <span class="s2">"Loan"</span>
+    <span class="n">_check_company_auto</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">company_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span>
+        <span class="s2">"res.company"</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">"Company"</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">company</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">member_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span><span class="s2">"library.member"</span><span class="p">,</span> <span class="n">check_company</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">book_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span><span class="s2">"library.book"</span><span class="p">,</span> <span class="n">check_company</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>and in <code>security/library_security.xml</code> a <strong>global</strong> rule:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"library_loan_rule_company"</span><span class="w"> </span><span class="na">model=</span><span class="s">"ir.rule"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>Library<span class="w"> </span>loan:<span class="w"> </span>multi-company<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"model_id"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"model_library_loan"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"domain_force"</span><span class="nt">&gt;</span>['|',<span class="w"> </span>('company_id',<span class="w"> </span>'=',<span class="w"> </span>False),<span class="w"> </span>('company_id',<span class="w"> </span>'in',<span class="w"> </span>company_ids)]<span class="nt">&lt;/field&gt;</span>
+<span class="nt">&lt;/record&gt;</span>
+</code></pre></div>
+<p>Three details are easy to get wrong:</p>
+<ul>
+<li>The default <code>lambda self: self.env.company</code> is the <em>current</em> company, not the user's main company. Records created while the switcher is on company B belong to B.</li>
+<li>The rule is <strong>global</strong> (no groups). A group rule would not restrict users outside the group; the record rules chapter explains why. This is the case where a global rule is exactly right.</li>
+<li>The rule uses <code>company_ids</code>, the <em>enabled</em> companies from the switcher, not all the user's companies. Records from companies the user has not ticked do not appear, which is what makes the switcher meaningful.</li>
+</ul>
+<p>For shared data (a product visible to every company) allow an empty company: <code>('company_id', '=', False)</code> in the domain above, and leave <code>company_id</code> optional on the model. For a company hierarchy, the base <code>res.partner</code> rule uses <code>('company_id', 'parent_of', company_ids)</code> alongside the partner-share condition, so a company can see records of its parents.</p>
+<h2 id="check_company-keeping-relations-consistent"><code>check_company</code>: keeping relations consistent</h2>
+<p>A loan in company A that points at a book of company B is a data leak and a source of impossible accounting. Two switches prevent it:</p>
+<ul>
+<li><code>_check_company_auto = True</code> on the model: on every <code>create</code> and <code>write</code> the ORM calls <code>_check_company()</code>.</li>
+<li><code>check_company=True</code> on each relational field to verify.</li>
+</ul>
+<p><code>_check_company</code> verifies that the company of each related record is compatible with the company of the record: allowed are the same company or no company. The comodel's <code>_check_company_domain(companies)</code> is <code>[('company_id', 'in', company_ids + [False])]</code>, or <code>[('company_id', '=', False)]</code> when there are no companies. If a record fails the check you get <code>UserError: Incompatible companies on records:</code> with a line per offending field naming the company of each record. Records are checked with <code>active_test=False</code>, so archived records are judged too.</p>
+<p><code>check_company=True</code> has a second effect: it generates a default <strong>domain</strong> for the field (<code>_description_domain</code> in <code>fields.py</code>), so the many2one dropdown offers only compatible records. When the model has <code>company_id</code> the domain reads, in effect: if the record has a company, offer comodel records whose company is that one or empty; if it has none, offer only records without a company. With <code>company_ids</code> it uses that field the same way; if the model has neither, the framework logs a warning that it could not generate the company-dependent domain. Your own <code>domain=</code> on the field is appended to it.</p>
+<p>The check is skipped for fields that are not marked, so a missing <code>check_company=True</code> is a silent hole: the domain is also missing and the form lets users pick wrong records.</p>
+<h2 id="company-dependent-fields">Company-dependent fields</h2>
+<p>Some values differ per company on the same record: a product's cost price, a partner's receivable account. <code>company_dependent=True</code> stores one value per company:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LibraryBook</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_inherit</span> <span class="o">=</span> <span class="s2">"library.book"</span>
+
+    <span class="n">replacement_cost</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="n">company_dependent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">shelf_account_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span><span class="s2">"account.account"</span><span class="p">,</span> <span class="n">company_dependent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_company</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>In the Odoo 18 source:</p>
+<ul>
+<li>The value is stored in the model's own table as a <strong>jsonb dictionary keyed by company id</strong>, not in a separate table. (Older versions used <code>ir.property</code> rows, which is why old tutorials describe them differently.) Defaults for companies without a value come from <code>ir.default</code>.</li>
+<li>It is read and written for <code>env.company</code>, the current company. Switching company changes what the same record shows.</li>
+<li>Allowed types are <code>char</code>, <code>float</code>, <code>boolean</code>, <code>integer</code>, <code>text</code>, <code>many2one</code>, <code>date</code>, <code>datetime</code>, <code>selection</code>, <code>html</code>. A company-dependent field <strong>cannot be <code>required</code></strong> and <strong>cannot be translated</strong>; Odoo warns at definition.</li>
+<li>With <code>check_company=True</code> on a company-dependent field, the check uses the <strong>currently active company</strong> instead of the record's company, and the generated domain uses the first enabled company.</li>
+<li>A model with company-dependent fields should have a <code>company_id</code> or <code>company_ids</code> field, or the framework logs "Skipping a company check ... the model doesn't have a <code>company_id</code>".</li>
+</ul>
+<p>Because of the jsonb storage, a SQL query on such a field needs the key: <code>replacement_cost-&gt;&gt;'1'</code> for company 1. When you read in SQL, remember this and that the value for a company without an entry is null, not the default.</p>
+<h2 id="where-multi-company-breaks">Where multi-company breaks</h2>
+<p><strong><code>sudo()</code>.</strong> It ignores record rules, so a <code>sudo().search([])</code> returns all companies' records mixed together, and <code>env.company</code> skips its sanity check. The <code>sudo</code> docstring in 18 spells it out: "could cause data access to cross the boundaries of record rules, possibly mixing records that are meant to be isolated (e.g. records from different companies)", and "methods which select one record among many - for example getting the default company, or selecting a Bill of Materials" can behave unintuitively. In a multi-company database every <code>sudo()</code> in a search is a bug report waiting to happen. Add the company explicitly when you must elevate:</p>
+<div class="highlight"><pre><span></span><code><span class="n">loans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.loan"</span><span class="p">]</span><span class="o">.</span><span class="n">sudo</span><span class="p">()</span><span class="o">.</span><span class="n">search</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">"company_id"</span><span class="p">,</span> <span class="s2">"in"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">companies</span><span class="o">.</span><span class="n">ids</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">"state"</span><span class="p">,</span> <span class="s2">"="</span><span class="p">,</span> <span class="s2">"open"</span><span class="p">),</span>
+<span class="p">])</span>
+</code></pre></div>
+<p><strong>Cron jobs and server actions.</strong> They run as the user configured on the job (often the superuser, <code>base.user_root</code>), so <code>env.company</code> is the superuser's main company and rules do not apply. A cron that processes "all open loans" will process every company with whatever company context the first record happens to give. Loop over companies explicitly:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@api</span><span class="o">.</span><span class="n">model</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_cron_send_reminders</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"res.company"</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">([]):</span>
+        <span class="n">loans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_company</span><span class="p">(</span><span class="n">company</span><span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">([</span>
+            <span class="p">(</span><span class="s2">"company_id"</span><span class="p">,</span> <span class="s2">"="</span><span class="p">,</span> <span class="n">company</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"state"</span><span class="p">,</span> <span class="s2">"="</span><span class="p">,</span> <span class="s2">"open"</span><span class="p">),</span>
+        <span class="p">])</span>
+        <span class="n">loans</span><span class="o">.</span><span class="n">_send_reminders</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Sequences.</strong> An <code>ir.sequence</code> has its own <code>company_id</code>. If the sequence has no company, all companies share one numbering. Use <code>company_id</code> on the sequence and search it with the right <code>with_company</code>, or invoices of different companies will interleave. See the sequences chapter in the ORM part.</p>
+<p><strong>Reports and emails.</strong> Reports render with the company of the record; templates should read <code>object.company_id</code>, not <code>user.company_id</code>, for letterheads and legal data.</p>
+<p><strong>Default values.</strong> <code>default=lambda self: self.env.company</code> evaluates at creation, in the creator's current company. Imports and automated creation under sudo take the superuser's. Pass <code>company_id</code> explicitly in automated creation.</p>
+<p><strong>Unique constraints.</strong> An SQL <code>UNIQUE (name)</code> is global across companies. If names only need to be unique per company use <code>UNIQUE (company_id, name)</code>; remember null <code>company_id</code> values are distinct in PostgreSQL unique constraints.</p>
+<p><strong>Domains in actions.</strong> Do not filter by company in an action <code>domain</code> for isolation; use the rule. The rule applies everywhere (list, kanban, search, RPC), a domain only in that action.</p>
+<h2 id="testing">Testing</h2>
+<p>Create two companies and a user belonging to both, and test with the switcher in each state:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@tagged</span><span class="p">(</span><span class="s2">"post_install"</span><span class="p">,</span> <span class="s2">"-at_install"</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TestLoanCompanies</span><span class="p">(</span><span class="n">TransactionCase</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setUpClass</span><span class="p">()</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">company_a</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">company</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"res.company"</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Company B"</span><span class="p">})</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"res.users"</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+            <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Multi"</span><span class="p">,</span> <span class="s2">"login"</span><span class="p">:</span> <span class="s2">"multi"</span><span class="p">,</span>
+            <span class="s2">"company_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">company_a</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">"company_ids"</span><span class="p">:</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">company_a</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span><span class="o">.</span><span class="n">id</span><span class="p">])],</span>
+            <span class="s2">"groups_id"</span><span class="p">:</span> <span class="p">[(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="s2">"library.group_library_user"</span><span class="p">)</span><span class="o">.</span><span class="n">id</span><span class="p">])],</span>
+        <span class="p">})</span>
+        <span class="n">Loan</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.loan"</span><span class="p">]</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">loan_b</span> <span class="o">=</span> <span class="n">Loan</span><span class="o">.</span><span class="n">with_company</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+            <span class="s2">"company_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">"member_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.member"</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"M"</span><span class="p">,</span> <span class="s2">"company_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span><span class="o">.</span><span class="n">id</span><span class="p">})</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">"book_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.book"</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"company_id"</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">company_b</span><span class="o">.</span><span class="n">id</span><span class="p">})</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+        <span class="p">})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_only_enabled_companies_are_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Loan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.loan"</span><span class="p">]</span><span class="o">.</span><span class="n">with_user</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">only_a</span> <span class="o">=</span> <span class="n">Loan</span><span class="o">.</span><span class="n">with_context</span><span class="p">(</span><span class="n">allowed_company_ids</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">company_a</span><span class="o">.</span><span class="n">id</span><span class="p">])</span><span class="o">.</span><span class="n">search</span><span class="p">([])</span>
+        <span class="n">both</span> <span class="o">=</span> <span class="n">Loan</span><span class="o">.</span><span class="n">with_context</span><span class="p">(</span>
+            <span class="n">allowed_company_ids</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">company_a</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">company_b</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">search</span><span class="p">([])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotIn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loan_b</span><span class="p">,</span> <span class="n">only_a</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loan_b</span><span class="p">,</span> <span class="n">both</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_incompatible_company_is_rejected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">book_a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.book"</span><span class="p">]</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"company_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">company_a</span><span class="o">.</span><span class="n">id</span><span class="p">})</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">UserError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loan_b</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s2">"book_id"</span><span class="p">:</span> <span class="n">book_a</span><span class="o">.</span><span class="n">id</span><span class="p">})</span>
+</code></pre></div>
+<p>The first test exercises the global rule through <code>allowed_company_ids</code>, exactly as the web client sends it. The second exercises <code>_check_company</code>. Also test a user who tries <code>allowed_company_ids</code> with a company they do not own: reading <code>env.company</code> raises <code>AccessError</code>.</p>
+<h2 id="odoo-20">Odoo 20</h2>
+<p>The isolation rule is an <code>ir.access</code> row without a group in the 20 tree (a restriction), for example <code>hr_employee_comp_rule</code> in <code>hr</code>: empty group, operation <code>crud</code>, domain <code>[('company_id', 'in', company_ids + [False])]</code>. The mechanisms above (<code>env.company</code>, <code>env.companies</code>, <code>with_company</code>, <code>check_company</code>) exist unchanged in the Odoo 20 tree. The group layout for <code>base.group_multi_company</code> follows the new privilege structure, which affects only the group XML you write, not the ORM behaviour.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<div class="admonition warning">
+<p><code>sudo()</code> plus <code>search</code> in a multi-company database mixes companies. Add the company condition explicitly, or avoid elevation.</p>
+</div>
+<ul>
+<li><strong>A group rule for companies.</strong> It does not restrict users outside the group. Companies need a global rule.</li>
+<li><strong>Forgetting <code>check_company=True</code>.</strong> No consistency check and no filtered dropdown; wrong-company records can be linked.</li>
+<li><strong><code>company_id</code> without <code>index=True</code>.</strong> The rule domain is on every query.</li>
+<li><strong>Defaulting <code>company_id</code> to <code>user.company_id</code>.</strong> Use <code>env.company</code>: records follow the switcher.</li>
+<li><strong>Crons that ignore companies.</strong> They run as the superuser. Loop over companies and use <code>with_company</code>.</li>
+<li><strong>Company-dependent fields in SQL.</strong> They are jsonb keyed by company id in 18; old <code>ir.property</code> queries do not apply.</li>
+<li><strong>A company-dependent field marked <code>required</code>.</strong> Not supported; Odoo warns.</li>
+<li><strong>Shared sequences</strong> across companies by leaving the sequence company empty.</li>
+<li><strong><code>env.company</code> on a tampered context.</strong> Raises <code>AccessError</code> for normal users; sudo skips the check.</li>
+<li><strong>Unique constraints without the company.</strong> Global uniqueness blocks legitimate duplicates across companies.</li>
+</ul>
+<h2 id="versions">Versions</h2>
+<div class="admonition info">
+<p><strong>16 and 17:</strong> company-dependent fields are stored as <code>ir.property</code> rows; <code>company_ids</code> rule context and <code>check_company</code> exist. Verify the storage claim on your branch before writing SQL against these fields.</p>
+<p><strong>18:</strong> company-dependent fields are jsonb columns on the model table, with defaults from <code>ir.default</code>. <code>check_company</code> and <code>_check_company_auto</code> as above.</p>
+<p><strong>20:</strong> same environment API.</p>
+</div>
+<h2 id="try-it">Try it</h2>
+<ol>
+<li>Create two companies and a user in both. Open the switcher with only A ticked, then both. Count <code>library.loan</code> records.</li>
+<li>In a shell, as that user, set <code>allowed_company_ids</code> to a company the user does not own and read <code>env.company</code>. Then repeat with <code>sudo()</code>.</li>
+<li>Add <code>replacement_cost</code> as company-dependent, set it in A and in B for one book, and read it in each company. Then inspect the column in SQL: <code>SELECT replacement_cost FROM library_book WHERE id = ...</code>.</li>
+</ol>
+<details>
+<summary>Solution notes</summary>
+<ol>
+<li>With only A ticked the rule hides B's loans; with both ticked they appear.</li>
+<li>The non-sudo access raises <code>AccessError: Access to unauthorized or invalid companies.</code>; with <code>sudo()</code> it returns the company.</li>
+<li>The value follows the current company, and the column holds a JSON object such as <code>{"1": 12.5, "2": 14.0}</code>.</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../field-level-security/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Field-level security">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Field-level security
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../secure-coding/" class="md-footer__link md-footer__link--next" aria-label="Next: Secure coding">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Secure coding
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

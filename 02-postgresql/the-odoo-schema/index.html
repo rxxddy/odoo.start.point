@@ -1,0 +1,4886 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="How Odoo turns models into tables, columns, constraints, and relation tables, and where its own metadata lives.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/02-postgresql/the-odoo-schema/">
+      
+      
+        <link rel="prev" href="../locks/">
+      
+      
+        <link rel="next" href="../psql-and-operations/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>The Odoo schema - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-odoo-schema" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Odoo schema
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/control-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/comprehensions-and-generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-model-name-to-table-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      From model name to table name
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-columns-every-table-has" class="md-nav__link">
+    <span class="md-ellipsis">
+      The columns every table has
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-type-to-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field type to column type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#many2one-the-foreign-key-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      Many2one: the foreign key column
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#many2many-the-relation-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Many2many: the relation table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-worked-example-python-to-ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      A worked example: Python to DDL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-and-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inheritance and the table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoos-own-metadata-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo's own metadata tables
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Odoo's own metadata tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ir_model-and-ir_model_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_model and ir_model_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ir_model_data-xml-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_model_data: XML IDs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ir_ui_view-and-the-others" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_ui_view and the others
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-core-business-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      The core business tables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-translated-and-json-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading translated and JSON values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/multi-company/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/registries-and-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/website-and-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-model-name-to-table-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      From model name to table name
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-columns-every-table-has" class="md-nav__link">
+    <span class="md-ellipsis">
+      The columns every table has
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-type-to-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field type to column type
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#many2one-the-foreign-key-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      Many2one: the foreign key column
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#many2many-the-relation-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Many2many: the relation table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-worked-example-python-to-ddl" class="md-nav__link">
+    <span class="md-ellipsis">
+      A worked example: Python to DDL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inheritance-and-the-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inheritance and the table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#odoos-own-metadata-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo's own metadata tables
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Odoo's own metadata tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ir_model-and-ir_model_fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_model and ir_model_fields
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ir_model_data-xml-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_model_data: XML IDs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ir_ui_view-and-the-others" class="md-nav__link">
+    <span class="md-ellipsis">
+      ir_ui_view and the others
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-core-business-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      The core business tables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discovery-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discovery queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-translated-and-json-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading translated and JSON values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/02-postgresql/the-odoo-schema.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-odoo-schema">The Odoo schema</h1>
+<p>Odoo never asks you to write <code>CREATE TABLE</code>. You declare a model in Python, and at install or update time the framework creates and alters tables to match. The mapping is regular enough to learn once: a model name gives a table name, a field type gives a column type, a <code>Many2many</code> gives a relation table, and a small set of <code>ir_*</code> tables record what the framework did and why. Knowing the rules lets you go from a Python class to the SQL (and back), find the rows behind a screen, and write a correct diagnostic query without opening the source. This chapter states the rules for Odoo 16 to 18, flags the points that differ by version, and finishes with a toolbox of discovery queries.</p>
+<p>The teaching module <code>library</code> is used throughout: models <code>library.book</code>, <code>library.author</code>, <code>library.loan</code>, <code>library.tag</code>. The standard tables mentioned (<code>res_partner</code>, <code>ir_model</code>, ...) are the same in every Odoo database.</p>
+<div class="admonition info">
+<p>Everything here describes behaviour of the Odoo 16, 17, and 18 series. Where a detail changed between them it is marked, and where it is stated without a marker it holds for all three. Whenever the exact column type or constraint matters to you, confirm it on your own database with <code>\d table_name</code> (the discovery habit this chapter teaches) rather than trusting a book.</p>
+</div>
+<h2 id="from-model-name-to-table-name">From model name to table name</h2>
+<p>The table name is the model's <code>_name</code> with dots replaced by underscores:</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>res.partner</code></td>
+<td><code>res_partner</code></td>
+</tr>
+<tr>
+<td><code>sale.order.line</code></td>
+<td><code>sale_order_line</code></td>
+</tr>
+<tr>
+<td><code>library.book</code></td>
+<td><code>library_book</code></td>
+</tr>
+<tr>
+<td><code>library.loan</code></td>
+<td><code>library_loan</code></td>
+</tr>
+</tbody>
+</table>
+<p>A model can override this with <code>_table = 'my_table'</code>, and a few standard models do. For a model you do not know, ask the registry instead of guessing (query below).</p>
+<p>Not every model has a table:</p>
+<ul>
+<li><strong>Regular models</strong> (<code>models.Model</code>) get a table.</li>
+<li><strong>Transient models</strong> (<code>models.TransientModel</code>, used for wizards) get a table too. Odoo vacuums old rows from it periodically, so rows are short-lived.</li>
+<li><strong>Abstract models</strong> (<code>models.AbstractModel</code>, mixins like <code>mail.thread</code>) have no table. Their fields are copied into the concrete models that inherit them.</li>
+<li><strong>Models with <code>_auto = False</code></strong> have no automatically created table. Reports commonly define one as a database view in <code>init()</code> (<code>CREATE VIEW sale_report AS ...</code>). They are listed by <code>\dv</code>, not <code>\dt</code>.</li>
+</ul>
+<h2 id="the-columns-every-table-has">The columns every table has</h2>
+<p>Each regular model table starts with an <code>id</code> primary key and four audit columns:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>integer</code>, from <code>&lt;table&gt;_id_seq</code> (<code>serial</code>)</td>
+<td>primary key</td>
+</tr>
+<tr>
+<td><code>create_uid</code></td>
+<td><code>integer</code>, foreign key to <code>res_users(id)</code>, <code>ON DELETE SET NULL</code></td>
+<td>user who created the row</td>
+</tr>
+<tr>
+<td><code>create_date</code></td>
+<td><code>timestamp without time zone</code></td>
+<td>creation time, UTC</td>
+</tr>
+<tr>
+<td><code>write_uid</code></td>
+<td><code>integer</code>, foreign key to <code>res_users(id)</code>, <code>ON DELETE SET NULL</code></td>
+<td>user of the last write</td>
+</tr>
+<tr>
+<td><code>write_date</code></td>
+<td><code>timestamp without time zone</code></td>
+<td>time of the last write, UTC</td>
+</tr>
+</tbody>
+</table>
+<p>The audit columns exist because <code>_log_access</code> defaults to true; a model that sets <code>_log_access = False</code> (typical of high-volume technical tables, such as <code>ir_attachment</code>-like or log tables, and of <code>_auto = False</code> views) has none. Because <code>create_uid</code> and <code>write_uid</code> point at <code>res_users</code>, deleting a user is allowed even though their ids appear everywhere: the audit columns become NULL.</p>
+<p>Other columns that appear by convention, not by rule: <code>active</code> (boolean, makes the ORM hide rows with false), <code>name</code>, <code>sequence</code>, <code>company_id</code>, <code>parent_id</code> and <code>parent_path</code> (when <code>_parent_store = True</code>, a varchar like <code>1/5/12/</code> that makes subtree queries a prefix match), and <code>state</code> (selection stored as its key). They are ordinary fields; they just recur.</p>
+<h2 id="field-type-to-column-type">Field type to column type</h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Column type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Integer</code></td>
+<td><code>int4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Float</code></td>
+<td><code>float8</code> (<code>double precision</code>)</td>
+<td>with <code>digits</code>, may be <code>numeric</code>; see hint</td>
+</tr>
+<tr>
+<td><code>Monetary</code></td>
+<td><code>numeric</code></td>
+<td>no <code>digits</code> limit in the column</td>
+</tr>
+<tr>
+<td><code>Char</code></td>
+<td><code>varchar</code></td>
+<td><code>size=n</code> adds a limit: <code>varchar(n)</code></td>
+</tr>
+<tr>
+<td><code>Text</code>, <code>Html</code></td>
+<td><code>text</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Boolean</code></td>
+<td><code>bool</code></td>
+<td>may be NULL on rows from before the field existed</td>
+</tr>
+<tr>
+<td><code>Date</code></td>
+<td><code>date</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Datetime</code></td>
+<td><code>timestamp</code> (without time zone)</td>
+<td>stored as UTC</td>
+</tr>
+<tr>
+<td><code>Selection</code></td>
+<td><code>varchar</code></td>
+<td>holds the key, e.g. <code>'available'</code>; no check constraint</td>
+</tr>
+<tr>
+<td><code>Binary</code></td>
+<td><code>bytea</code>, or no column</td>
+<td>default <code>attachment=True</code> stores the file in <code>ir_attachment</code> and the field has no column</td>
+</tr>
+<tr>
+<td><code>Image</code></td>
+<td>like <code>Binary</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Json</code></td>
+<td><code>jsonb</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>Many2one</code></td>
+<td><code>int4</code> plus a foreign key</td>
+<td>column name equals the field name, e.g. <code>author_id</code></td>
+</tr>
+<tr>
+<td><code>Reference</code></td>
+<td><code>varchar</code></td>
+<td>text <code>'model,id'</code>, no foreign key</td>
+</tr>
+<tr>
+<td><code>Many2oneReference</code></td>
+<td><code>int4</code></td>
+<td>an id into a model named by another field; no foreign key</td>
+</tr>
+<tr>
+<td><code>One2many</code></td>
+<td>no column</td>
+<td>the column is on the other model (the <code>inverse_name</code>)</td>
+</tr>
+<tr>
+<td><code>Many2many</code></td>
+<td>no column on either table</td>
+<td>a separate relation table (below)</td>
+</tr>
+<tr>
+<td>computed, not stored</td>
+<td>no column</td>
+<td>computed in Python on read</td>
+</tr>
+<tr>
+<td>computed with <code>store=True</code>, related with <code>store=True</code></td>
+<td>a normal column</td>
+<td>maintained by the ORM; stale if you write SQL</td>
+</tr>
+<tr>
+<td><code>Properties</code></td>
+<td><code>jsonb</code></td>
+<td>free-form properties (Odoo 17 and later)</td>
+</tr>
+</tbody>
+</table>
+<p>A column exists only for stored fields. When a field is "missing" from the table, check whether it is computed without <code>store</code>, a <code>One2many</code>, a <code>Many2many</code>, or an attachment-backed binary.</p>
+<div class="admonition info">
+<p>Versions. Whether <code>Float(digits=...)</code> creates a <code>numeric</code> or a <code>float8</code> column has varied; use <code>\d</code> on the real table. Translated <code>Char</code>/<code>Text</code>/<code>Html</code> fields (<code>translate=True</code>) are <code>jsonb</code> from Odoo 16, holding one entry per language code (<code>{"en_US": "Tidewater", "fr_FR": "..."}</code>); in Odoo 15 and earlier they are plain <code>varchar</code>/<code>text</code> and translations sit in <code>ir_translation</code>. Company-dependent fields (<code>company_dependent=True</code>) are stored in <code>ir_property</code> rows up to Odoo 17; from Odoo 18 they are, to my knowledge, a <code>jsonb</code> column on the model's own table keyed by company id (confirm in the release notes). In all versions reading them with SQL needs care.</p>
+</div>
+<h2 id="many2one-the-foreign-key-column">Many2one: the foreign key column</h2>
+<p><code>author_id = fields.Many2one('library.author')</code> creates <code>author_id integer</code> and a foreign key <code>library_book_author_id_fkey</code> referencing <code>library_author(id)</code>. The <code>ondelete</code> argument sets the foreign-key action:</p>
+<table>
+<thead>
+<tr>
+<th><code>ondelete=</code></th>
+<th>Foreign key action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(not given)</td>
+<td><code>SET NULL</code> for an optional field; <code>RESTRICT</code> for a required one (Odoo refuses <code>set null</code> on a required field)</td>
+</tr>
+<tr>
+<td><code>'set null'</code></td>
+<td><code>ON DELETE SET NULL</code></td>
+</tr>
+<tr>
+<td><code>'restrict'</code></td>
+<td><code>ON DELETE RESTRICT</code></td>
+</tr>
+<tr>
+<td><code>'cascade'</code></td>
+<td><code>ON DELETE CASCADE</code> (lines that cannot live without their header)</td>
+</tr>
+</tbody>
+</table>
+<p><code>index=True</code> adds a B-tree index <code>library_book_author_id_index</code>. Without it, there is no index on the foreign key column, so joins from <code>library_author</code> to its books and deletes of an author need a scan of <code>library_book</code>. The index habits of <a href="../indexes-and-explain/">Indexes and EXPLAIN</a> apply.</p>
+<p>A One2many has no column. <code>loan_ids = fields.One2many('library.loan', 'book_id')</code> is a view of the <code>book_id</code> many2one on <code>library_loan</code>. To read it in SQL you query <code>library_loan WHERE book_id = ...</code>.</p>
+<h2 id="many2many-the-relation-table">Many2many: the relation table</h2>
+<p><code>tag_ids = fields.Many2many('library.tag')</code> on <code>library.book</code> creates a table named from the two table names sorted alphabetically, joined, with <code>_rel</code> appended:</p>
+<div class="highlight"><pre><span></span><code>library_book_library_tag_rel
+</code></pre></div>
+<p>The two columns are named <code>&lt;table&gt;_id</code> for each side: <code>library_book_id</code> and <code>library_tag_id</code>. Both are <code>integer NOT NULL</code>, with foreign keys <code>ON DELETE CASCADE</code> to their parents, a unique constraint over the pair, and an index on the second column (so lookups from either side are indexed). Each row is one link; there is no <code>id</code>, no audit column, and so no way to know who linked what or when.</p>
+<p>You can override any of the three names in the field definition:</p>
+<div class="highlight"><pre><span></span><code><span class="n">tag_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2many</span><span class="p">(</span><span class="s1">'library.tag'</span><span class="p">,</span> <span class="n">relation</span><span class="o">=</span><span class="s1">'library_book_tag_rel'</span><span class="p">,</span>
+                           <span class="n">column1</span><span class="o">=</span><span class="s1">'book_id'</span><span class="p">,</span> <span class="n">column2</span><span class="o">=</span><span class="s1">'tag_id'</span><span class="p">)</span>
+</code></pre></div>
+<p>Standard Odoo does this all the time, so the alphabetical rule describes the default, not every table. For example <code>res.users</code> and <code>res.groups</code> are linked by <code>res_groups_users_rel</code> with columns <code>gid</code> and <code>uid</code>. Never assume; ask the registry (query below).</p>
+<p>PostgreSQL limits identifiers to 63 bytes, and Odoo refuses to create a relation table whose name would exceed it. For long model names the symptom is an error at module load telling you to pass <code>relation=</code> explicitly.</p>
+<p>Reading a many2many in SQL is the join from <a href="../joins/">Joins</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'en_US'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">book</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'en_US'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">tag</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">library_book</span><span class="w"> </span><span class="n">b</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">library_book_library_tag_rel</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">library_book_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">library_tag</span><span class="w"> </span><span class="n">t</span><span class="w">                  </span><span class="k">ON</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">library_tag_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+<p>(That assumes translated <code>name</code> fields on both models; for a non-translated <code>Char</code> write <code>b.name</code>.)</p>
+<h2 id="a-worked-example-python-to-ddl">A worked example: Python to DDL</h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LibraryBook</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'library.book'</span>
+    <span class="n">_description</span> <span class="o">=</span> <span class="s1">'Book'</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">translate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">isbn</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Char</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Selection</span><span class="p">([(</span><span class="s1">'available'</span><span class="p">,</span> <span class="s1">'Available'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'lost'</span><span class="p">,</span> <span class="s1">'Lost'</span><span class="p">)],</span>
+                             <span class="n">default</span><span class="o">=</span><span class="s1">'available'</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Float</span><span class="p">()</span>
+    <span class="n">author_id</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2one</span><span class="p">(</span><span class="s1">'library.author'</span><span class="p">,</span> <span class="n">ondelete</span><span class="o">=</span><span class="s1">'set null'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tag_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Many2many</span><span class="p">(</span><span class="s1">'library.tag'</span><span class="p">)</span>
+    <span class="n">loan_ids</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">One2many</span><span class="p">(</span><span class="s1">'library.loan'</span><span class="p">,</span> <span class="s1">'book_id'</span><span class="p">)</span>
+    <span class="n">loan_count</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">compute</span><span class="o">=</span><span class="s1">'_compute_loan_count'</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_sql_constraints</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">'isbn_unique'</span><span class="p">,</span> <span class="s1">'unique(isbn)'</span><span class="p">,</span> <span class="s1">'The ISBN must be unique.'</span><span class="p">),</span>
+    <span class="p">]</span>
+</code></pre></div>
+<p>After installing the module, <code>\d library_book</code> shows (abridged, with details that vary by release):</p>
+<div class="highlight"><pre><span></span><code>                                          Table "public.library_book"
+    Column    |            Type             | Nullable |                 Default
+--------------+-----------------------------+----------+------------------------------------------
+ id           | integer                     | not null | nextval('library_book_id_seq'::regclass)
+ create_uid   | integer                     |          |
+ create_date  | timestamp without time zone |          |
+ write_uid    | integer                     |          |
+ write_date   | timestamp without time zone |          |
+ name         | jsonb                       | not null |
+ isbn         | character varying(13)       |          |
+ state        | character varying           | not null |
+ active       | boolean                     |          |
+ weight       | double precision            |          |
+ author_id    | integer                     |          |
+ loan_count   | integer                     |          |
+Indexes:
+    "library_book_pkey" PRIMARY KEY, btree (id)
+    "library_book_author_id_index" btree (author_id)
+    "library_book_isbn_unique" UNIQUE CONSTRAINT, btree (isbn)
+Foreign-key constraints:
+    "library_book_author_id_fkey" FOREIGN KEY (author_id) REFERENCES library_author(id) ON DELETE SET NULL
+    "library_book_create_uid_fkey" FOREIGN KEY (create_uid) REFERENCES res_users(id) ON DELETE SET NULL
+    "library_book_write_uid_fkey" FOREIGN KEY (write_uid) REFERENCES res_users(id) ON DELETE SET NULL
+Referenced by:
+    TABLE "library_book_library_tag_rel" CONSTRAINT "library_book_library_tag_rel_library_book_id_fkey" ...
+    TABLE "library_loan" CONSTRAINT "library_loan_book_id_fkey" ...
+</code></pre></div>
+<p>Note what is not in the table: <code>tag_ids</code> (a relation table) and <code>loan_ids</code> (a column on <code>library_loan</code>). Note also the constraint name: <code>_sql_constraints</code> entries become <code>&lt;table&gt;_&lt;constraint name&gt;</code>, here <code>library_book_isbn_unique</code>. That name is what appears in the error text, which is how you map a raw database error back to the declaration: <code>duplicate key value violates unique constraint "library_book_isbn_unique"</code>.</p>
+<p>Odoo also writes a comment on each column with the field's label and on the table with the model's <code>_description</code>. These come out in the descriptive form of <code>\d</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="err">\</span><span class="n">d</span><span class="o">+</span><span class="w"> </span><span class="n">library_book</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">col_description</span><span class="p">(</span><span class="s1">'library_book'</span><span class="p">::</span><span class="n">regclass</span><span class="p">,</span><span class="w"> </span><span class="n">attnum</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="n">attname</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_attribute</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">attrelid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library_book'</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">attnum</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">attisdropped</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">attnum</span><span class="p">;</span>
+</code></pre></div>
+<p>The labels give the screen name for each column, which helps when you meet an unfamiliar table.</p>
+<div class="admonition info">
+<p>Versions. Up to Odoo 18, <code>_sql_constraints</code> is the mechanism. Later versions replace it with constraint objects declared on the class; the database objects and their naming stay close, but check the release notes of the version you work on.</p>
+</div>
+<h2 id="inheritance-and-the-table">Inheritance and the table</h2>
+<p>How a model extends another decides what happens in the database.</p>
+<ul>
+<li><strong>Extension in place</strong> (<code>_inherit = 'res.partner'</code> without a new <code>_name</code>): the new fields become columns on the <strong>same</strong> table <code>res_partner</code>. This is how modules add fields to standard models, and why <code>res_partner</code> grows wide.</li>
+<li><strong>Prototype inheritance</strong> (<code>_name = 'x.y'</code> with <code>_inherit = 'a.b'</code>): a new model with its own new table, copying a's fields.</li>
+<li><strong>Delegation</strong> (<code>_inherits = {'res.partner': 'partner_id'}</code>): the child has its own table with a required many2one to the parent table, and reads and writes of the inherited fields transparently go to the parent row. <code>res_users</code> is the standard example: a user row has a <code>partner_id</code>, and the user's name, email, and image live in <code>res_partner</code>.</li>
+<li><strong>Mixins</strong> (abstract): no table of their own. <code>mail.thread</code> adds no column to your table; its data lives in <code>mail_message</code>, <code>mail_followers</code>, and friends, tied to your records by <code>model</code> and <code>res_id</code>.</li>
+</ul>
+<p>Custom fields created through the UI or Studio are model fields too: their names start with <code>x_</code> and their rows in <code>ir_model_fields</code> have <code>state = 'manual'</code>, and they produce columns like any other stored field. They are not part of any module's Python, which is why they are easy to lose when a database is copied without the right database dump of the metadata tables.</p>
+<h2 id="odoos-own-metadata-tables">Odoo's own metadata tables</h2>
+<p>The <code>ir_*</code> tables are Odoo's catalogue about itself. These are the ones a developer reads.</p>
+<h3 id="ir_model-and-ir_model_fields">ir_model and ir_model_fields</h3>
+<p><code>ir_model</code> lists every model; <code>ir_model_fields</code> lists every field, including those with no column:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'en_US'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">label</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">transient</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model</span><span class="w"> </span><span class="n">m</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">model</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">'library.%'</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">m</span><span class="p">.</span><span class="n">model</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>      model      |  label  | transient
+-----------------+---------+-----------
+ library.author  | Author  | f
+ library.book    | Book    | f
+ library.loan    | Loan    | f
+ library.tag     | Tag     | f
+(4 rows)
+</code></pre></div>
+<p>(<code>name</code> is <code>jsonb</code> from Odoo 16; in 15 and earlier read it as plain text.) The table behind a model:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="k">replace</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="s1">'.'</span><span class="p">,</span><span class="w"> </span><span class="s1">'_'</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">expected_table</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span><span class="p">;</span>
+</code></pre></div>
+<p><code>replace(model, '.', '_')</code> is right unless the model sets <code>_table</code>; confirm with <code>\dt library_book</code>.</p>
+<p>List the fields of a model, stored or not:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">ttype</span><span class="p">,</span><span class="w"> </span><span class="n">relation</span><span class="p">,</span><span class="w"> </span><span class="n">store</span><span class="p">,</span><span class="w"> </span><span class="n">required</span><span class="p">,</span><span class="w"> </span><span class="k">index</span><span class="p">,</span><span class="w"> </span><span class="n">compute</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">computed</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>     name     |   ttype   |    relation    | store | required | index | computed
+--------------+-----------+----------------+-------+----------+-------+----------
+ active       | boolean   |                | t     | f        | f     | f
+ author_id    | many2one  | library.author | t     | f        | t     | f
+ create_date  | datetime  |                | t     | f        | f     | f
+ create_uid   | many2one  | res.users      | t     | f        | f     | f
+ display_name | char      |                | f     | f        | f     | t
+ id           | integer   |                | t     | f        | f     | f
+ isbn         | char      |                | t     | f        | f     | f
+ loan_count   | integer   |                | t     | f        | f     | t
+ loan_ids     | one2many  | library.loan   | f     | f        | f     | f
+ name         | char      |                | t     | t        | f     | f
+ state        | selection |                | t     | t        | f     | f
+ tag_ids      | many2many | library.tag    | f     | f        | f     | f
+ weight       | float     |                | t     | f        | f     | f
+ write_date   | datetime  |                | t     | f        | f     | f
+ write_uid    | many2one  | res.users      | t     | f        | f     | f
+(15 rows)
+</code></pre></div>
+<p>The inherited technical field <code>display_name</code> is listed too, with no column. Some releases also list <code>__last_update</code> (non-stored). Fields you did not declare, such as <code>message_ids</code>, appear as soon as the model inherits a mixin.</p>
+<p><code>store = f</code> fields have no column. For a many2many the same table records the relation table and its two column names, so you never need to infer them:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">relation</span><span class="p">,</span><span class="w"> </span><span class="n">relation_table</span><span class="p">,</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'res.users'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">ttype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'many2many'</span><span class="p">;</span>
+</code></pre></div>
+<p>Selection values live in <code>ir_model_fields_selection</code> (columns <code>field_id</code>, <code>value</code>, <code>name</code>, <code>sequence</code>), one row per option.</p>
+<h3 id="ir_model_data-xml-ids">ir_model_data: XML IDs</h3>
+<p>Every record created from a data file, and many created in code, has a row in <code>ir_model_data</code> that maps a stable name to a database id:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>module</code></td>
+<td>the module that owns the record, e.g. <code>base</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>the local part of the XML ID</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td>the model of the record, e.g. <code>res.groups</code></td>
+</tr>
+<tr>
+<td><code>res_id</code></td>
+<td>the record's <code>id</code> in that model's table</td>
+</tr>
+<tr>
+<td><code>noupdate</code></td>
+<td>if true, module updates do not overwrite this record's data</td>
+</tr>
+</tbody>
+</table>
+<p>The full XML ID is <code>module.name</code>. Resolve one in either direction:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- XML ID to record id</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">res_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_data</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'base'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'group_user'</span><span class="p">;</span>
+
+<span class="c1">-- record to XML ID(s)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">'.'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">xml_id</span><span class="p">,</span><span class="w"> </span><span class="n">noupdate</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_data</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'res.groups'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">res_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<p>This is how you find the row behind <code>env.ref('base.group_user')</code> without a shell. It is also the first place to look when a "record was deleted" error appears at module update: an <code>ir_model_data</code> row exists, but its target is gone (a raw <code>DELETE</code> somewhere), and the update stops with a missing-reference error.</p>
+<h3 id="ir_ui_view-and-the-others">ir_ui_view and the others</h3>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Content</th>
+<th>Useful columns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ir_ui_view</code></td>
+<td>every view</td>
+<td><code>name</code>, <code>model</code>, <code>type</code>, <code>arch_db</code> (the XML), <code>inherit_id</code>, <code>mode</code> (<code>primary</code> or <code>extension</code>), <code>key</code>, <code>priority</code>, <code>active</code></td>
+</tr>
+<tr>
+<td><code>ir_act_window</code></td>
+<td>window actions</td>
+<td><code>name</code>, <code>res_model</code>, <code>view_mode</code>, <code>domain</code>, <code>context</code></td>
+</tr>
+<tr>
+<td><code>ir_ui_menu</code></td>
+<td>the menu tree</td>
+<td><code>name</code>, <code>parent_id</code>, <code>action</code> (a reference string <code>ir.actions.act_window,&lt;id&gt;</code>), <code>sequence</code></td>
+</tr>
+<tr>
+<td><code>ir_attachment</code></td>
+<td>files</td>
+<td><code>name</code>, <code>res_model</code>, <code>res_id</code>, <code>res_field</code>, <code>type</code>, <code>store_fname</code>, <code>file_size</code>, <code>mimetype</code>, <code>db_datas</code></td>
+</tr>
+<tr>
+<td><code>ir_config_parameter</code></td>
+<td>system parameters</td>
+<td><code>key</code>, <code>value</code></td>
+</tr>
+<tr>
+<td><code>ir_cron</code></td>
+<td>scheduled actions</td>
+<td><code>cron_name</code> (or the linked action), <code>active</code>, <code>interval_number</code>, <code>interval_type</code>, <code>nextcall</code></td>
+</tr>
+<tr>
+<td><code>ir_module_module</code></td>
+<td>installed modules</td>
+<td><code>name</code>, <code>state</code>, <code>latest_version</code></td>
+</tr>
+<tr>
+<td><code>ir_model_access</code></td>
+<td>ACL rows</td>
+<td><code>model_id</code>, <code>group_id</code>, <code>perm_read</code>, <code>perm_write</code>, <code>perm_create</code>, <code>perm_unlink</code></td>
+</tr>
+<tr>
+<td><code>ir_rule</code></td>
+<td>record rules</td>
+<td><code>model_id</code>, <code>domain_force</code>, <code>global</code>, <code>groups</code></td>
+</tr>
+<tr>
+<td><code>ir_sequence</code></td>
+<td>numbering sequences</td>
+<td><code>code</code>, <code>prefix</code>, <code>padding</code>, <code>number_next</code></td>
+</tr>
+</tbody>
+</table>
+<p>A view's XML is in <code>arch_db</code>, which is how you see what a view really looks like after all inheritance is stored (but not applied; the combined view is built at load). Find the extensions of a view:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="k">mode</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">priority</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_ui_view</span><span class="w"> </span><span class="n">v</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">inherit_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_ui_view</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.view_book_form'</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">priority</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+<p>(Use a real view key from your database; keys are <code>module.xmlid</code>.) Installed modules and their states:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">latest_version</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_module_module</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">state</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'installed'</span><span class="p">,</span><span class="w"> </span><span class="s1">'to upgrade'</span><span class="p">,</span><span class="w"> </span><span class="s1">'to install'</span><span class="p">,</span><span class="w"> </span><span class="s1">'to remove'</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</code></pre></div>
+<p>Module <code>state</code> takes the values <code>uninstalled</code>, <code>installed</code>, <code>to install</code>, <code>to upgrade</code>, <code>to remove</code>, and <code>uninstallable</code>. A module stuck in <code>to upgrade</code> after an interrupted update is a common reason an instance refuses to start cleanly.</p>
+<p>Be careful with attachment files: <code>ir_attachment.db_datas</code> holds file contents when <code>ir.attachment.location</code> is <code>db</code>; otherwise <code>store_fname</code> names a file on disk (the filestore) and the column is NULL. Select without <code>db_datas</code> unless you want megabytes.</p>
+<h2 id="the-core-business-tables">The core business tables</h2>
+<p>You will read these constantly. The names are stable across 16 to 18:</p>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>res_partner</code></td>
+<td>every contact, company, and address. <code>parent_id</code> links a contact to its company; <code>is_company</code>; <code>type</code> (<code>contact</code>, <code>invoice</code>, <code>delivery</code>, ...); <code>active</code>; <code>company_id</code> optional</td>
+</tr>
+<tr>
+<td><code>res_users</code></td>
+<td>one row per login (<code>login</code>, <code>active</code>, <code>partner_id</code>, <code>company_id</code>, <code>share</code>). The person's name, email, and image are on the linked <code>res_partner</code> row. Never select the password column</td>
+</tr>
+<tr>
+<td><code>res_company</code></td>
+<td>companies, linked to a <code>partner_id</code>; <code>parent_id</code> for hierarchies</td>
+</tr>
+<tr>
+<td><code>res_groups</code></td>
+<td>security groups. Memberships in <code>res_groups_users_rel (gid, uid)</code>; implied groups in another relation table</td>
+</tr>
+<tr>
+<td><code>res_country</code>, <code>res_currency</code>, <code>res_lang</code></td>
+<td>reference data. <code>res_currency_rate</code> has the exchange rates</td>
+</tr>
+<tr>
+<td><code>mail_message</code></td>
+<td>chatter messages and logged notes: <code>model</code>, <code>res_id</code>, <code>body</code>, <code>message_type</code>, <code>author_id</code>, <code>date</code></td>
+</tr>
+<tr>
+<td><code>mail_followers</code></td>
+<td>followers: <code>res_model</code>, <code>res_id</code>, <code>partner_id</code></td>
+</tr>
+<tr>
+<td><code>product_template</code>, <code>product_product</code></td>
+<td>product and its variants; the variant has <code>product_tmpl_id</code></td>
+</tr>
+<tr>
+<td><code>account_move</code>, <code>account_move_line</code></td>
+<td>invoices, bills, journal entries and their lines (all in one table pair, told apart by <code>move_type</code>)</td>
+</tr>
+<tr>
+<td><code>sale_order</code>, <code>sale_order_line</code>, <code>purchase_order</code>, <code>stock_picking</code>, <code>stock_move</code>, <code>stock_quant</code></td>
+<td>the usual document tables</td>
+</tr>
+</tbody>
+</table>
+<p>Two modelling patterns explain many joins:</p>
+<ul>
+<li>Generic references from <code>mail_message</code>, <code>ir_attachment</code>, and <code>mail_followers</code> use a pair of columns: the model name as a string, and the id as an integer, with no foreign key. "All messages of this partner" is <code>WHERE model = 'res.partner' AND res_id = 42</code>. Such rows are not removed by database cascades; the ORM deletes them when the owning record is unlinked, so a raw delete of the owner leaves orphans.</li>
+<li>The header/line pattern: a <code>*_line</code> table has a many2one to its header (<code>order_id</code>, <code>move_id</code>, <code>picking_id</code>), usually <code>ondelete='cascade'</code>, and the money totals on the header are stored computed fields maintained from the lines.</li>
+</ul>
+<h2 id="discovery-queries">Discovery queries</h2>
+<p>Keep these in a snippet file. They answer the first questions about any Odoo database.</p>
+<p><strong>Row counts of the largest tables</strong> (estimates, instant):</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">relname</span><span class="p">,</span><span class="w"> </span><span class="n">reltuples</span><span class="p">::</span><span class="nb">bigint</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">approx_rows</span><span class="p">,</span>
+<span class="w">       </span><span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="n">oid</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_size</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_class</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">relkind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'r'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">relnamespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'public'</span><span class="p">::</span><span class="n">regnamespace</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="n">oid</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span>
+</code></pre></div>
+<p>On a database that has run for years, <code>ir_attachment</code> (when stored in the database), <code>mail_message</code>, <code>mail_tracking_value</code>, <code>bus_bus</code>, and accounting lines typically lead the list.</p>
+<p><strong>Which tables reference <code>res_partner</code></strong> (and with what delete rule), the reason a contact cannot be deleted:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">conrelid</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">referencing_table</span><span class="p">,</span>
+<span class="w">       </span><span class="n">a</span><span class="p">.</span><span class="n">attname</span><span class="w">           </span><span class="k">AS</span><span class="w"> </span><span class="k">column</span><span class="p">,</span>
+<span class="w">       </span><span class="k">CASE</span><span class="w"> </span><span class="n">confdeltype</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">'a'</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">'NO ACTION'</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">'r'</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">'RESTRICT'</span>
+<span class="w">                        </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">'c'</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">'CASCADE'</span><span class="w">  </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">'n'</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">'SET NULL'</span>
+<span class="w">                        </span><span class="k">WHEN</span><span class="w"> </span><span class="s1">'d'</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">'SET DEFAULT'</span><span class="w"> </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">on_delete</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_constraint</span><span class="w"> </span><span class="k">c</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">pg_attribute</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">attrelid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">conrelid</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">attnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">conkey</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">contype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'f'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">confrelid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'res_partner'</span><span class="p">::</span><span class="n">regclass</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Columns that exist in the table but not in the registry</strong>, a sign of removed fields (Odoo does not drop the column when a field disappears; it only drops the <code>NOT NULL</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="k">column_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">c</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="k">table_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library_book'</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="k">column_name</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>Which module defines a model.</strong> <code>ir_model_data</code> rows for the model's <code>model_*</code> xml ids name the owners:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">module</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_data</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'ir.model'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">res_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>A record's chatter.</strong> Messages of a record:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="nb">date</span><span class="p">,</span><span class="w"> </span><span class="n">message_type</span><span class="p">,</span><span class="w"> </span><span class="k">left</span><span class="p">(</span><span class="n">regexp_replace</span><span class="p">(</span><span class="n">body</span><span class="p">,</span><span class="w"> </span><span class="s1">'&lt;[^&gt;]+&gt;'</span><span class="p">,</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span><span class="w"> </span><span class="s1">'g'</span><span class="p">),</span><span class="w"> </span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">text</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">mail_message</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">res_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="nb">date</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+</code></pre></div>
+<p>The <code>regexp_replace</code> strips HTML tags so the body is readable in a terminal.</p>
+<p><strong>Which cron jobs will run next:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">active</span><span class="p">,</span><span class="w"> </span><span class="n">nextcall</span><span class="p">,</span><span class="w"> </span><span class="n">interval_number</span><span class="p">,</span><span class="w"> </span><span class="n">interval_type</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_cron</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nextcall</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</code></pre></div>
+<p>The <code>ir_cron</code> columns that name the job and its code differ between versions (the job's name is on the linked <code>ir_act_server</code> row in recent releases), so join accordingly or <code>\d ir_cron</code> first.</p>
+<p><strong>The company of a record</strong>, <strong>the stored translation of a term</strong>, <strong>the properties of a record</strong>: all of these follow the same recipe: find the model in <code>ir_model</code>, list its fields in <code>ir_model_fields</code>, then query the table.</p>
+<h2 id="reading-translated-and-json-values">Reading translated and JSON values</h2>
+<p>In Odoo 16 and later a translated field is a JSON object:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'en_US'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">en</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'fr_FR'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">fr</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">library_book</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">id</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code> id |                   name                    |     en     |       fr
+----+-------------------------------------------+------------+-----------------
+  1 | {"en_US": "Tidewater"}                    | Tidewater  |
+  2 | {"en_US": "Salt Roads", "fr_FR": "Routes de sel"} | Salt Roads | Routes de sel
+</code></pre></div>
+<p>A missing language key gives NULL, not a fallback to English; the ORM applies the fallback in Python. When you filter with <code>ILIKE</code> against a translated field in SQL, filter on the key: <code>name-&gt;&gt;'en_US' ILIKE '%road%'</code>. And when you update, use <code>jsonb_set</code> to change one language without erasing the others (<a href="../writing-data/">INSERT, UPDATE, DELETE</a>).</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Assuming <code>model.name</code> is <code>table_name</code>.</strong> It is, until a model sets <code>_table</code>. Check <code>ir_model</code> and <code>\dt</code>.</li>
+<li><strong>Looking for a column that does not exist.</strong> One2many, Many2many, non-stored computed fields, and attachment-backed binaries have none. Query <code>ir_model_fields</code> for <code>store</code>.</li>
+<li><strong>Guessing relation-table names.</strong> Standard modules override them. Read <code>relation_table</code>, <code>column1</code>, and <code>column2</code> from <code>ir_model_fields</code>.</li>
+<li><strong>Writing a stored computed or related field in SQL and not its dependants.</strong> The ORM will not recompute. Update both, or recompute in the shell.</li>
+<li><strong>Treating <code>jsonb</code> names as text.</strong> On 16+, <code>WHERE name = 'x'</code> compares to a JSON value. Use <code>name-&gt;&gt;'en_US'</code>.</li>
+<li><strong>Selecting binary columns by accident.</strong> <code>SELECT *</code> on <code>ir_attachment</code> or <code>res_partner</code> (image fields in attachments) can transfer huge data. Name your columns.</li>
+<li><strong>Raw deletes leaving orphans.</strong> No foreign key protects <code>mail_message</code>, <code>ir_attachment</code>, or <code>ir_model_data</code> rows that reference a deleted record by model name and id.</li>
+<li><strong>Believing <code>active</code> means deleted.</strong> Archived rows are still there; a count that ignores <code>active</code> includes them. Odoo's UI count excludes them.</li>
+<li><strong>Joining <code>res_users</code> to <code>res_partner</code> incorrectly.</strong> A user's display name is the partner's <code>name</code>. <code>res_users</code> has no name column of its own.</li>
+<li><strong>Reading local time out of UTC columns.</strong> <code>create_date</code> and <code>write_date</code> are UTC. Convert deliberately.</li>
+<li><strong>Unique error names read as noise.</strong> A constraint named <code>library_book_isbn_unique</code> tells you the module, the model, and the declaration; search the code for the suffix.</li>
+</ul>
+<h2 id="try-it">Try it</h2>
+<p>Use any Odoo database you may read (a throwaway development database, or a restored copy; never a live production system), or reason from the <code>library_book</code> example if you have none.</p>
+<ol>
+<li>
+<p>Find the table and the stored columns of the model <code>res.partner</code> using <code>ir_model</code> and <code>ir_model_fields</code> (your database must be Odoo 16 or later to see jsonb labels; otherwise drop the <code>-&gt;&gt;</code>). Which of its relational fields have no column?</p>
+</li>
+<li>
+<p>For <code>res.users</code>, find every many2many field, with its relation table and the two column names. Then write the SQL join listing user logins and their group names for one user.</p>
+</li>
+<li>
+<p>Resolve the XML ID <code>base.user_root</code> (or <code>base.main_company</code>) to a record id and a table, then fetch the row from that table.</p>
+</li>
+<li>
+<p>Write a query that lists, for the model <code>library.book</code>, the foreign keys declared on its table, using <code>pg_constraint</code>, and compare with the <code>many2one</code> rows of <code>ir_model_fields</code>. Which foreign keys have no counterpart among the fields, and why?</p>
+</li>
+<li>
+<p>Given the error <code>duplicate key value violates unique constraint "library_loan_book_member_uniq"</code>, work out the table, the likely <code>_sql_constraints</code> name, and the columns involved, using only the catalog.</p>
+</li>
+</ol>
+<details>
+<summary>Solution</summary>
+<ol>
+<li>
+<p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">ttype</span><span class="p">,</span><span class="w"> </span><span class="n">relation</span><span class="p">,</span><span class="w"> </span><span class="n">store</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'res.partner'</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">store</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</code></pre></div>
+The model's table is <code>res_partner</code>. Fields with <code>store = f</code> and <code>ttype</code> of <code>one2many</code> or <code>many2many</code> (for example <code>child_ids</code>, <code>category_id</code>, <code>user_ids</code>) have no column on <code>res_partner</code>, and non-stored computed fields (many) have none either. The remaining stored fields are the columns of <code>\d res_partner</code>.</p>
+</li>
+<li>
+<p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">relation</span><span class="p">,</span><span class="w"> </span><span class="n">relation_table</span><span class="p">,</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'res.users'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">ttype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'many2many'</span><span class="p">;</span>
+</code></pre></div>
+For the groups, <code>groups_id</code> points at <code>res.groups</code> with relation table <code>res_groups_users_rel</code> and columns <code>uid</code>, <code>gid</code>. The join:
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">login</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">name</span><span class="o">-&gt;&gt;</span><span class="s1">'en_US'</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">grp</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">res_users</span><span class="w"> </span><span class="n">u</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">res_groups_users_rel</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">uid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">res_groups</span><span class="w"> </span><span class="k">g</span><span class="w">           </span><span class="k">ON</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">r</span><span class="p">.</span><span class="n">gid</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">u</span><span class="p">.</span><span class="n">login</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'someone'</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+On Odoo 16 and later <code>res_groups.name</code> is <code>jsonb</code>; in earlier versions use <code>g.name</code>.</p>
+</li>
+<li>
+<p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">res_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_data</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'base'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'user_root'</span><span class="p">;</span>
+</code></pre></div>
+The result names <code>res.users</code> and an id. The table is <code>res_users</code>: <code>SELECT id, login, partner_id FROM res_users WHERE id = &lt;res_id&gt;;</code>.</p>
+</li>
+<li>
+<p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">conname</span><span class="p">,</span><span class="w"> </span><span class="n">pg_get_constraintdef</span><span class="p">(</span><span class="n">oid</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_constraint</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">conrelid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library_book'</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">contype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'f'</span><span class="p">;</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">relation</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">ir_model_fields</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library.book'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">ttype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'many2one'</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">store</span><span class="p">;</span>
+</code></pre></div>
+Both lists contain <code>author_id</code>, <code>create_uid</code>, and <code>write_uid</code>: every stored many2one has one foreign key, named <code>&lt;table&gt;_&lt;column&gt;_fkey</code>. The foreign keys that are not many2one fields live on other tables: the relation table <code>library_book_library_tag_rel</code> carries two (to <code>library_book</code> and <code>library_tag</code>), and <code>library_loan</code> carries one pointing at <code>library_book</code>. They appear under "Referenced by" in <code>\d library_book</code>, not in its own constraint list.</p>
+</li>
+<li>
+<p><div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">conrelid</span><span class="p">::</span><span class="n">regclass</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">table_name</span><span class="p">,</span><span class="w"> </span><span class="n">conname</span><span class="p">,</span><span class="w"> </span><span class="n">pg_get_constraintdef</span><span class="p">(</span><span class="n">oid</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">pg_constraint</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">conname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'library_loan_book_member_uniq'</span><span class="p">;</span>
+</code></pre></div>
+The result gives the table <code>library_loan</code> and a definition such as <code>UNIQUE (book_id, member_id)</code>. The Odoo name is the part after <code>library_loan_</code>: the <code>_sql_constraints</code> entry called <code>book_member_uniq</code> in the <code>library.loan</code> model.</p>
+</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../locks/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Locks">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Locks
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../psql-and-operations/" class="md-footer__link md-footer__link--next" aria-label="Next: psql and operations">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                psql and operations
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4851 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Conditions, loops, and the idioms that replace most loops.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/01-python/control-flow/">
+      
+      
+        <link rel="prev" href="../collections/">
+      
+      
+        <link rel="next" href="../functions/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Control flow - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#control-flow" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Control flow
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#indentation-is-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indentation is syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-elif-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      if, elif, else
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="if, elif, else">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guard-clauses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guard clauses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional expressions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#match-python-310" class="md-nav__link">
+    <span class="md-ellipsis">
+      match (Python 3.10+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      for loops
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="for loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    <span class="md-ellipsis">
+      range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looping-the-python-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      Looping the Python way
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looping-over-dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Looping over dictionaries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#break-continue-and-the-loop-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      break, continue, and the loop else
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-shape-for-record-in-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo shape: for record in self
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-a-collection-while-looping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying a collection while looping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#while-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      while loops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pass-and-placeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      pass, and placeholders
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-loops-with-built-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Replacing loops with built-ins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing loops with built-ins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sum-min-max-len" class="md-nav__link">
+    <span class="md-ellipsis">
+      sum, min, max, len
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any-and-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      any and all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-with-a-default-first-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      next with a default: first match
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#counting-and-summing-booleans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Counting and summing booleans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting-and-ranking-instead-of-looping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting and ranking instead of looping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-recordset-equivalents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo recordset equivalents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-walrus-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      The walrus operator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comprehensions-and-generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/the-odoo-schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/multi-company/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/registries-and-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/website-and-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09-frontend-js/tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#indentation-is-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      Indentation is syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-elif-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      if, elif, else
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="if, elif, else">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#guard-clauses" class="md-nav__link">
+    <span class="md-ellipsis">
+      Guard clauses
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional expressions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#match-python-310" class="md-nav__link">
+    <span class="md-ellipsis">
+      match (Python 3.10+)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      for loops
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="for loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    <span class="md-ellipsis">
+      range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looping-the-python-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      Looping the Python way
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looping-over-dictionaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Looping over dictionaries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#break-continue-and-the-loop-else" class="md-nav__link">
+    <span class="md-ellipsis">
+      break, continue, and the loop else
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-shape-for-record-in-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo shape: for record in self
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-a-collection-while-looping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Modifying a collection while looping
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#while-loops" class="md-nav__link">
+    <span class="md-ellipsis">
+      while loops
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pass-and-placeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      pass, and placeholders
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#replacing-loops-with-built-ins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Replacing loops with built-ins
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Replacing loops with built-ins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sum-min-max-len" class="md-nav__link">
+    <span class="md-ellipsis">
+      sum, min, max, len
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any-and-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      any and all
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#next-with-a-default-first-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      next with a default: first match
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#counting-and-summing-booleans" class="md-nav__link">
+    <span class="md-ellipsis">
+      Counting and summing booleans
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sorting-and-ranking-instead-of-looping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sorting and ranking instead of looping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odoo-recordset-equivalents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Odoo recordset equivalents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-walrus-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      The walrus operator
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/01-python/control-flow.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="control-flow">Control flow</h1>
+<p>Up to now every example ran top to bottom, once. Real code has to make decisions ("is this loan overdue?"), repeat work ("do this for each record"), and stop early ("nothing to do, return"). Python's tools for that are <code>if</code>, <code>for</code>, <code>while</code>, and a small set of built-ins that replace many hand-written loops. Odoo methods are mostly loops over records with conditions inside, so fluency here pays back on every page of the rest of the book.</p>
+<h2 id="indentation-is-syntax">Indentation is syntax</h2>
+<p>Python marks blocks by indentation, not by braces. A line ending in a colon opens a block, and the lines indented under it form the body:</p>
+<div class="highlight"><pre><span></span><code><span class="n">stock</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="n">stock</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"out of stock"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"reorder"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"done"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>out of stock
+reorder
+done
+</code></pre></div>
+<p>The two indented lines belong to the <code>if</code>. The unindented line runs regardless. Use four spaces per level and never mix tabs and spaces. Moving a line one level left or right changes what the program does without producing any error, so review indentation in diffs with care.</p>
+<h2 id="if-elif-else">if, elif, else</h2>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">loan_status</span><span class="p">(</span><span class="n">days_late</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">days_late</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"on time"</span>
+<span class="gp">... </span>    <span class="k">elif</span> <span class="n">days_late</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"late"</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"overdue"</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loan_status</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">loan_status</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">loan_status</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="go">('on time', 'late', 'overdue')</span>
+</code></pre></div>
+<p>Conditions are checked top to bottom and the first true one wins. Order matters when ranges overlap. Anything can serve as a condition (see truthiness in <a href="../values-and-types/">Values and types</a>), but be explicit when the distinction between <code>0</code>, <code>None</code>, and empty matters.</p>
+<p>Combine tests with <code>and</code>, <code>or</code>, <code>not</code>, and use chained comparisons for ranges:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">age</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">13</span> <span class="o">&lt;=</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">18</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age</span> <span class="o">&lt;</span> <span class="mi">13</span> <span class="ow">or</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">18</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="ow">not</span> <span class="p">(</span><span class="mi">13</span> <span class="o">&lt;=</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">)</span>
+<span class="go">False</span>
+</code></pre></div>
+<p>Membership tests are more readable than strings of <code>or</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">=</span> <span class="s2">"done"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"done"</span><span class="p">,</span> <span class="s2">"cancel"</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">state</span> <span class="o">==</span> <span class="s2">"done"</span> <span class="ow">or</span> <span class="n">state</span> <span class="o">==</span> <span class="s2">"cancel"</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>The <code>in</code> form scales and is hard to get wrong.</p>
+<h3 id="guard-clauses">Guard clauses</h3>
+<p>Deeply nested conditions are hard to read:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">renew</span><span class="p">(</span><span class="n">loan</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">loan</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">"open"</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">loan</span><span class="o">.</span><span class="n">renewed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">loan</span><span class="o">.</span><span class="n">member_active</span><span class="p">:</span>
+                <span class="n">loan</span><span class="o">.</span><span class="n">due_days</span> <span class="o">+=</span> <span class="mi">7</span>
+</code></pre></div>
+<p>Invert the conditions and exit early:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">renew</span><span class="p">(</span><span class="n">loan</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">loan</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="s2">"open"</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">loan</span><span class="o">.</span><span class="n">renewed</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">loan</span><span class="o">.</span><span class="n">member_active</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">loan</span><span class="o">.</span><span class="n">due_days</span> <span class="o">+=</span> <span class="mi">7</span>
+</code></pre></div>
+<p>Each condition is now an independent line, and the main action sits at the left margin. In Odoo you will see the same pattern as <code>if not self: return</code> at the top of a method, or <code>if not record.partner_id: continue</code> inside a loop.</p>
+<h3 id="conditional-expressions">Conditional expressions</h3>
+<p><code>A if cond else B</code> picks a value inside an expression:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">qty</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">label</span> <span class="o">=</span> <span class="s2">"copy"</span> <span class="k">if</span> <span class="n">qty</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">"copies"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">qty</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span>
+<span class="go">'3 copies'</span>
+</code></pre></div>
+<p>Do not nest them. If the second-level condition needs more than a glance, use a full <code>if</code>.</p>
+<h2 id="match-python-310">match (Python 3.10+)</h2>
+<p>Structural pattern matching compares a value against several shapes. For plain value dispatch it reads better than a chain of <code>elif</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">next_state</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">match</span> <span class="n">state</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">case</span> <span class="s2">"draft"</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="s2">"open"</span>
+<span class="gp">... </span>        <span class="k">case</span> <span class="s2">"open"</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="s2">"returned"</span>
+<span class="gp">... </span>        <span class="k">case</span> <span class="s2">"returned"</span> <span class="o">|</span> <span class="s2">"lost"</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="kc">None</span>
+<span class="gp">... </span>        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown state </span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">next_state</span><span class="p">(</span><span class="s2">"draft"</span><span class="p">),</span> <span class="n">next_state</span><span class="p">(</span><span class="s2">"lost"</span><span class="p">)</span>
+<span class="go">('open', None)</span>
+</code></pre></div>
+<p><code>_</code> is the wildcard that matches anything and is the "else" branch. <code>|</code> combines alternatives. <code>match</code> can also take apart tuples, lists, and dictionaries:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">match</span> <span class="n">command</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">_</span><span class="p">,</span> <span class="n">vals</span><span class="p">):</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="sa">f</span><span class="s2">"create </span><span class="si">{</span><span class="n">vals</span><span class="si">}</span><span class="s2">"</span>
+<span class="gp">... </span>        <span class="k">case</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">rec_id</span><span class="p">):</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="sa">f</span><span class="s2">"link </span><span class="si">{</span><span class="n">rec_id</span><span class="si">}</span><span class="s2">"</span>
+<span class="gp">... </span>        <span class="k">case</span> <span class="p">(</span><span class="mi">5</span><span class="p">,):</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="s2">"clear all"</span>
+<span class="gp">... </span>        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">return</span> <span class="s2">"other"</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">describe</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"x"</span><span class="p">})),</span> <span class="n">describe</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">)),</span> <span class="n">describe</span><span class="p">((</span><span class="mi">5</span><span class="p">,))</span>
+<span class="go">("create {'name': 'x'}", 'link 7', 'clear all')</span>
+</code></pre></div>
+<p>The tuples here have the shape of Odoo's x2many commands, which is the kind of data <code>match</code> suits. It needs Python 3.10, so check your target Odoo version's interpreter before using it in a module. A chain of <code>if</code>/<code>elif</code> works everywhere.</p>
+<h2 id="for-loops">for loops</h2>
+<p><code>for name in iterable:</code> runs the body once per item. An <strong>iterable</strong> is anything you can loop over: lists, tuples, strings, dicts, sets, files, ranges, generators, and Odoo recordsets.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="go">DUNE</span>
+<span class="go">EMMA</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="s2">"abc"</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"-"</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">a-b-c-</span>
+</code></pre></div>
+<p>The <code>end="-"</code> argument replaces the newline that <code>print</code> normally appends.</p>
+<p>The loop variable keeps its last value after the loop ends, and it is an ordinary variable in the enclosing scope, not one scoped to the loop.</p>
+<h3 id="range">range</h3>
+<p><code>range(stop)</code>, <code>range(start, stop)</code>, <code>range(start, stop, step)</code> produce integers, stopping before <code>stop</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="go">[0, 1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[2, 4, 6]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">[5, 4, 3, 2, 1]</span>
+</code></pre></div>
+<p>A <code>range</code> does not build the list; it computes numbers as needed, so <code>range(10**9)</code> costs no memory.</p>
+<h3 id="looping-the-python-way">Looping the Python way</h3>
+<p>A common beginner habit is looping over indexes:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">books</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</code></pre></div>
+<p>Loop over the items:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">books</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
+</code></pre></div>
+<p>When you need the position too, use <code>enumerate</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">,</span> <span class="s2">"Ulysses"</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
+<span class="go">1 Dune</span>
+<span class="go">2 Emma</span>
+<span class="go">3 Ulysses</span>
+</code></pre></div>
+<p>To walk two sequences in step, use <code>zip</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Dune"</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pages</span> <span class="o">=</span> <span class="p">[</span><span class="mi">612</span><span class="p">,</span> <span class="mi">474</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">pages</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="go">Dune 612</span>
+<span class="go">Emma 474</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">titles</span><span class="p">,</span> <span class="n">pages</span><span class="p">))</span>
+<span class="go">{'Dune': 612, 'Emma': 474}</span>
+</code></pre></div>
+<p><code>zip</code> stops at the shortest input silently. Python 3.10 adds <code>zip(a, b, strict=True)</code>, which raises <code>ValueError</code> on different lengths and is worth using when a mismatch would mean a bug.</p>
+<p><code>reversed(seq)</code> iterates backwards without copying, <code>sorted(iterable)</code> iterates in sorted order:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="go">[3, 2, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">({</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">})]</span>
+<span class="go">[1, 2, 3]</span>
+</code></pre></div>
+<h3 id="looping-over-dictionaries">Looping over dictionaries</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">stock</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Dune"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"Emma"</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">title</span><span class="p">,</span> <span class="n">qty</span> <span class="ow">in</span> <span class="n">stock</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">status</span> <span class="o">=</span> <span class="s2">"in stock"</span> <span class="k">if</span> <span class="n">qty</span> <span class="k">else</span> <span class="s2">"sold out"</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="go">Dune: in stock</span>
+<span class="go">Emma: sold out</span>
+</code></pre></div>
+<h3 id="break-continue-and-the-loop-else">break, continue, and the loop <code>else</code></h3>
+<p><code>break</code> leaves the loop. <code>continue</code> skips to the next item.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">continue</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">break</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="go">3</span>
+<span class="go">5</span>
+<span class="go">7</span>
+</code></pre></div>
+<p>A <code>for</code> loop can have an <code>else</code> block that runs only if the loop finished without hitting <code>break</code>. It reads awkwardly, and is the cleanest way to express "search, and act if nothing was found":</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">first_free</span><span class="p">(</span><span class="n">slots</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">slot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">result</span> <span class="o">=</span> <span class="s2">"found"</span>
+<span class="gp">... </span>            <span class="k">break</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">result</span> <span class="o">=</span> <span class="s2">"all busy"</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">result</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_free</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">]),</span> <span class="n">first_free</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="go">('found', 'all busy')</span>
+</code></pre></div>
+<h3 id="odoo-shape-for-record-in-self">Odoo shape: <code>for record in self</code></h3>
+<p>Odoo model methods receive <code>self</code>, which is a recordset, and the idiom is to loop over it:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">action_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">loan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">loan</span><span class="o">.</span><span class="n">state</span> <span class="o">!=</span> <span class="s2">"open"</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">loan</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">"returned"</span>
+</code></pre></div>
+<p>Everything in this chapter applies: <code>continue</code> as a guard, <code>if</code> conditions on fields, assignment in the body. Two habits that matter in Odoo (and that later chapters explain fully): the loop should not trigger a database query per iteration when one query could serve all records, and a method decorated for a single record must say so. For now, read <code>for loan in self:</code> as "for each record in this group".</p>
+<h3 id="modifying-a-collection-while-looping">Modifying a collection while looping</h3>
+<p>Removing items from a list during iteration skips elements, because the list shrinks under the loop:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="go">[1, 3, 5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">nums</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span>
+<span class="go">[1, 2, 3, 4]</span>
+</code></pre></div>
+<p>The first output looks right by luck. The second shows the skip: the second <code>2</code> and the second <code>4</code> were never examined. Build a new list instead:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="go">[1, 3]</span>
+</code></pre></div>
+<h2 id="while-loops">while loops</h2>
+<p><code>while condition:</code> repeats while the condition is true. Use it when you do not know in advance how many iterations you need.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">steps</span>
+<span class="go">111</span>
+</code></pre></div>
+<p>The typical Odoo use is batching: process records in chunks until none are left.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">pending</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">pending</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">batch</span><span class="p">,</span> <span class="n">pending</span> <span class="o">=</span> <span class="n">pending</span><span class="p">[:</span><span class="n">batch_size</span><span class="p">],</span> <span class="n">pending</span><span class="p">[</span><span class="n">batch_size</span><span class="p">:]</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="go">[1, 2, 3]</span>
+<span class="go">[4, 5, 6]</span>
+<span class="go">[7]</span>
+</code></pre></div>
+<p>An infinite loop with an explicit exit is also a normal form:</p>
+<div class="highlight"><pre><span></span><code><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">chunk</span> <span class="o">=</span> <span class="n">read_next_chunk</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">chunk</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="n">process</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition warning">
+<p>A <code>while</code> whose condition never becomes false runs forever. In an Odoo worker, an endless loop pins a CPU until the worker is killed on its time limit. Every <code>while</code> needs a clear path to its exit, and long-running ones need a visible progress counter in the log.</p>
+</div>
+<h2 id="pass-and-placeholders">pass, and placeholders</h2>
+<p><code>pass</code> does nothing and exists because a block cannot be empty:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LoanError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">todo</span><span class="p">():</span>
+    <span class="k">pass</span>
+</code></pre></div>
+<p>A docstring or <code>...</code> (Ellipsis) works as an empty body too.</p>
+<h2 id="replacing-loops-with-built-ins">Replacing loops with built-ins</h2>
+<p>A loop that accumulates a single answer is often a built-in call.</p>
+<h3 id="sum-min-max-len">sum, min, max, len</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">prices</span> <span class="o">=</span> <span class="p">[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">prices</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">prices</span><span class="p">)</span>
+<span class="go">(40.5, 8.0, 20.0, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">prices</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">32.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="s2">"pear"</span><span class="p">,</span> <span class="s2">"fig"</span><span class="p">,</span> <span class="s2">"apple"</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="go">'apple'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">min</span><span class="p">([],</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">3</span>
+</code></pre></div>
+<p><code>min([])</code> and <code>max([])</code> raise <code>ValueError</code> on empty input, so pass <code>default=</code> whenever the input might be empty.</p>
+<h3 id="any-and-all">any and all</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">loans</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span> <span class="p">{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"returned"</span><span class="p">,</span> <span class="s2">"days"</span><span class="p">:</span> <span class="mi">2</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([]),</span> <span class="nb">all</span><span class="p">([])</span>
+<span class="go">(False, True)</span>
+</code></pre></div>
+<p><code>any</code> is true if at least one item is truthy; <code>all</code> is true if every item is truthy. On an empty input <code>all</code> is <code>True</code> ("no counter-example") and <code>any</code> is <code>False</code>. That empty-input rule is a source of subtle bugs: "all lines are delivered" is <code>True</code> for an order with no lines.</p>
+<p>Both stop at the first deciding item. Pass a generator expression (see <a href="../comprehensions-and-generators/">Comprehensions and generators</a>) so no intermediate list is built.</p>
+<h3 id="next-with-a-default-first-match">next with a default: first match</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">((</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"returned"</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="go">{'state': 'returned', 'days': 2}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">((</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"lost"</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="go">True</span>
+</code></pre></div>
+<p><code>next(iterator, default)</code> returns the first item or the default. It is the idiomatic "find the first X". Without the default, an empty result raises <code>StopIteration</code>.</p>
+<h3 id="counting-and-summing-booleans">Counting and summing booleans</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">1</span>
+</code></pre></div>
+<h3 id="sorting-and-ranking-instead-of-looping">Sorting and ranking instead of looping</h3>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"state"</span><span class="p">]</span>
+<span class="go">'open'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="s2">"days"</span><span class="p">])[</span><span class="s2">"state"</span><span class="p">]</span>
+<span class="go">'open'</span>
+</code></pre></div>
+<h3 id="odoo-recordset-equivalents">Odoo recordset equivalents</h3>
+<p>Odoo's recordsets carry methods that wrap these same loops. Their behaviour, expressed in plain Python over a list, is:</p>
+<table>
+<thead>
+<tr>
+<th>Odoo style</th>
+<th>Plain Python equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>recs.filtered(lambda r: r.state == "open")</code></td>
+<td><code>[r for r in recs if r.state == "open"]</code></td>
+</tr>
+<tr>
+<td><code>recs.mapped("name")</code></td>
+<td><code>[r.name for r in recs]</code></td>
+</tr>
+<tr>
+<td><code>recs.sorted(key=lambda r: r.days)</code></td>
+<td><code>sorted(recs, key=lambda r: r.days)</code></td>
+</tr>
+<tr>
+<td><code>any(r.state == "open" for r in recs)</code></td>
+<td>same, built-in <code>any</code></td>
+</tr>
+<tr>
+<td><code>sum(recs.mapped("amount"))</code></td>
+<td><code>sum(r.amount for r in recs)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The Odoo methods return recordsets, not lists, so the result can be used for further ORM operations (<code>.write(...)</code>, <code>.unlink()</code>, more <code>filtered</code>). The plain-Python forms return lists. When you only need values, either works. When you need records back, use the Odoo method.</p>
+<h2 id="the-walrus-operator">The walrus operator</h2>
+<p><code>:=</code> (Python 3.8+) assigns inside an expression. It saves repeating a computation in a condition:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="s2">"ref=LIB-0042"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">m</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"LIB-(\d+)"</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+<span class="go">42</span>
+</code></pre></div>
+<p>Use it sparingly, when it removes a duplicated call or an extra line. Do not use it to make one-liners cleverer.</p>
+<h2 id="putting-it-together">Putting it together</h2>
+<p>A function that decides what to do with loan records, using guard clauses, a loop, a dictionary for dispatch, and a counter for a summary:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">today</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">summary</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">loan</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">loan</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">"open"</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">summary</span><span class="p">[</span><span class="s2">"skipped"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="k">continue</span>
+<span class="gp">... </span>        <span class="n">days_late</span> <span class="o">=</span> <span class="p">(</span><span class="n">today</span> <span class="o">-</span> <span class="n">loan</span><span class="p">[</span><span class="s2">"due"</span><span class="p">])</span><span class="o">.</span><span class="n">days</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">days_late</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">summary</span><span class="p">[</span><span class="s2">"on_time"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>        <span class="k">elif</span> <span class="n">days_late</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">summary</span><span class="p">[</span><span class="s2">"late"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>        <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">summary</span><span class="p">[</span><span class="s2">"overdue"</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">)},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"returned"</span><span class="p">,</span> <span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
+<span class="gp">... </span>    <span class="p">{</span><span class="s2">"state"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span> <span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">)},</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="go">{'late': 1, 'overdue': 1, 'skipped': 1, 'on_time': 1}</span>
+</code></pre></div>
+<p>Subtracting two <code>date</code> objects gives a <code>timedelta</code>, whose <code>.days</code> is an integer. Dates are covered in depth in <a href="../working-with-money-and-dates/">Money, dates, and time zones</a>.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Indentation drift.</strong> Moving a line one level changes meaning without an error. Review diffs with whitespace visible.</li>
+<li><strong><code>=</code> versus <code>==</code>.</strong> <code>if x = 3:</code> is a syntax error in Python, which is a mercy. But <code>x == 3</code> as a statement on its own does nothing; it computes and discards a boolean.</li>
+<li><strong>Modifying a list while iterating it.</strong> Elements are skipped. Build a new list or iterate over a copy.</li>
+<li><strong>Forgetting that <code>range</code> stops before <code>stop</code>.</strong> <code>range(1, 5)</code> is <code>1, 2, 3, 4</code>.</li>
+<li><strong><code>while</code> without a guaranteed exit.</strong> Add a counter, a timeout, or a <code>break</code> path, and log progress in long loops.</li>
+<li><strong><code>for</code> variable leaking.</strong> After <code>for x in items</code>, <code>x</code> still exists, and holds the last item, or raises <code>NameError</code> if the loop never ran.</li>
+<li><strong><code>all([])</code> is <code>True</code>.</strong> "All lines done" passes for an empty collection. Add an explicit emptiness check when that is not what you mean.</li>
+<li><strong><code>min</code>/<code>max</code> on empty input.</strong> Raise <code>ValueError</code> unless <code>default=</code> is passed.</li>
+<li><strong><code>next()</code> on an empty iterator.</strong> Raises <code>StopIteration</code> unless a default is passed.</li>
+<li><strong>Truthiness in conditions.</strong> <code>if qty:</code> treats <code>0</code> as "no value". Use <code>is None</code> for the real missing case.</li>
+<li><strong>Per-iteration queries.</strong> In Odoo, a loop that performs a database search or write inside each iteration can take minutes on large data. Build the data once outside the loop, then loop in memory.</li>
+<li><strong><code>zip</code> truncation.</strong> Mismatched lengths are dropped silently unless you pass <code>strict=True</code> (3.10+).</li>
+<li><strong>Deep nesting.</strong> More than three levels of indentation is a signal to use guard clauses, a helper function, or a dictionary dispatch.</li>
+</ul>
+<h2 id="try-it">Try it</h2>
+<ol>
+<li>Write <code>classify(n)</code> that returns <code>"fizz"</code> for multiples of 3, <code>"buzz"</code> for multiples of 5, <code>"fizzbuzz"</code> for both, and the number as a string otherwise. Print the results for 1 to 15.</li>
+<li>Given <code>values = [4, 8, 15, 16, 23, 42]</code>, find the first value greater than 20 with <code>next</code>, the index of that value with <code>enumerate</code>, and whether all values are positive.</li>
+<li>Write a <code>while</code> loop that splits a list of 10 ids into chunks of 4 and prints each chunk. Then rewrite it as a <code>for</code> loop over <code>range</code>.</li>
+<li>The following code is meant to remove all <code>None</code> entries and fails to remove adjacent ones. Explain why, and fix it: <code>for x in items: if x is None: items.remove(x)</code> with <code>items = [1, None, None, 2]</code>.</li>
+<li>Write a function <code>first_overdue(loans, today)</code> that returns the first loan whose due date is before <code>today</code>, or <code>None</code>, using <code>next</code>. Then write a version using a <code>for</code> loop with <code>else</code>.</li>
+</ol>
+<details>
+<summary>Solution</summary>
+<p>1.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">classify</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">15</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"fizzbuzz"</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"fizz"</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="s2">"buzz"</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">classify</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
+<span class="go">['1', '2', 'fizz', '4', 'buzz', 'fizz', '7', '8', 'fizz', 'buzz', '11', 'fizz', '13', '14', 'fizzbuzz']</span>
+</code></pre></div>
+<p>2.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">((</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="go">23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">next</span><span class="p">((</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
+<span class="go">True</span>
+</code></pre></div>
+<p>3.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rest</span> <span class="o">=</span> <span class="n">ids</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">rest</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">chunk</span><span class="p">,</span> <span class="n">rest</span> <span class="o">=</span> <span class="n">rest</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">rest</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+<span class="go">[1, 2, 3, 4]</span>
+<span class="go">[5, 6, 7, 8]</span>
+<span class="go">[9, 10]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">),</span> <span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">ids</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">start</span> <span class="o">+</span> <span class="mi">4</span><span class="p">])</span>
+<span class="go">[1, 2, 3, 4]</span>
+<span class="go">[5, 6, 7, 8]</span>
+<span class="go">[9, 10]</span>
+</code></pre></div>
+<ol>
+<li>After the first <code>None</code> is removed, the list shifts left and the loop's internal position moves past the second <code>None</code>. Result is <code>[1, None, 2]</code>. Fix: <code>items = [x for x in items if x is not None]</code>.</li>
+</ol>
+<p>5.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">first_overdue</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">today</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">next</span><span class="p">((</span><span class="n">l</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">loans</span> <span class="k">if</span> <span class="n">l</span><span class="p">[</span><span class="s2">"due"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">today</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">first_overdue_loop</span><span class="p">(</span><span class="n">loans</span><span class="p">,</span> <span class="n">today</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">loan</span> <span class="ow">in</span> <span class="n">loans</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">loan</span><span class="p">[</span><span class="s2">"due"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">today</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="n">result</span> <span class="o">=</span> <span class="n">loan</span>
+<span class="gp">... </span>            <span class="k">break</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">result</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">20</span><span class="p">)},</span> <span class="p">{</span><span class="s2">"due"</span><span class="p">:</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_overdue</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span> <span class="o">==</span> <span class="n">first_overdue_loop</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_overdue</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="go">{'due': datetime.date(2025, 3, 1)}</span>
+</code></pre></div>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../collections/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lists, tuples, dicts, sets">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lists, tuples, dicts, sets
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../functions/" class="md-footer__link md-footer__link--next" aria-label="Next: Functions">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Functions
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>

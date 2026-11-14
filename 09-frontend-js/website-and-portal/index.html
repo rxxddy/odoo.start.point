@@ -1,0 +1,4533 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Customer portal pages, public widgets, public OWL components and Odoo 20 interactions: the JavaScript and QWeb that run for visitors and portal users.">
+      
+      
+      
+        <link rel="canonical" href="https://rxxddy.github.io/odoo.start.point/09-frontend-js/website-and-portal/">
+      
+      
+        <link rel="prev" href="../customising-views/">
+      
+      
+        <link rel="next" href="../tours-and-frontend-tests/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Website and portal - Odoo Developer Handbook</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#website-and-portal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Odoo Developer Handbook" class="md-header__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Odoo Developer Handbook
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Website and portal
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Odoo Developer Handbook" class="md-nav__button md-logo" aria-label="Odoo Developer Handbook" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Odoo Developer Handbook
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rxxddy/odoo.start.point" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    rxxddy/odoo.start.point
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo Developer Handbook
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Start Here
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Start Here
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/how-to-read-this-book/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to read this book
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/conventions-and-versions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conventions and version notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start/the-odoo-mental-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo mental model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/setup-and-running-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup and running code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/values-and-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Values and types
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lists, tuples, dicts, sets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/control-flow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Control flow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/comprehensions-and-generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comprehensions and generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/classes-and-inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Classes and inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/super-explained/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    super() explained
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/decorators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decorators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/errors-and-exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Errors and exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/modules-and-imports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules and imports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/standard-library-toolbox/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Standard library toolbox
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-python/working-with-money-and-dates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Money, dates, and time zones
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    PostgreSQL for Odoo
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PostgreSQL for Odoo
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/relational-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Relational basics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/select-from-where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SELECT, FROM, WHERE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/aggregation-and-window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregation and window functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/writing-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    INSERT, UPDATE, DELETE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/indexes-and-explain/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Indexes and EXPLAIN
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/transactions-and-isolation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions and isolation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/locks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Locks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/the-odoo-schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-postgresql/psql-and-operations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    psql and operations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Web basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Web basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/xml-for-odoo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML for Odoo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/html-and-css/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTML and CSS you need
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/javascript-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScript fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/async-and-the-dom/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Async and the DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-web-basics/http-and-json/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and JSON
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Odoo architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Odoo architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/installing-and-running/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installing and running
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/command-line-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command line reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/project-layout-and-addons-path/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Project layout and addons path
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/anatomy-of-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Anatomy of a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/registry-and-model-loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registry and model loading
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/request-lifecycle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Request lifecycle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/workers-cron-and-longpolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Workers, cron, and longpolling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-architecture/odoo-sh-and-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Odoo.sh and deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Shell and debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Shell and debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/odoo-shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The Odoo shell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/running-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/remote-scripts-over-rpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote scripts over RPC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/logging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/debugging-with-pdb-and-debugpy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging with pdb and debugpy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/developer-mode-and-tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developer mode and tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/reading-tracebacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reading tracebacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/inspecting-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inspecting SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/safe-bulk-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Safe bulk scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-shell-and-debugging/common-errors-catalog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common errors catalog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    The ORM
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            The ORM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/models-and-recordsets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models and recordsets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/fields-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fields reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/crud/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create, read, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/search-and-domains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search and domains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/grouping-and-aggregation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Grouping and aggregation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/computed-and-related-fields/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Computed and related fields
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/constraints-and-defaults/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Constraints and defaults
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/inheritance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Inheritance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/environment-context-sudo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment, context, sudo
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/overriding-crud-methods/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overriding create, write, unlink
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/cache-and-prefetch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache and prefetch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/raw-sql-from-the-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Raw SQL from the ORM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/xml-ids-and-references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML IDs and references
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/mail-thread-and-activities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mail thread and activities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-orm/sequences-and-translations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sequences and translations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Security
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/security-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The security model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/groups-and-access-rights/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Groups and access rights
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/record-rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Record rules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/field-level-security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Field-level security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/multi-company/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multi-company
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-security/secure-coding/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Secure coding
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Data and views
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Data and views
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/data-files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/actions-and-menus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Actions and menus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/form-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Form views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/list-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/search-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Search views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/kanban-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kanban views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/other-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot, graph, calendar, and more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/view-inheritance-and-xpath/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View inheritance and XPath
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/wizards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wizards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/qweb-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    QWeb templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/pdf-reports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PDF reports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/email-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Email templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/server-actions-and-automation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Server actions and automation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-data-and-views/scheduled-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scheduled actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Frontend and JavaScript
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Frontend and JavaScript
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../frontend-overview/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Frontend overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets-and-bundles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assets and bundles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../owl-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../owl3-and-odoo-20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWL 3 and Odoo 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../registries-and-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Registries and services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patching/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Patching standard code
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-fields-and-widgets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom field widgets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customising-views/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customising views
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Website and portal
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-runs-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      What runs where
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-portal-in-one-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      The portal in one page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-access-rights-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: access rights first
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: the controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: the templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-put-the-files-in-the-right-bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: put the files in the right bundles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behaviour-on-the-page-public-widgets-odoo-17-and-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behaviour on the page: public widgets (Odoo 17 and 18)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behaviour-on-the-page-interactions-odoo-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behaviour on the page: interactions (Odoo 20)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-owl-component-on-a-public-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      An OWL component on a public page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#styling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing the portal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tours-and-frontend-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tours and frontend tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Backend logic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Backend logic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/thin-controllers-fat-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Thin controllers, fat models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/http-controllers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP controllers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/state-machines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    State machines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/business-logic-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Business logic design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/transactions-in-practice/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transactions in practice
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/queues-and-background-work/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Queues and background work
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/external-apis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Consuming external APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/webhooks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Receiving webhooks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/bidirectional-sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bidirectional synchronisation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/performance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Performance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-backend-logic/importing-and-exporting-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Importing and exporting data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Testing and quality
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Testing and quality
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/writing-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/http-and-tour-tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HTTP and tour tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/coding-standards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coding standards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/git-workflow-for-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git workflow for modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-testing-and-quality/documenting-your-modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Documenting your modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Migration and versions
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Migration and versions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/version-differences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Version differences, 16 to 20
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a module
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/migration-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/upgrading-a-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Upgrading a database
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-migration-and-versions/deprecations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deprecations and replacements
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Blueprints
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Blueprints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-library-module/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A complete module from scratch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-extending-sales/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extending a standard workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-wizard-and-report/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A wizard with a PDF report
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-rest-integration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A REST integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-customer-portal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A portal feature
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-data-repair-scripts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data repair scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-blueprints/blueprint-spreadsheet-import/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spreadsheet import
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-orm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ORM cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/cheat-sheet-commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command cheat sheet
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/manifest-reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Manifest reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/model-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Model catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/view-id-catalogue/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    View ID catalogue
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-reference/glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-runs-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      What runs where
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-portal-in-one-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      The portal in one page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-access-rights-first" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: access rights first
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-the-controller" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: the controller
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-the-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: the templates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-put-the-files-in-the-right-bundles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: put the files in the right bundles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behaviour-on-the-page-public-widgets-odoo-17-and-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behaviour on the page: public widgets (Odoo 17 and 18)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behaviour-on-the-page-interactions-odoo-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Behaviour on the page: interactions (Odoo 20)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-owl-component-on-a-public-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      An OWL component on a public page
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#styling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Styling
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-the-portal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing the portal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pitfalls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#versions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Versions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      Try it
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/rxxddy/odoo.start.point/edit/main/09-frontend-js/website-and-portal.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="website-and-portal">Website and portal</h1>
+<p>The backend web client is not what visitors and portal users see. Their pages are rendered by a controller with QWeb, served with <code>web.assets_frontend</code>, and brought to life by a different set of JavaScript tools.</p>
+<p>Everything was read from the Odoo 18 <code>portal</code> and <code>web</code> addons and the Odoo 20 tree. The teaching module <code>library</code> gives its members a page listing their loans.</p>
+<h2 id="what-runs-where">What runs where</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Odoo 17 and 18</th>
+<th>Odoo 20</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Page markup</td>
+<td>QWeb templates (<code>portal.portal_layout</code>, <code>website.layout</code>)</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Page logic</td>
+<td>controller extending <code>CustomerPortal</code></td>
+<td>same</td>
+</tr>
+<tr>
+<td>Behaviour on a page</td>
+<td><code>publicWidget.Widget</code> subclasses registered in <code>publicWidget.registry</code></td>
+<td><code>Interaction</code> subclasses registered in <code>public.interactions</code></td>
+</tr>
+<tr>
+<td>OWL on a public page</td>
+<td><code>&lt;owl-component name="..."&gt;</code> plus <code>public_components</code> registry</td>
+<td>same element, mounted by an interaction</td>
+</tr>
+<tr>
+<td>JSON calls</td>
+<td><code>rpc</code> from <code>@web/core/network/rpc</code>, route <code>type="json"</code></td>
+<td>same <code>rpc</code>, route <code>type="jsonrpc"</code></td>
+</tr>
+<tr>
+<td>Bundle</td>
+<td><code>web.assets_frontend</code></td>
+<td><code>web.assets_frontend</code></td>
+</tr>
+</tbody>
+</table>
+<p>Public code has no <code>env.services.orm</code> guarantee for anonymous users and no web client. Anything it needs from the server goes through a controller route, which is where access control belongs.</p>
+<h2 id="the-portal-in-one-page">The portal in one page</h2>
+<p>The portal is the set of pages under <code>/my</code> that a logged-in portal user sees. <code>CustomerPortal</code> in <code>addons/portal/controllers/portal.py</code> is the controller to extend. Its relevant members in 18:</p>
+<ul>
+<li><code>_prepare_home_portal_values(self, counters)</code>: returns the values for the home page cards. <code>counters</code> is the list of badges to compute; the base returns <code>{}</code>.</li>
+<li><code>/my/counters</code> (a JSON route) calls the same method for the lazily loaded badges, and caches the booleans in the session.</li>
+<li><code>home()</code> renders <code>portal.portal_my_home</code>.</li>
+<li><code>_document_check_access(model_name, document_id, access_token=None)</code>: loads a record the user may see, either through normal access or through a valid access token. It returns the record sudoed and raises <code>MissingError</code> or <code>AccessError</code>.</li>
+<li><code>_get_page_view_values(...)</code>: adds chatter and pager values for a detail page.</li>
+<li><code>pager(url, total, page=1, step=30, scope=5, url_args=None)</code>: module-level function producing the dict for the pager template.</li>
+</ul>
+<h2 id="step-1-access-rights-first">Step 1: access rights first</h2>
+<p>Portal users are in <code>base.group_portal</code>. Without an access rule and a record rule they see nothing, and the page raises <code>AccessError</code>. Write the security before the page.</p>
+<p><code>library/security/ir.model.access.csv</code> (one line more):</p>
+<div class="highlight"><pre><span></span><code>access_library_loan_portal,library.loan portal,model_library_loan,base.group_portal,1,0,0,0
+</code></pre></div>
+<p><code>library/security/library_security.xml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">"library_loan_rule_portal"</span><span class="w"> </span><span class="na">model=</span><span class="s">"ir.rule"</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"name"</span><span class="nt">&gt;</span>Loan:<span class="w"> </span>portal<span class="w"> </span>users<span class="w"> </span>see<span class="w"> </span>their<span class="w"> </span>own<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"model_id"</span><span class="w"> </span><span class="na">ref=</span><span class="s">"model_library_loan"</span><span class="nt">/&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"domain_force"</span><span class="nt">&gt;</span>[('member_id.partner_id',<span class="w"> </span>'=',<span class="w"> </span>user.partner_id.id)]<span class="nt">&lt;/field&gt;</span>
+<span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">"groups"</span><span class="w"> </span><span class="na">eval=</span><span class="s">"[(4, ref('base.group_portal'))]"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/record&gt;</span>
+</code></pre></div>
+<p>Read access only, and only the member's own loans. Everything the controller does with <code>request.env</code> then goes through this rule. Do not reach for <code>sudo()</code> to make the page work; fix the rule.</p>
+<h2 id="step-2-the-controller">Step 2: the controller</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># library/controllers/portal.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo</span><span class="w"> </span><span class="kn">import</span> <span class="n">http</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">AccessError</span><span class="p">,</span> <span class="n">MissingError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo.http</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo.addons.portal.controllers.portal</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomerPortal</span><span class="p">,</span> <span class="n">pager</span> <span class="k">as</span> <span class="n">portal_pager</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LibraryPortal</span><span class="p">(</span><span class="n">CustomerPortal</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_home_portal_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">counters</span><span class="p">):</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_prepare_home_portal_values</span><span class="p">(</span><span class="n">counters</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">"loan_count"</span> <span class="ow">in</span> <span class="n">counters</span><span class="p">:</span>
+            <span class="n">Loan</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.loan"</span><span class="p">]</span>
+            <span class="n">values</span><span class="p">[</span><span class="s2">"loan_count"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">Loan</span><span class="o">.</span><span class="n">search_count</span><span class="p">([])</span> <span class="k">if</span> <span class="n">Loan</span><span class="o">.</span><span class="n">has_access</span><span class="p">(</span><span class="s2">"read"</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">values</span>
+
+    <span class="nd">@http</span><span class="o">.</span><span class="n">route</span><span class="p">(</span>
+        <span class="p">[</span><span class="s2">"/my/loans"</span><span class="p">,</span> <span class="s2">"/my/loans/page/&lt;int:page&gt;"</span><span class="p">],</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s2">"http"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="s2">"user"</span><span class="p">,</span> <span class="n">website</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">portal_my_loans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">Loan</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">env</span><span class="p">[</span><span class="s2">"library.loan"</span><span class="p">]</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">Loan</span><span class="o">.</span><span class="n">search_count</span><span class="p">([])</span>
+        <span class="n">pager</span> <span class="o">=</span> <span class="n">portal_pager</span><span class="p">(</span>
+            <span class="n">url</span><span class="o">=</span><span class="s2">"/my/loans"</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="n">total</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items_per_page</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">loans</span> <span class="o">=</span> <span class="n">Loan</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+            <span class="p">[],</span> <span class="n">order</span><span class="o">=</span><span class="s2">"due_date desc"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_items_per_page</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">pager</span><span class="p">[</span><span class="s2">"offset"</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_portal_layout_values</span><span class="p">()</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">"loans"</span><span class="p">:</span> <span class="n">loans</span><span class="p">,</span>
+            <span class="s2">"page_name"</span><span class="p">:</span> <span class="s2">"loans"</span><span class="p">,</span>
+            <span class="s2">"pager"</span><span class="p">:</span> <span class="n">pager</span><span class="p">,</span>
+            <span class="s2">"default_url"</span><span class="p">:</span> <span class="s2">"/my/loans"</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">"library.portal_my_loans"</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+    <span class="nd">@http</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">"/my/loans/&lt;int:loan_id&gt;"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"http"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="s2">"user"</span><span class="p">,</span> <span class="n">website</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">portal_my_loan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loan_id</span><span class="p">,</span> <span class="n">access_token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">loan_sudo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_check_access</span><span class="p">(</span><span class="s2">"library.loan"</span><span class="p">,</span> <span class="n">loan_id</span><span class="p">,</span> <span class="n">access_token</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">AccessError</span><span class="p">,</span> <span class="n">MissingError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="s2">"/my"</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"loan"</span><span class="p">:</span> <span class="n">loan_sudo</span><span class="p">,</span> <span class="s2">"page_name"</span><span class="p">:</span> <span class="s2">"loan"</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">request</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">"library.portal_my_loan"</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+</code></pre></div>
+<p>Points to check in this code:</p>
+<ul>
+<li><code>Loan.search_count([])</code> is not unsafe: the record rule above narrows the result to the user's own loans, because the call runs as the portal user. That is why the controller uses the plain environment.</li>
+<li><code>has_access("read")</code> returns a boolean in 18. In 17 the equivalent is <code>check_access_rights("read", raise_exception=False)</code>. Counting without the check would raise for users who lack the ACL.</li>
+<li><code>_items_per_page</code> is an attribute of <code>CustomerPortal</code> (80 in the 18 source); use it so your page matches the others, or define your own step.</li>
+<li><code>portal_pager(...)</code> returns a dict with an <code>offset</code> key, ready for <code>search(offset=...)</code>.</li>
+<li><code>_document_check_access</code> returns the record <strong>sudoed</strong>, so everything you render from <code>loan_sudo</code> bypasses record rules after the check. Render only fields you mean to show, and never pass <code>loan_sudo</code> to code that writes.</li>
+<li><code>auth="user"</code> redirects anonymous visitors to the login page. Do not use <code>auth="public"</code> for private data.</li>
+</ul>
+<p>Register the file in <code>controllers/__init__.py</code> (<code>from . import portal</code>) and in <code>library/__init__.py</code> (<code>from . import controllers</code>).</p>
+<h2 id="step-3-the-templates">Step 3: the templates</h2>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;odoo&gt;</span>
+<span class="w">    </span><span class="cm">&lt;!-- 1. A card on /my --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;template</span><span class="w"> </span><span class="na">id=</span><span class="s">"portal_my_home_library"</span><span class="w"> </span><span class="na">name=</span><span class="s">"Library: loans card"</span>
+<span class="w">              </span><span class="na">inherit_id=</span><span class="s">"portal.portal_my_home"</span><span class="w"> </span><span class="na">customize_show=</span><span class="s">"True"</span><span class="w"> </span><span class="na">priority=</span><span class="s">"30"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;xpath</span><span class="w"> </span><span class="na">expr=</span><span class="s">"//div[hasclass('o_portal_docs')]"</span><span class="w"> </span><span class="na">position=</span><span class="s">"inside"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-call=</span><span class="s">"portal.portal_docs_entry"</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-set=</span><span class="s">"title"</span><span class="nt">&gt;</span>Loans<span class="nt">&lt;/t&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-set=</span><span class="s">"url"</span><span class="w"> </span><span class="na">t-value=</span><span class="s">"'/my/loans'"</span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-set=</span><span class="s">"text"</span><span class="nt">&gt;</span>Books<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>borrowed<span class="nt">&lt;/t&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-set=</span><span class="s">"placeholder_count"</span><span class="w"> </span><span class="na">t-value=</span><span class="s">"'loan_count'"</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/xpath&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/template&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- 2. Breadcrumb entries --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;template</span><span class="w"> </span><span class="na">id=</span><span class="s">"portal_breadcrumbs_library"</span><span class="w"> </span><span class="na">name=</span><span class="s">"Library: breadcrumbs"</span>
+<span class="w">              </span><span class="na">inherit_id=</span><span class="s">"portal.portal_breadcrumbs"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;xpath</span><span class="w"> </span><span class="na">expr=</span><span class="s">"//ol[hasclass('o_portal_submenu')]"</span><span class="w"> </span><span class="na">position=</span><span class="s">"inside"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;li</span><span class="w"> </span><span class="na">t-if=</span><span class="s">"page_name == 'loans'"</span><span class="w"> </span><span class="na">class=</span><span class="s">"breadcrumb-item active"</span><span class="nt">&gt;</span>Loans<span class="nt">&lt;/li&gt;</span>
+<span class="w">            </span><span class="nt">&lt;li</span><span class="w"> </span><span class="na">t-if=</span><span class="s">"page_name == 'loan'"</span><span class="w"> </span><span class="na">class=</span><span class="s">"breadcrumb-item"</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">"/my/loans"</span><span class="nt">&gt;</span>Loans<span class="nt">&lt;/a&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/li&gt;</span>
+<span class="w">            </span><span class="nt">&lt;li</span><span class="w"> </span><span class="na">t-if=</span><span class="s">"page_name == 'loan'"</span><span class="w"> </span><span class="na">class=</span><span class="s">"breadcrumb-item active"</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-out=</span><span class="s">"loan.display_name"</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/li&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/xpath&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/template&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- 3. The list page --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;template</span><span class="w"> </span><span class="na">id=</span><span class="s">"portal_my_loans"</span><span class="w"> </span><span class="na">name=</span><span class="s">"Library: my loans"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-call=</span><span class="s">"portal.portal_layout"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-set=</span><span class="s">"breadcrumbs_searchbar"</span><span class="w"> </span><span class="na">t-value=</span><span class="s">"False"</span><span class="nt">/&gt;</span>
+<span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-if=</span><span class="s">"not loans"</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;p</span><span class="w"> </span><span class="na">class=</span><span class="s">"alert alert-info"</span><span class="nt">&gt;</span>You<span class="w"> </span>have<span class="w"> </span>no<span class="w"> </span>loans.<span class="nt">&lt;/p&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">            </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-else=</span><span class="s">""</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-call=</span><span class="s">"portal.portal_table"</span><span class="nt">&gt;</span>
+<span class="w">                    </span><span class="nt">&lt;thead&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;th&gt;</span>Book<span class="nt">&lt;/th&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;th&gt;</span>Due<span class="nt">&lt;/th&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;th</span><span class="w"> </span><span class="na">class=</span><span class="s">"text-end"</span><span class="nt">&gt;</span>State<span class="nt">&lt;/th&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">                    </span><span class="nt">&lt;/thead&gt;</span>
+<span class="w">                    </span><span class="nt">&lt;tbody&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;tr</span><span class="w"> </span><span class="na">t-foreach=</span><span class="s">"loans"</span><span class="w"> </span><span class="na">t-as=</span><span class="s">"loan"</span><span class="nt">&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;td&gt;&lt;a</span><span class="w"> </span><span class="na">t-attf-href=</span><span class="s">"/my/loans/#{loan.id}"</span><span class="nt">&gt;&lt;t</span><span class="w"> </span><span class="na">t-out=</span><span class="s">"loan.book_id.name"</span><span class="nt">/&gt;&lt;/a&gt;&lt;/td&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;td&gt;&lt;span</span><span class="w"> </span><span class="na">t-field=</span><span class="s">"loan.due_date"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+<span class="w">                            </span><span class="nt">&lt;td</span><span class="w"> </span><span class="na">class=</span><span class="s">"text-end"</span><span class="nt">&gt;&lt;span</span><span class="w"> </span><span class="na">t-field=</span><span class="s">"loan.state"</span><span class="nt">/&gt;&lt;/td&gt;</span>
+<span class="w">                        </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">                    </span><span class="nt">&lt;/tbody&gt;</span>
+<span class="w">                </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/template&gt;</span>
+
+<span class="w">    </span><span class="cm">&lt;!-- 4. The detail page --&gt;</span>
+<span class="w">    </span><span class="nt">&lt;template</span><span class="w"> </span><span class="na">id=</span><span class="s">"portal_my_loan"</span><span class="w"> </span><span class="na">name=</span><span class="s">"Library: my loan"</span><span class="nt">&gt;</span>
+<span class="w">        </span><span class="nt">&lt;t</span><span class="w"> </span><span class="na">t-call=</span><span class="s">"portal.portal_layout"</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">"container pt-3 o_library_loan"</span><span class="w"> </span><span class="na">t-att-data-loan-id=</span><span class="s">"loan.id"</span><span class="nt">&gt;</span>
+<span class="w">                </span><span class="nt">&lt;h2</span><span class="w"> </span><span class="na">t-out=</span><span class="s">"loan.book_id.name"</span><span class="nt">/&gt;</span>
+<span class="w">                </span><span class="nt">&lt;p&gt;</span>Due<span class="w"> </span>on<span class="w"> </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">t-field=</span><span class="s">"loan.due_date"</span><span class="nt">/&gt;&lt;/p&gt;</span>
+<span class="w">                </span><span class="nt">&lt;button</span><span class="w"> </span><span class="na">t-if=</span><span class="s">"loan.state == 'open'"</span><span class="w"> </span><span class="na">type=</span><span class="s">"button"</span>
+<span class="w">                        </span><span class="na">class=</span><span class="s">"btn btn-primary o_library_extend"</span><span class="nt">&gt;</span>
+<span class="w">                    </span>Extend<span class="w"> </span>by<span class="w"> </span>7<span class="w"> </span>days
+<span class="w">                </span><span class="nt">&lt;/button&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/div&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/t&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/template&gt;</span>
+<span class="nt">&lt;/odoo&gt;</span>
+</code></pre></div>
+<p>Details behind it:</p>
+<ul>
+<li><code>portal.portal_docs_entry</code> takes <code>title</code>, <code>url</code>, <code>text</code>, <code>icon</code>, <code>placeholder_count</code>, <code>count</code>, <code>show_count</code> and <code>config_card</code> (read from the template). A card with <code>placeholder_count</code> stays hidden until the lazily fetched <code>/my/counters</code> result says the count is non-zero, which is why <code>_prepare_home_portal_values</code> must answer to the key you pass.</li>
+<li><code>portal.portal_table</code> wraps whatever you put inside in a <code>&lt;table&gt;</code>, plus the pager when <code>pager</code> is in the values.</li>
+<li><code>t-field</code> renders a field with its formatting and widget rules (dates, selections), which is better than <code>t-out</code> for model values. It needs a record and a field.</li>
+<li><code>page_name</code> drives breadcrumbs and menu highlighting. Set it in the controller.</li>
+<li>The home page template is inherited with <code>customize_show="True"</code> so an administrator can switch the card on and off from the website editor.</li>
+<li>The <code>xpath</code> selectors reuse classes from the portal templates (<code>o_portal_docs</code>, <code>o_portal_submenu</code>). Check them in the branch you target; they are the part most likely to move.</li>
+</ul>
+<h2 id="step-4-put-the-files-in-the-right-bundles">Step 4: put the files in the right bundles</h2>
+<p>Portal pages use <code>web.assets_frontend</code> for scripts and styles. Backend code does not belong there.</p>
+<div class="highlight"><pre><span></span><code><span class="s2">"assets"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"web.assets_frontend"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"library/static/src/portal/**/*"</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">},</span>
+<span class="s2">"data"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">"security/ir.model.access.csv"</span><span class="p">,</span>
+    <span class="s2">"security/library_security.xml"</span><span class="p">,</span>
+    <span class="s2">"views/portal_templates.xml"</span><span class="p">,</span>
+<span class="p">],</span>
+<span class="s2">"depends"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"portal"</span><span class="p">,</span> <span class="s2">"library_base"</span><span class="p">],</span>
+</code></pre></div>
+<h2 id="behaviour-on-the-page-public-widgets-odoo-17-and-18">Behaviour on the page: public widgets (Odoo 17 and 18)</h2>
+<p>A <code>publicWidget</code> attaches to the elements matching its <code>selector</code> when the page loads, and gives you jQuery-style helpers (<code>this.$el</code>, <code>events</code>), a lifecycle, and automatic cleanup. This is the legacy-style API that portal and website still use in 18.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/** @odoo-module **/</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">publicWidget</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/legacy/js/public/public_widget"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">rpc</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/network/rpc"</span><span class="p">;</span>
+
+<span class="nx">publicWidget</span><span class="p">.</span><span class="nx">registry</span><span class="p">.</span><span class="nx">LibraryLoanExtend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">publicWidget</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="s2">".o_library_loan"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">events</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">"click .o_library_extend"</span><span class="o">:</span><span class="w"> </span><span class="s2">"_onExtendClick"</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="nx">start</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">loanId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">loanId</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">_super</span><span class="p">(...</span><span class="nb">arguments</span><span class="p">);</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="nx">_onExtendClick</span><span class="p">(</span><span class="nx">ev</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ev</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">button</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">rpc</span><span class="p">(</span><span class="sb">`/my/loans/</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">loanId</span><span class="si">}</span><span class="sb">/extend`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">days</span><span class="o">:</span><span class="w"> </span><span class="mf">7</span><span class="w"> </span><span class="p">});</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"p"</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Due on </span><span class="si">${</span><span class="nx">result</span><span class="p">.</span><span class="nx">due_date</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">button</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>The pieces, from <code>addons/web/static/src/legacy/js/public/public_widget.js</code>:</p>
+<ul>
+<li><code>selector</code> is a CSS selector; one widget instance is created for each match.</li>
+<li><code>events</code> maps <code>"event selector"</code> to a method name, with jQuery-style delegation inside <code>this.$el</code>.</li>
+<li>Lifecycle: <code>init(parent, options)</code> first, then <code>willStart()</code> (may return a promise, nothing is displayed before it resolves), then <code>start()</code> (the element is ready; return the parent's promise by calling <code>this._super</code>), and <code>destroy()</code> when the page unloads or the website editor takes over.</li>
+<li><code>this._super(...arguments)</code> calls the overridden method. It is required in <code>start</code> so the base class can finish.</li>
+<li>Registered widgets are looked up through <code>publicWidget.registry</code>; the key is only a unique name.</li>
+<li>Selectors are matched when the page loads. Elements injected later (a modal, an AJAX fragment) are not matched automatically, so prefer server-rendered pages.</li>
+</ul>
+<p>The matching JSON route, with <code>type="json"</code> in 18. It needs <code>from odoo import _, fields, http</code>, and <code>action_extend</code> is a method of the teaching model <code>library.loan</code> (it adds the days to <code>due_date</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@http</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">"/my/loans/&lt;int:loan_id&gt;/extend"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"json"</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="s2">"user"</span><span class="p">,</span> <span class="n">website</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">portal_extend_loan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loan_id</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">loan_sudo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_check_access</span><span class="p">(</span><span class="s2">"library.loan"</span><span class="p">,</span> <span class="n">loan_id</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="n">AccessError</span><span class="p">,</span> <span class="n">MissingError</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">AccessError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">"You cannot extend this loan."</span><span class="p">))</span>
+    <span class="n">loan_sudo</span><span class="o">.</span><span class="n">action_extend</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">days</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">"due_date"</span><span class="p">:</span> <span class="n">fields</span><span class="o">.</span><span class="n">Date</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">loan_sudo</span><span class="o">.</span><span class="n">due_date</span><span class="p">)}</span>
+</code></pre></div>
+<p>Do the check on the server every time. The button being hidden in the template is not a security measure.</p>
+<h2 id="behaviour-on-the-page-interactions-odoo-20">Behaviour on the page: interactions (Odoo 20)</h2>
+<p>Odoo 20 replaces <code>publicWidget</code> with <code>Interaction</code> classes (<code>web/static/src/public/interaction.js</code>), registered in <code>public.interactions</code>. The Odoo 20 core ports its portal pages to them (<code>account/static/src/interactions/...</code>). The same widget, as an interaction:</p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Interaction</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/public/interaction"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">rpc</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/network/rpc"</span><span class="p">;</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nx">LibraryLoanExtend</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Interaction</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">selector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">".o_library_loan"</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">dynamicContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">".o_library_extend"</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"t-on-click"</span><span class="o">:</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">onExtendClick</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">loanId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">parseInt</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">loanId</span><span class="p">,</span><span class="w"> </span><span class="mf">10</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="nx">onExtendClick</span><span class="p">(</span><span class="nx">ev</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">button</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">ev</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">button</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="nx">waitFor</span><span class="p">(</span>
+<span class="w">                </span><span class="nx">rpc</span><span class="p">(</span><span class="sb">`/my/loans/</span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">loanId</span><span class="si">}</span><span class="sb">/extend`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">days</span><span class="o">:</span><span class="w"> </span><span class="mf">7</span><span class="w"> </span><span class="p">})</span>
+<span class="w">            </span><span class="p">);</span>
+<span class="w">            </span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"p"</span><span class="p">).</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`Due on </span><span class="si">${</span><span class="nx">result</span><span class="p">.</span><span class="nx">due_date</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">button</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"public.interactions"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.loan_extend"</span><span class="p">,</span><span class="w"> </span><span class="nx">LibraryLoanExtend</span><span class="p">);</span>
+</code></pre></div>
+<p>What the base class documents in the source:</p>
+<ul>
+<li><code>static selector</code> picks the elements; <code>selectorHas</code> and <code>selectorNotHas</code> refine it. One instance per element, with <code>this.el</code> and <code>this.env</code>/<code>this.services</code>.</li>
+<li>The constructor is not overridden; use <code>setup()</code> (sync initialisation), <code>willStart()</code> (async, awaited before dynamic content applies), <code>start()</code> (equivalent of OWL's <code>mounted</code>, handlers attached), and <code>destroy()</code> for cleanup. It is not necessary to call <code>super</code> in these unless you inherit from a concrete subclass.</li>
+<li><code>dynamicContent</code> is an object <code>{ selector: { directive: handler } }</code> with directives <code>t-on-*</code> (with <code>.prevent</code>, <code>.stop</code>, <code>.capture</code>, <code>.once</code>, <code>.noUpdate</code>), <code>t-att-*</code>, <code>t-out</code> and <code>t-component</code>. Special selectors are <code>_root</code>, <code>_body</code>, <code>_document</code>, <code>_window</code>. The framework re-applies the dynamic content after each handler, so state-driven classes and attributes need no manual DOM code.</li>
+<li>Helpers: <code>waitFor(promise)</code> (ignores a result that arrives after the interaction was destroyed), <code>addListener</code>, <code>debounced</code>, <code>throttled</code>, <code>locked</code> (one run at a time, optionally with a loading animation), <code>setSafeInterval</code>, <code>waitForTimeout</code>, <code>insert</code>, <code>removeChildren</code>, <code>registerCleanup</code>, <code>mountComponent</code>.</li>
+<li>Interactions must clean up after themselves: they are destroyed when someone switches the website to edit mode.</li>
+<li>The source states plainly that it "is not owl": the syntax resembles OWL templates but differs.</li>
+</ul>
+<p>For a port from <code>publicWidget</code>: <code>selector</code> stays; <code>events</code> become entries of <code>dynamicContent</code>; <code>start()</code> becomes <code>setup()</code> or <code>start()</code>; <code>this._super</code> disappears; wrap asynchronous calls in <code>this.waitFor</code>.</p>
+<h2 id="an-owl-component-on-a-public-page">An OWL component on a public page</h2>
+<p>For richer UI on a public page, use OWL in a controlled way: register a component and place a custom element in the template.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/** @odoo-module **/</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">Component</span><span class="p">,</span><span class="w"> </span><span class="nx">useState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@odoo/owl"</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">registry</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">"@web/core/registry"</span><span class="p">;</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nx">LoanCountdown</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">template</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"library.LoanCountdown"</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="nx">props</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">due</span><span class="o">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="nx">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">ms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">due</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useState</span><span class="p">({</span><span class="w"> </span><span class="nx">days</span><span class="o">:</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span><span class="p">(</span><span class="nx">ms</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">86400000</span><span class="p">)</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">registry</span><span class="p">.</span><span class="nx">category</span><span class="p">(</span><span class="s2">"public_components"</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="s2">"library.loan_countdown"</span><span class="p">,</span><span class="w"> </span><span class="nx">LoanCountdown</span><span class="p">);</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;owl-component</span><span class="w"> </span><span class="na">name=</span><span class="s">"library.loan_countdown"</span><span class="w"> </span><span class="na">t-att-props=</span><span class="s">"json.dumps({'due': str(loan.due_date)})"</span><span class="nt">/&gt;</span>
+</code></pre></div>
+<p>In 18 the <code>public_component_service</code> mounts each <code>owl-component[name]</code> element it finds, parsing the element's <code>props</code> attribute as JSON and creating a separate OWL app per element (<code>addons/web/static/src/public/public_component_service.js</code>). The component class comes from the <code>public_components</code> registry. In 20 a <code>PublicComponentInteraction</code> with selector <code>owl-component[name]</code> does the same through <code>this.mountComponent</code>.</p>
+<p>The portal's own signature form uses exactly this shape: <code>&lt;owl-component name="portal.signature_form" t-att-props="json.dumps(signature_form_props)"/&gt;</code>. Build the dictionary in the controller and serialise it in the template as shown. A public OWL component gets the public environment: services like <code>orm</code> that need a session user are not safe to assume. Fetch data through your own routes.</p>
+<h2 id="styling">Styling</h2>
+<p>Frontend styles go into <code>web.assets_frontend</code> as SCSS and can use Bootstrap utilities and the portal's CSS variables. Prefix your classes (<code>o_library_...</code>). To change colours globally for the portal, override variables in <code>web._assets_primary_variables</code>, as described in the assets chapter.</p>
+<h2 id="testing-the-portal">Testing the portal</h2>
+<p>Python controller tests use <code>HttpCase</code> with <code>self.authenticate("portal_user", "portal_user")</code> and <code>self.url_open("/my/loans")</code>; they check status codes, redirects for anonymous users, and that a portal user cannot read another member's loan (<code>/my/loans/&lt;other id&gt;</code> redirects to <code>/my</code>). A tour (see the next chapter) drives the real page, including the widget click, with <code>self.start_tour("/my/loans", "library_portal_tour", login="portal_user")</code>.</p>
+<p>Write the access test first. It is the one that catches the expensive mistakes.</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>No access rule for <code>base.group_portal</code>.</strong> The portal page raises <code>AccessError</code> or shows nothing. Write ACL and record rule first.</li>
+<li><strong><code>sudo()</code> to "fix" a portal page.</strong> It exposes other members' records. Fix the rule instead.</li>
+<li><strong>Rendering a sudoed record into a writing code path.</strong> <code>_document_check_access</code> returns the record with elevated rights; keep it read-only.</li>
+<li><strong><code>auth="public"</code> for private pages.</strong> Use <code>auth="user"</code>.</li>
+<li><strong>A JSON route without server-side checks.</strong> The UI is not a boundary.</li>
+<li><strong>Backend code in <code>web.assets_frontend</code>, or the other way round.</strong> The module does not exist on that page.</li>
+<li><strong>Widget or interaction selector that matches nothing.</strong> Check the class in the rendered HTML (with <code>?debug=assets</code>), not in the template source.</li>
+<li><strong><code>type="json"</code> on 20.</strong> It is a deprecated alias of <code>jsonrpc</code> since 19; write <code>jsonrpc</code> when you target 20 only.</li>
+<li><strong><code>publicWidget</code> on 20 for new code.</strong> Core is moving to interactions. Existing widgets may keep working for now; confirm in your build.</li>
+<li><strong>Assuming the <code>orm</code> service works for visitors.</strong> Public pages have no logged-in user; use routes.</li>
+<li><strong>Heavy JavaScript on every public page.</strong> <code>web.assets_frontend</code> is downloaded by every visitor. Use lazy bundles (<code>loadBundle</code>) for rarely needed code.</li>
+<li><strong>Hard-coded URLs.</strong> Use <code>t-attf-href</code> or <code>url_for</code>-style helpers so website and language prefixes keep working.</li>
+<li><strong>Counters without a matching key.</strong> A card with <code>placeholder_count="loan_count"</code> stays hidden if <code>_prepare_home_portal_values</code> does not return <code>loan_count</code> when asked.</li>
+</ul>
+<h2 id="versions">Versions</h2>
+<div class="admonition info">
+<p><strong>16:</strong> <code>publicWidget</code> is the only tool. The portal controller API and the <code>rpc</code> helper were not verified on 16 for this chapter; check <code>_prepare_home_portal_values</code> and the JSON call helper on your branch.</p>
+<p><strong>17:</strong> <code>publicWidget</code>; the portal helpers above exist. <code>check_access_rights</code> is the way to test access.</p>
+<p><strong>18:</strong> <code>publicWidget</code>, <code>has_access</code>, <code>rpc</code> import, <code>type="json"</code>. Public OWL components via <code>owl-component</code>.</p>
+<p><strong>20:</strong> <code>Interaction</code> classes in <code>public.interactions</code>; routes use <code>type="jsonrpc"</code> (<code>json</code> is a deprecated alias with a warning).</p>
+</div>
+<h2 id="try-it">Try it</h2>
+<ol>
+<li>Create the ACL, rule, controller and templates above. Log in as a portal user whose partner owns two loans and check <code>/my/loans</code>.</li>
+<li>Log in as a second portal user and request the first user's loan id directly at <code>/my/loans/&lt;id&gt;</code>. What happens?</li>
+<li>Add the widget, open the loan page, click the button, and read the network tab.</li>
+<li>Write a <code>HttpCase</code> test that asserts step 2.</li>
+</ol>
+<details>
+<summary>Solution notes</summary>
+<ol>
+<li>The list shows only the user's loans, and the home card appears once <code>/my/counters</code> reports a non-zero <code>loan_count</code>.</li>
+<li><code>_document_check_access</code> raises <code>AccessError</code> for a record the user cannot read without a token, and the controller redirects to <code>/my</code>. If you see the other user's data, the record rule is missing or has the wrong domain.</li>
+<li>One JSON request to <code>/my/loans/&lt;id&gt;/extend</code>; the date text updates without a page reload.</li>
+<li><code>self.authenticate("portal_b", "portal_b")</code>, <code>response = self.url_open("/my/loans/%d" % loan_a.id)</code>, then assert the final URL ends with <code>/my</code> (follow redirects) or the status is 302.</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../customising-views/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Customising views">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Customising views
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tours-and-frontend-tests/" class="md-footer__link md-footer__link--next" aria-label="Next: Tours and frontend tests">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Tours and frontend tests
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.instant", "search.suggest", "search.highlight", "toc.follow", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>
